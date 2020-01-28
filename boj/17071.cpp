@@ -1,85 +1,99 @@
 #include <iostream>
 #include <queue>
-#include <cmath>
+#include <cstring>
 #include <algorithm>
 using namespace std;
 
-const int DEFAULTID = 1000000;
+const int ODD = 1;
+const int EVEN = 0;
 const int MAXSIZE = 500001;
-const int MAXTIME = 500001;
-const int NOTVISITED = 0;
+const int NOTVISITED = -1;
 
-int points[MAXSIZE][2] = { 0, }; // 0은 지난시간, 1은 시간에 따른 k의 위치
-queue<int> q;
+int sReach[2][MAXSIZE] = { 0, };
+queue<pair<int,int>> q;
 
-int minExpectedTime = MAXTIME;
+int minEven = MAXSIZE, minOdd = MAXSIZE;
 
-int getReachTime(int k, int t, int position) {
-    double testX = (-2.0 * t - 1 + sqrt((2 * t + 1)*(2 * t + 1) + 8 * (position - k))) / 2;
-    int testY = testX;
-    if (testX >= 0 &&testY == testX) {
-        return testY;
-    }
-    return MAXTIME;
-}
+void setTime(int s, int time, int type) {
 
-void setPoints(int lastPosition, int position) {
-    int time = points[lastPosition][0] - DEFAULTID + 1;
-    if (points[position][0] == NOTVISITED) {
-        points[position][0] = points[lastPosition][0] + 1;
-        points[position][1] = points[lastPosition][1] + time;
-
-        if (position > points[position][1]) {
-            minExpectedTime = min(minExpectedTime, getReachTime(points[position][1], points[position][0] - DEFAULTID, position) + time);
-        }
-        q.push(position);
+    if (sReach[type][s] == NOTVISITED) {
+        sReach[type][s] = time;
+        q.push(pair<int, int>(s, time));
     }
 }
 
-
-int solve(int s, int k) {
-
-    points[s][0] = DEFAULTID;
-    points[s][1] = k;
-    q.push(s);
-
-    while(!q.empty()) {
-        int now = q.front();
+void bfs(int s) {
+    memset(sReach, -1, sizeof(int)* MAXSIZE * 2);
+    if (q.empty()) {
+        q.push(pair<int,int>(s,0));
+        sReach[0][s] = 0;
+    }
+    while (!q.empty()) {
+        int now = q.front().first;
+        int nextTime = q.front().second + 1;
         q.pop();
 
-        if (points[now][1] >= MAXSIZE) {
-            return -1;
+        int type = EVEN;
+        if (nextTime % 2 == ODD) {
+            type = ODD;
         }
 
-        if (now == points[now][1]) {
-            return min(minExpectedTime, points[now][0] - DEFAULTID);
+        if (now * 2 < MAXSIZE) {
+            setTime(now * 2, nextTime, type);
         }
 
-        if (points[now][0] - DEFAULTID > minExpectedTime) {
-            return minExpectedTime;
+        if (now + 1 < MAXSIZE) {
+            setTime(now + 1, nextTime, type);
         }
 
-        if (now * 2 < MAXTIME) {
-            setPoints(now, now * 2);
-        }
-        if (now + 1 < MAXTIME) {
-            setPoints(now, now + 1);
-        }
         if (now - 1 >= 0) {
-            setPoints(now, now - 1);
+            setTime(now - 1, nextTime, type);
         }
     }
+    return;
+}
+
+void setMin(int k) {
+    for (int i = k, t = 0; i < MAXSIZE; i = i + t) {
+        if (sReach[EVEN][i] != NOTVISITED) {
+            if ( sReach[EVEN][i] <= t && (t - sReach[EVEN][i]) % 2 == 0) {
+                minEven = min(minEven, t);
+            }
+        }
+
+
+        if (sReach[ODD][i] != NOTVISITED) {
+            if (sReach[ODD][i] <= t && (t - sReach[ODD][i]) % 2 == 0) {
+                minOdd = min(minOdd, t);
+            }
+        }
+
+        if (sReach[ODD][i] == t || sReach[ODD][i] == t) {
+            break;
+        }
+
+        ++t;
+    }
+}
+
+int solve(int s, int k) {
     
+    bfs(s);
+
+    setMin(k);
+
+    int ans = min(minOdd, minEven);
+
+    if (ans == MAXSIZE) {
+        return -1;
+    }
+
+    return ans;
 }
 
 int main(void) {
     int s = 0, k = 0;
     cin >> s >> k;
-
-    if (k >= MAXSIZE - 1) {
-        cout << -1;
-        return 0;
-    }
 
     cout << solve(s, k);
     return 0;
