@@ -20,7 +20,7 @@ bool checkMap(int row, int col) {
 
             colNum[colVal]++;
             rowNum[rowVal]++;
-            areaNum[areaVal]++;
+            areaNum[areaVal]++; 
         }
     }
     for (int i = 1; i < 10; i++) {
