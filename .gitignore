@@ -1,6 +1,7 @@
 
 *.obj
 *.vcxproj
+.vscode
 pch.cpp
 pch.h
 
