@@ -34,9 +34,14 @@ void init() {
       values[u].erase(v);
     }
     values[u].insert(make_pair(v,w));
+  }
 
-    if(u == startVertexNumber) {
-      minValues[v] = w;
+  for(auto i = values[startVertexNumber].begin(); i != values[startVertexNumber].end(); ++i) {
+    int index = i->first;
+    int value = i->second;
+
+    if(minValues[index] > value) {
+      minValues[index] = value;
     }
   }
 }
