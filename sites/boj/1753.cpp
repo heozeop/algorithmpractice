@@ -1,13 +1,100 @@
-// ì •ì  Vê°œ, ê°„ì„  Eê°œ
-// 1 ~ Vê¹Œì§€ ê°€ëŠ” ìµœë‹¨ ê²½ë¡œ ê°’ ì¶œë ¥í•˜ê¸°
+// Á¤Á¡ V°³, °£¼± E°³
+// 1 ~ V±îÁö °¡´Â ÃÖ´Ü °æ·Î °ª Ãâ·ÂÇÏ±â
 
 /*
-* ì¼ë‹¨ ê¸°ë³¸ì ì¸ ìƒê°ìœ¼ë¡œëŠ” ê°ˆ ìˆ˜ ìžˆëŠ” ì˜ì—­ ë¦¬ìŠ¤íŠ¸ë¥¼ minHeapì„ ì‚¬ìš©í•´ ê°€ì§€ê³  ìžˆìœ¼ë©´ ë˜ì§€ ì•Šì„ê¹Œ ì‹¶ë‹¤ëŠ” ìƒê°ì„ í–ˆìŠµë‹ˆë‹¤.
-* 1ë²ˆ ë…¸ë“œì—ì„œ ê°ˆ ìˆ˜ ìžˆëŠ” ì˜ì—­ì— ëŒ€í•œ minHeapì„ í†µí•´, ë‹¤ìŒ ë…¸ë“œë¥¼ ì„ íƒ í•©ë‹ˆë‹¤.
-* ì´ ë•Œ, ì´ë¯¸ ë°©ë¬¸í•œ ë…¸ë“œì¸ì§€ í™•ì¸í•©ë‹ˆë‹¤.
+* Àú±â ÀÖ´Â 4¹øÀ» ÀÌÇØ ÇÏ¸é ´ÙÀÍ½ºÆ®¶ó ¾Ë°í¸®Áò ¹®Á¦ÀÎ 1753 ¹øÀ» ½±°Ô Ç®µí ÇÕ´Ï´Ù.
+* ÀÌ ¹®Á¦´Â ¸Þ¸ð¸® Á¦ÇÑ¿¡ ¾È°É¸± °Å °°À¸´Ï ±×³É ÀÏ´Ü o^2·Î Ç®°Ú½À´Ï´Ù.
+* ÀÌ°Ô n^2¶ó°í? Â¼³×
+* 
+* ÅÇÀÌ 4Ä­ÀÎ°Å ºÒÆíÇÏ´õ¶óµµ Á¶±Ý¸¸ Âü¾ÆÁÖ¼¼¿ä ¤Ì¤Ì
+* 
+* Ã¹ÁÙ ºÎÅÍ VÁÙ¿¡ °ÉÃÄ => 1~V±îÁö µ¹¸é¼­
+* i¹øÂ° ÁÙ¿¡ i¹ø Á¤Á¡À¸·ÎÀÇ ÃÖ´Ü °æ·ÎÀÇ °æ·Î°ª => [½ÃÀÛ][i]ÀÇ ÃÖ¼Ú°ª
 */
 
 #include <iostream>
 #include <vector>
+#include <cstring>
 using namespace std;
 
+const int MAX_VERTEX_SIZE = 20001;
+const int MAX_EDGE_SIZE = 300000;
+const int INF = 11;
+
+int values[MAX_VERTEX_SIZE][MAX_VERTEX_SIZE];
+int minValues = [MAX_VERTEX_SIZE];
+int visitedVertexNumber= [MAX_VERTEX_SIZE];
+int v, e;
+int startVertexNumber;
+
+void init() {
+    memset(values, INF, sizeof values);
+    memset(minValues, INF, sizeof minValues);
+
+    cin >> v >> e >> startVertexNumber;
+    for (int i = 0; i < e; ++i) {
+        int u, v, w;
+        scanf("%d %d %d", &u, &v, &w);
+        values[u][v] = w;
+    }
+    minValues[startVertexNumber] = 0;
+}
+
+int getNextValues() {
+    int min = INF;
+    int index = -1;
+    for (int i = 1; i < v; ++i) {
+        if (!visitedVertexNumber[i] && minValues[i] < min) {
+            min = minValues[i];
+            index = i;
+        }
+    }
+
+    return index;
+}
+
+void setVisitable(int current) {
+    for (int i = 1; i <= v; ++i) {
+        bool isVisited = visitedVertexNumber[i] == 1;
+        int throughPathWeight = minValues[current] + values[current][i];
+
+        if (!isVisited && minValues[i] > throughPathWeight) {
+            minValues[i] = throughPathWeight;
+        }
+    }
+}
+
+void calcMinValues() {
+    initMinValues();
+    int visitedVertex = -1;
+    while () {
+        /*
+            Á¤¸®°¡ ¾ÈµÇ¼­ ¾²¸é¼­ ÇÒ°Ô¿©
+            1. ¹æ¹®ÇÑ ³ëµå ¼±ÅÃ
+            2. ¹æ¹®ÇÑ ³ëµå¿¡¼­ °¥ ¼ö ÀÖ´Â ¸ðµç À§Ä¡ ÇÑ¹ø ½Ï ¼³Á¤
+        */
+        visitedVertex = getNextValues();
+        if (visitedVertex < 0) {
+            return;
+        }
+        visitedVertexNumber[visitedVertex] = 1;
+        setVisitable(visitedVertex);
+    }
+}
+
+// °¡Àå ÀûÀº ºñ¿ëµéÀ» Ãâ·ÂÇÕ´Ï´Ù.
+void printMinWeights() {
+    for (int i = 1; i <= v; ++i) {
+        if (minValues != INF) {
+            cout << minValues[i] << endl;
+        }
+        cout << "INF" << endl;
+    }
+}
+
+void main(void) {
+    init();
+    calcMinValues();
+    printMinWeights();
+    return;
+}
