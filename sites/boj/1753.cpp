@@ -34,6 +34,10 @@ void init() {
       values[u].erase(v);
     }
     values[u].insert(make_pair(v,w));
+
+    if(u == startVertexNumber) {
+      minValues[v] = w;
+    }
   }
 }
 
@@ -47,7 +51,6 @@ int getNextValues() {
     }
   }
 
-  visitedVertexNumber[index] = 1;
   return index;
 }
 
@@ -65,13 +68,11 @@ void setVisitable(int current) {
 }
 
 void calcMinValues() {
-  int visitedVertex;
-  while (1) {
-    visitedVertex = getNextValues();
-    if (visitedVertex < 0) {
-      return;
-    }
+  int visitedVertex = startVertexNumber;
+  while (visitedVertex > 0) {
+    visitedVertexNumber[visitedVertex] = 1;
     setVisitable(visitedVertex);
+    visitedVertex = getNextValues();
   }
 }
 
