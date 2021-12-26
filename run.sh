@@ -17,4 +17,4 @@ target_input=${current_dir}/${current_file}.txt
 
 /usr/bin/g++ -g ${target_file} -o ${current_dir}/${current_file}.out
 
-./${current_dir}/${current_file}.out < target_input
+./${current_dir}/${current_file}.out < ${target_input}
