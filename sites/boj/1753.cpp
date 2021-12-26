@@ -25,6 +25,7 @@ void init() {
     minValues[i] = INF;
   }
   minValues[startVertexNumber] = 0;
+  visitedVertexNumber[startVertexNumber] = 1;
 
   // 엣지 입력
   for (int i = 0; i < e; ++i) {
@@ -49,7 +50,7 @@ void init() {
 int getNextValues() {
   int min = INF;
   int index = -1;
-  for (int i = 1; i < v; ++i) {
+  for (int i = 1; i <= v; ++i) {
     if (!visitedVertexNumber[i] && minValues[i] < min) {
       min = minValues[i];
       index = i;
@@ -59,25 +60,34 @@ int getNextValues() {
   return index;
 }
 
-void setVisitable(int current) {
+void updateForNext(int current) {
   map<int,int> entryPoint = values[current];
   for(auto iter = entryPoint.begin(); iter != entryPoint.end(); ++iter) {
     int index = iter->first;
     int value = iter->second;
+
     bool isVisitedVertex = visitedVertexNumber[index] == 1;
+    if(isVisitedVertex) {
+      continue;
+    }
+
     int throughPathWeight = minValues[current] + value;
-    if(throughPathWeight > 0 && !isVisitedVertex && minValues[index] > throughPathWeight) {
+    if(minValues[index] > throughPathWeight) {
       minValues[index] = throughPathWeight;
     }
   }
 }
 
 void calcMinValues() {
-  int visitedVertex = startVertexNumber;
-  while (visitedVertex > 0) {
-    visitedVertexNumber[visitedVertex] = 1;
-    setVisitable(visitedVertex);
+  int visitedVertex;
+  while (1) {
     visitedVertex = getNextValues();
+    if(visitedVertex < 0) {
+      return;
+    }
+
+    visitedVertexNumber[visitedVertex] = 1;
+    updateForNext(visitedVertex);
   }
 }
 
