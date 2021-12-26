@@ -8,45 +8,30 @@ const int MAX_VERTEX_SIZE = 20001;
 const int MAX_EDGE_SIZE = 300000;
 const int INF = 11 * MAX_EDGE_SIZE;
 
-map<pair<int,int>, int> values;
+// map<pair<int,int>, int> values;
+map<int,int>values[MAX_VERTEX_SIZE];
 int minValues[MAX_VERTEX_SIZE];
 int visitedVertexNumber[MAX_VERTEX_SIZE];
 int v, e;
 int startVertexNumber;
 
-// 가장 적은 비용들을 출력합니다.
-void printMinWeights() {
-  for (int i = 1; i <= v; ++i) {
-    if (minValues[i] < INF) {
-      cout << minValues[i] << endl;
-    } else {
-      cout << "INF" << endl;
-    }
-  }
-}
 
 void init() {
-  // 입력
+  // 기준값 입력
   cin >> v >> e >> startVertexNumber;
 
-  for (int i = 0; i < e; ++i) {
-    int u, v, w;
-    scanf("%d %d %d", &u, &v, &w);
-    pair<int, int> location = make_pair(u,v);
-    if(values.find(location) != values.end()) {
-      if(values.at(location) < w) {
-        continue;
-      }
-      values.erase(location);
-    }
-    values.insert(make_pair(location, w));
-  }
-
-  // min values
+  // 최솟값 초기화
   for(int i = 1; i <= v; ++i) {
     minValues[i] = INF;
   }
   minValues[startVertexNumber] = 0;
+
+  // 엣지 입력
+  for (int i = 0; i < e; ++i) {
+    int u, v, w;
+    scanf("%d %d %d", &u, &v, &w);
+    values[u].insert(make_pair(v,w));
+  }
 }
 
 int getNextValues() {
@@ -63,16 +48,14 @@ int getNextValues() {
 }
 
 void setVisitable(int current) {
-  for (int i = 1; i <= v; ++i) {
-    bool isVisited = visitedVertexNumber[i] == 1;
-    try{
-      int throughPathWeight = minValues[current] + values.at(make_pair(current, i));
-
-      if (throughPathWeight > 0 && !isVisited && minValues[i] > throughPathWeight) {
-        minValues[i] = throughPathWeight;
-      }
-    } catch(const out_of_range e) {
-
+  map<int,int> entryPoint = values[current];
+  for(auto iter = entryPoint.begin(); iter != entryPoint.end(); ++iter) {
+    int index = iter->first;
+    int value = iter->second;
+    bool isVisitedVertex = visitedVertexNumber[index] == 1;
+    int throughPathWeight = minValues[current] + value;
+    if(throughPathWeight > 0 && !isVisitedVertex && minValues[index] > throughPathWeight) {
+      minValues[index] = throughPathWeight;
     }
   }
 }
@@ -89,6 +72,16 @@ void calcMinValues() {
   }
 }
 
+// 가장 적은 비용들을 출력합니다.
+void printMinWeights() {
+  for (int i = 1; i <= v; ++i) {
+    if (minValues[i] < INF) {
+      cout << minValues[i] << endl;
+    } else {
+      cout << "INF" << endl;
+    }
+  }
+}
 
 int main(void) {
   init();
