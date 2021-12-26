@@ -30,6 +30,9 @@ void init() {
   for (int i = 0; i < e; ++i) {
     int u, v, w;
     scanf("%d %d %d", &u, &v, &w);
+    if(values[u].find(v) != values[u].end() && values[u].at(v) > w) {
+      values[u].erase(v);
+    }
     values[u].insert(make_pair(v,w));
   }
 }
@@ -44,6 +47,7 @@ int getNextValues() {
     }
   }
 
+  visitedVertexNumber[index] = 1;
   return index;
 }
 
@@ -61,13 +65,12 @@ void setVisitable(int current) {
 }
 
 void calcMinValues() {
-  int visitedVertex = -1;
+  int visitedVertex;
   while (1) {
     visitedVertex = getNextValues();
     if (visitedVertex < 0) {
       return;
     }
-    visitedVertexNumber[visitedVertex] = 1;
     setVisitable(visitedVertex);
   }
 }
