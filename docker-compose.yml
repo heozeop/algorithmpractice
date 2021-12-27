@@ -1,0 +1,13 @@
+version: '3.4'
+
+services:
+  algorithmpractice:
+    image: algorithmpractice
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - type: bind
+        source: ./sites
+        target: /usr/src/myapp
+

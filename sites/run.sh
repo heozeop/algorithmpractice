@@ -11,10 +11,10 @@ current_site=$3
 input_file=$4
 
 # current_dir=${PWD}/${current_site}
-current_dir="sites/${current_site:=boj}"
+current_dir="${current_site:=boj}"
 target_file=${current_dir}/${current_file}.${current_extension:=cpp}
 target_input=${current_dir}/${current_file}.txt
 
-/usr/bin/g++ -g ${target_file} -o ${current_dir}/${current_file}.out
+g++ -o ${current_dir}/${current_file}.out ${current_dir}/${current_file}.cpp
 
 ./${current_dir}/${current_file}.out < ${target_input}
