@@ -7,4 +7,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     volumes:
-      - ./:/sites
+      - type: bind
+        source: ./sites
+        target: /usr/src/myapp
+
