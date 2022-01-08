@@ -1,13 +1,11 @@
 #include <iostream>
 #include <queue>
 #include <vector>
-#include <cstring>
+#include <algorithm>
+#include <functional>
 using namespace std;
 const int NODE_SIZE_LIMIT = 801;
-const int NODE_WEIGHT_LIMIT = 1001;
-const int VISITED_NODE = 1;
-const int NOTVISITED_NODE = 0;
-typedef long long ll;
+const int NODE_WEIGHT_LIMIT = 987654321;
 
 int n, m;
 int t1, t2;
@@ -15,7 +13,7 @@ vector<pair<int, int> >graph[NODE_SIZE_LIMIT];
 
 void init() {
   cin >> n >> m;
-  for(int i = 1; i <= n; ++i) {
+  for(int i = 1; i <= m; ++i) {
     int a,b,c;
     scanf("%d %d %d", &a, &b, &c);
     graph[a].push_back(make_pair(b,c));
@@ -24,82 +22,54 @@ void init() {
   cin >> t1 >> t2;
 }
 
-void setMST(int startNode, int endNode, ll* minWeight, ll* visited) {
-  priority_queue<pair<int, int>, vector<pair<int, int> > > minHeap;
+vector<int> dijkstra(int startNode) {
+  vector<int> minWeight(n + 1, NODE_WEIGHT_LIMIT);
+
+  priority_queue<pair<int, int>,vector<pair<int, int> >, greater<pair<int, int> > > minHeap;
   minWeight[startNode] = 0;
   minHeap.push(make_pair(0, startNode));
-  while(minHeap.size() > 0) {
-    int weight = -minHeap.top().first;
+
+  while(!minHeap.empty()) {
+    int weight = minHeap.top().first;
     int node = minHeap.top().second;
-    visited[node] = VISITED_NODE;
     minHeap.pop();
+
+    if (minWeight[node] < weight)
+      continue;
 
     for(int i = 0; i < graph[node].size(); ++i) {
       int nextNode = graph[node][i].first;
-      int nextWeight = graph[node][i].second;
+      int nextWeight = weight + graph[node][i].second;
 
-      if(visited[nextNode] == 1) {
-        continue;
-      }
-
-      int calcedWeight = weight + nextWeight;
-      if(minWeight[nextNode] > calcedWeight) {
-        minWeight[nextNode] = calcedWeight;
-        minHeap.push(make_pair(-calcedWeight, nextNode));
+      if(minWeight[nextNode] > nextWeight) {
+        minWeight[nextNode] = nextWeight;
+        minHeap.push(make_pair(nextWeight, nextNode));
       }
     }
   }
+
+  return minWeight;
 }
 
-ll solve() {
-  size_t size = sizeof(ll) * (n + 1);
+int solve() {
+  vector<int> min1 = dijkstra(1);
+  vector<int> minA = dijkstra(t1);
+  vector<int> minB = dijkstra(t2);
 
-  ll minWeight[NODE_SIZE_LIMIT];
-  ll visited[NODE_SIZE_LIMIT];
-  ll minWeight2[NODE_SIZE_LIMIT];
-  ll visited2[NODE_SIZE_LIMIT];
+  int path1 = min1[t1] + minA[t2] + minB[n];
+  int path2 = min1[t2] + minB[t1] + minA[n];
+  int answer = min(path1, path2);
 
-  for(int i = 1; i <= n; ++i) {
-    minWeight[i] = NODE_WEIGHT_LIMIT;
-    minWeight2[i] = NODE_WEIGHT_LIMIT;
-    visited[i] = NOTVISITED_NODE;
-    visited2[i] = NOTVISITED_NODE;
-  }
-
-  // 1. 2 정점을 연결한 값을 찾는다.
-  setMST(t1,t2,minWeight,visited);
-  setMST(t2,t1,minWeight2,visited2);
-
-  // 2. 모든 정점이 연결 되었는지 확인한다.
-  bool isFirstNodeVisited = visited[1] == VISITED_NODE;
-  bool isNthNodeVisited = visited[n] == VISITED_NODE;
-  bool isT1NodeVisited = visited[t1] == VISITED_NODE;
-  bool isT2NodeVisited = visited[t2] == VISITED_NODE;
-
-  // 2.1 연결이 안된 노드가 있다면 -1을 리턴한다.
-  if(!isFirstNodeVisited || !isNthNodeVisited || !isT1NodeVisited || !isT2NodeVisited) {
+  if(answer >= NODE_WEIGHT_LIMIT || answer < 0) {
     return -1;
   }
 
-  // 2.2 t1 -> t2의 최솟값을 저장한다.
-  int minVal = minWeight[t2];
-
-  // 3.1 1번 노드에서 부터의 최솟값을 찾는다.
-  ll fromT1To1 = minWeight[1];
-  ll fromT2To1 = minWeight2[1];
-  minVal += fromT1To1 < fromT2To1 ? fromT1To1 : fromT2To1;
-
-  // 3.2 N번 노드에서부터의 최솟값을 찾는다.
-  ll fromT1ToN = minWeight[n];
-  ll fromT2ToN = minWeight2[n];
-  minVal += fromT1ToN < fromT2ToN ? fromT1ToN : fromT2ToN;
-
-  return minVal;
+  return answer;
 }
 
 int main(void) {
   init();
-  cout << solve();
+  cout << solve()<< endl;
 
   return 0;
 }
