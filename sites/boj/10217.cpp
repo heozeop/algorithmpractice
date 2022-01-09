@@ -3,23 +3,18 @@
 #include <algorithm>
 using namespace std;
 
-// floyd를 사용해서 비용과 소요시간을 계산해 봅니다.
-// dijkstra로 찾을 경우, 비용과 시간의 가중치가 있어 제대로된 탐색이 불가할 수 있을 것 같습니다.
-// dijkstra로 짜고, 두 지점을 함께 고려하면 어떻게 될까요? 어떤 지점 선택에 대해서 갈 수 있는지 고려하는 거죠.
-// 이 접근의 단점은 초기 선택을 되돌릴 수 없다는 거에요.
-// 그러면 벨만 포드?로 해보죠? 100 * 10000 이니까 시간 복잡도도 괜찮은 것 같아요!
-
 const int INF = 987654321;
-const int MAX = 101;
-const int TIME = 0;
-const int COST = 1;
+const int COST_LIMIT =  10001;
+const int NODE_LIMIT = 101;
 
 int testcases;
 int n, m, k;
-vector<pair<int,int> > flyTime[MAX];
-vector<pair<int,int> > flyCost[MAX];
+vector<pair<int,int> > flyTime[NODE_LIMIT];
+vector<pair<int,int> > flyCost[NODE_LIMIT];
+int minTimes[NODE_LIMIT][COST_LIMIT];
 
-void init(int n) {
+void init(int n, int m) {
+  fill(&minTimes[1][0], &minTimes[n][m] + 1, INF);
   for(int i = 1; i <= n; ++i) {
     flyTime[i].clear();
     flyCost[i].clear();
@@ -29,7 +24,7 @@ void init(int n) {
 void input() {
   cin >> n >> m >> k;
 
-  init(n);
+  init(n, m);
 
   int u,v,c,d;
   for(int i = 0; i < k; ++i) {
@@ -39,26 +34,33 @@ void input() {
   }
 }
 
-pair<int, int> bellmanFord() {
-  vector<int> times(n + 1, INF);
-  vector<int> costs(n + 1, INF);
+int bellmanFord() {
   bool updated;
-  times[1] = 0;
-  costs[1] = 0;
-  for(int i = 0; i < n; ++i) {
+  vector<int> cost(n + 1, INF);
+
+  cost[1] = 0;
+  minTimes[1][cost[1]] = 0;
+
+  for(int i = 0; i < n - 1; ++i) {
     updated = false;
 
     for(int cur = 1; cur <= n; ++cur) {
-      if(times[cur] == INF || costs[cur] > m) continue;
+      int currentMinTimeCost = cost[cur];
+
+      if(currentMinTimeCost > m) continue;
+      if(minTimes[cur][currentMinTimeCost] == INF) continue;
 
       for(int j = 0; j < flyTime[cur].size(); ++j) {
         int nextNode = flyTime[cur][j].first;
-        int curTime =  times[cur] + flyTime[cur][j].second;
-        int curCost =  costs[cur] + flyCost[cur][j].second;
+        int nextTime =  minTimes[cur][currentMinTimeCost] + flyTime[cur][j].second;
+        int nextCost =  currentMinTimeCost + flyCost[cur][j].second;
 
-        if(times[nextNode] > curTime && curCost <= m) {
-          times[nextNode] = curTime;
-          costs[nextNode] = curCost;
+        if(nextCost > m) continue;
+        if(minTimes[nextNode][nextCost] >= nextTime) {
+          minTimes[nextNode][nextCost] = nextTime;
+          if(cost[nextNode] > nextCost) {
+            cost[nextNode] = nextCost;
+          }
           updated = true;
         }
       }
@@ -67,11 +69,15 @@ pair<int, int> bellmanFord() {
     if(!updated) break;
   }
 
-  return make_pair(times[n], costs[n]);
+  if(cost[n] > m) {
+    return INF;
+  }
+
+  return minTimes[n][cost[n]];
 }
 
-void print(int timeVal, int costVal) {
-  if(costVal > m) {
+void print(int timeVal) {
+  if(timeVal < 0 || timeVal >= INF) {
     cout << "Poor KCM\n";
     return;
   }
@@ -84,12 +90,9 @@ int main(void) {
   cin.tie(NULL);
   cin >> testcases;
 
-  pair<int, int> result;
-
   while(testcases--) {
     input();
-    result = bellmanFord();
-    print(result.first, result.second);
+    print(bellmanFord());
   }
 
   return 0;
