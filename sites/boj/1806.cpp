@@ -1,10 +1,13 @@
 #include <iostream>
-#include <algorithm>
 using namespace std;
 
 const int NODE_LIMIT = 100000 + 1;
-int n, s;
+
+int n;
+long long s;
+int minLength = NODE_LIMIT;
 int numArray[NODE_LIMIT];
+int sumArray[NODE_LIMIT];
 
 void input();
 void solve();
@@ -20,27 +23,30 @@ int main(void) {
 
 void input() {
   cin >> n >> s;
-  for(int i = 0; i < n; ++i) {
+  for(int i = 1; i <= n; ++i) {
     cin >> numArray[i];
+    sumArray[i] = numArray[i] + sumArray[i - 1];
+
+    if(sumArray[i] >= s && minLength > i) {
+      minLength = i;
+    }
   }
   return;
 }
 
 void solve() {
-  sort(&numArray[0], &numArray[n]);
-  int left = 0, right = 1;
-  int minLength = NODE_LIMIT;
+  int leftNode = 1, rightNode = minLength;
   long long curSum = 0;
-  while(left < right && right < n) {
-    curSum += numArray[left] + numArray[right];
+  while(leftNode < rightNode && rightNode <= n) {
+    curSum = sumArray[rightNode] - sumArray[leftNode];
 
     if(curSum >= s) {
-      if(minLength > right - left + 1) {
-        minLength = right - left + 1;
+      if(minLength > rightNode - leftNode) {
+        minLength = rightNode - leftNode;
       }
-      left += 1;
+      leftNode += 1;
     } else {
-      right += 1;
+      rightNode += 1;
     }
   }
 
