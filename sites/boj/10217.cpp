@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <queue>
 using namespace std;
 
 const int INF = 987654321;
@@ -12,6 +13,15 @@ int n, m, k;
 vector<pair<int,int> > flyTime[NODE_LIMIT];
 vector<pair<int,int> > flyCost[NODE_LIMIT];
 int minTimes[NODE_LIMIT][COST_LIMIT];
+
+typedef struct _port {
+  int to;
+  int cost;
+  int time;
+  bool operator()(struct _port a, struct _port b){
+    return a.time > b.time || (a.time == b.time && a.cost > b.cost);
+  }
+} port;
 
 void init(int n, int m) {
   fill(&minTimes[1][0], &minTimes[n][m] + 1, INF);
@@ -34,46 +44,52 @@ void input() {
   }
 }
 
-int bellmanFord() {
-  bool updated;
-  vector<int> cost(n + 1, INF);
+int dijkstra() {
+  priority_queue<port, vector<port >, port > minHeap;
+  port p = {
+    to: 1,
+    cost: 0,
+    time: 0,
+  };
+  minHeap.push(p);
+  minTimes[1][0] = 0;
 
-  cost[1] = 0;
-  minTimes[1][cost[1]] = 0;
+  while(!minHeap.empty()) {
+    p = minHeap.top();
+    minHeap.pop();
 
-  for(int i = 0; i < n - 1; ++i) {
-    updated = false;
+    int times = p.time;
+    int node = p.to;
+    int cost = p.cost;
 
-    for(int cur = 1; cur <= n; ++cur) {
-      int currentMinTimeCost = cost[cur];
+    for(int i = 0; i < flyTime[node].size(); ++i) {
+      int nextNode = flyTime[node][i].first;
+      int nextTime = times + flyTime[node][i].second;
+      int nextCost = cost + flyCost[node][i].second;
 
-      if(currentMinTimeCost > m) continue;
-      if(minTimes[cur][currentMinTimeCost] == INF) continue;
+      port tmp = {
+        to: nextNode, cost: nextCost, time: nextTime
+      };
 
-      for(int j = 0; j < flyTime[cur].size(); ++j) {
-        int nextNode = flyTime[cur][j].first;
-        int nextTime =  minTimes[cur][currentMinTimeCost] + flyTime[cur][j].second;
-        int nextCost =  currentMinTimeCost + flyCost[cur][j].second;
-
-        if(nextCost > m) continue;
-        if(minTimes[nextNode][nextCost] >= nextTime) {
-          minTimes[nextNode][nextCost] = nextTime;
-          if(cost[nextNode] > nextCost) {
-            cost[nextNode] = nextCost;
-          }
-          updated = true;
+      if(nextCost <= m && minTimes[nextNode][nextCost] > nextTime) {
+        minTimes[nextNode][nextCost] = nextTime;
+        for(int j = nextCost + 1; j <= m; ++j) {
+          if(minTimes[nextNode][j] <= nextTime) break;
+          minTimes[nextNode][j] = nextTime;
         }
+        minHeap.push(tmp);
       }
     }
-
-    if(!updated) break;
   }
 
-  if(cost[n] > m) {
-    return INF;
+  int smallest = INF;
+  for(int i = 0; i <= m; ++i) {
+    if(smallest > minTimes[n][i]) {
+      smallest = minTimes[n][i];
+    }
   }
 
-  return minTimes[n][cost[n]];
+  return smallest;
 }
 
 void print(int timeVal) {
@@ -92,7 +108,7 @@ int main(void) {
 
   while(testcases--) {
     input();
-    print(bellmanFord());
+    print(dijkstra());
   }
 
   return 0;
