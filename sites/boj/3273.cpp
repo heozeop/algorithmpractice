@@ -1,11 +1,10 @@
 #include <iostream>
-#include <algorithm>
 using namespace std;
 
-const int VALUE_LIMIT= 100000;
+const int VALUE_LIMIT= 1000000 + 1;
 
 int n, x;
-int nodeArray[VALUE_LIMIT];
+int valueArray[VALUE_LIMIT];
 
 void input();
 void solve();
@@ -23,25 +22,25 @@ void input(){
   int temp;
   for(int i = 0; i < n; ++i) {
     cin >> temp;
-    nodeArray[i] = temp;
+    valueArray[temp] += 1;
   }
   cin >> x;
   return;
 }
 
 void solve() {
-  sort(&nodeArray[0], &nodeArray[n]);
-  int i = 0, j = n - 1, sum = 0;
-  while(i < j) {
-    int result = nodeArray[i] + nodeArray[j];
-    if(result == x) {
-      sum += 1;
-      i += 1;
-      j -= 1;
-    } else if (result < x) {
-      i += 1;
-    } else {
-      j -= 1;
+  int sum = 0;
+  int iter = 0;
+  if(x % 2 == 0) {
+    iter = x/2 - 1;
+    sum += (valueArray[x / 2] * (valueArray[x / 2] - 2))/2;
+  } else {
+    iter = x/2;
+  }
+
+  for(int i = 1; i <= iter; ++i) {
+    if(i < VALUE_LIMIT && x - i < VALUE_LIMIT) {
+      sum += valueArray[i] * valueArray[x - i];
     }
   }
 
