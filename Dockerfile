@@ -14,6 +14,6 @@ WORKDIR /usr/src/myapp
 # RUN g++ -o myapp main.cpp
 
 # This command runs your application, comment out this line to compile only
-CMD ["/bin/bash"]
+CMD ["bash"]
 
 LABEL Name=algorithmpractice Version=0.0.1
