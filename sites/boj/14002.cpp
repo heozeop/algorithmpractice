@@ -6,13 +6,13 @@
 
 using namespace std;
 
-const int VALUE_LIMIT = 1000 + 1;
-const int INDEX_LIMIT = 1000 + 1;
+const int VALUE_LIMIT = 1000000000 + 1;
+const int INDEX_LIMIT = 1000000 + 1;
 
 int n;
-int numArray[VALUE_LIMIT];
-int dpVal[VALUE_LIMIT];
-string dpPath[VALUE_LIMIT];
+int numArray[INDEX_LIMIT];
+int numIndexArray[INDEX_LIMIT];
+vector<int > dp;
 
 void input();
 void solve();
@@ -30,26 +30,51 @@ void input() {
   }
 }
 
+int search(int val) {
+  int startIndex = 0, endIndex = dp.size() - 1;
+  int middleIndex;
+  while(startIndex < endIndex) {
+    middleIndex = (startIndex + endIndex)/2;
+
+    if(val <= dp[middleIndex]) {
+      endIndex = middleIndex;
+    } else {
+      startIndex = middleIndex + 1;
+    }
+  }
+  return startIndex;
+}
+
+void setDP() {
+  int location = 0;
+  dp.push_back(numArray[1]);
+  numIndexArray[1] = 0;
+  for(int i = 2; i <= n; ++i) {
+    int currentNum = numArray[i];
+    if(currentNum > dp.back()) {
+      dp.push_back(currentNum);
+      numIndexArray[i] = dp.size() - 1;
+    } else {
+      location = search(currentNum);
+      dp[location] = currentNum;
+      numIndexArray[i] = location;
+    }
+  }
+}
+
 void solve() {
-  for(int i = 1; i <= n; ++i) {
-    dpVal[i] = 1;
-    dpPath[i] = to_string(numArray[i]);
-    for(int j = 1; j < i; ++j) {
-      if(numArray[i] > numArray[j] && dpVal[i] < dpVal[j] + 1) {
-        dpVal[i] = dpVal[j] + 1;
-        dpPath[i] = dpPath[j] + " " + to_string(numArray[i]);
-      }
+  setDP();
+  cout << dp.size() << endl;
+
+  vector<int> answers;
+  int target = dp.size() - 1;
+  for(int i = n; i > 0; --i){
+    if(numIndexArray[i] == target) { 
+      target -= 1;
+      answers.push_back(numArray[i]);
     }
   }
-
-  int maxLen = 0;
-  string maxPath;
-  for(int i = 1; i <= n; ++i) {
-    if(maxLen < dpVal[i]) {
-      maxLen = dpVal[i];
-      maxPath = dpPath[i];
-    }
+  for(int i = answers.size() - 1; i >= 0 ; --i) {
+    printf("%d ", answers[i]);
   }
-
-  cout << maxLen << endl << maxPath;
 }
