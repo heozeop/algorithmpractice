@@ -11,8 +11,9 @@ const int INDEX_LIMIT = 1000000 + 1;
 
 int n;
 int numArray[INDEX_LIMIT];
-int numIndexArray[INDEX_LIMIT];
+int numIndexPath[INDEX_LIMIT];
 vector<int > dp;
+bool needRefresh;
 
 void input();
 void solve();
@@ -45,19 +46,30 @@ int search(int val) {
   return startIndex;
 }
 
+void refreshPath() {
+  for(int i = 1; i <= dp.size(); ++i) {
+    numIndexPath[i] = dp[i - 1];
+  }
+}
+
 void setDP() {
   int location = 0;
+  needRefresh = false;
   dp.push_back(numArray[1]);
-  numIndexArray[1] = 0;
   for(int i = 2; i <= n; ++i) {
     int currentNum = numArray[i];
     if(currentNum > dp.back()) {
       dp.push_back(currentNum);
-      numIndexArray[i] = dp.size() - 1;
+      if(needRefresh) {
+        refreshPath();
+        needRefresh = false;
+      } else {
+        numIndexPath[dp.size()] = currentNum;
+      }
     } else {
       location = search(currentNum);
       dp[location] = currentNum;
-      numIndexArray[i] = location;
+      needRefresh = true;
     }
   }
 }
@@ -65,16 +77,7 @@ void setDP() {
 void solve() {
   setDP();
   cout << dp.size() << endl;
-
-  vector<int> answers;
-  int target = dp.size() - 1;
-  for(int i = n; i > 0; --i){
-    if(numIndexArray[i] == target) { 
-      target -= 1;
-      answers.push_back(numArray[i]);
-    }
-  }
-  for(int i = answers.size() - 1; i >= 0 ; --i) {
-    printf("%d ", answers[i]);
+  for(int i = 1; i <= dp.size(); ++i) {
+    printf("%d ", numIndexPath[i]);
   }
 }
