@@ -16,4 +16,4 @@ WORKDIR /usr/src/myapp
 # This command runs your application, comment out this line to compile only
 CMD ["bash"]
 
-LABEL Name=algorithmpractice Version=0.0.1
+LABEL Name=ap Version=0.0.1
