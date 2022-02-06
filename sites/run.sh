@@ -17,4 +17,8 @@ target_input=${current_dir}/${current_file}.txt
 
 g++ -o ${current_dir}/${current_file}.out ${current_dir}/${current_file}.cpp
 
+echo "start input"
+
 ./${current_dir}/${current_file}.out < ${target_input}
+
+echo "end input"
