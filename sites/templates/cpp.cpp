@@ -5,7 +5,6 @@
 
 using namespace std;
 
-void init();
 void input();
 void solve();
 
@@ -13,10 +12,6 @@ int main(void) {
   input();
   solve();
   return 0;
-}
-
-void init() {
-  return;
 }
 
 void input() {
