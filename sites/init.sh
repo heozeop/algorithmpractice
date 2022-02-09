@@ -16,9 +16,9 @@ target_file=${current_dir}/${current_file}.${current_extension}
 target_input=${current_dir}/${current_file}.txt
 template_file=templates/${current_extension}.${current_extension}
 
-echo "\ntry to copy ${template_file} to ${target_file}\n"
+echo "\ntry to copy ${template_file} to ${target_file}"
 
 cp ${template_file} ${target_file}
 touch ${target_input}
 
-echo "\n${target_file} and ${target_input} created"
+echo "${target_file} and ${target_input} created\n"
