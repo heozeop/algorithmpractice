@@ -5,14 +5,14 @@
 
 using namespace std;
 
-typedef pair<int,pair<int,int> > piii;
+typedef pair<int,pair<int,int> > pfii;
 const int LIMIT_NODE_COUNT = 10001;
 
 void input();
 void solve();
 
 int v, e;
-priority_queue<piii, vector<piii>, greater<piii> >graph;
+priority_queue<pfii, vector<pfii>, greater<pfii> >graph;
 int minSpanningTree;
 int list[LIMIT_NODE_COUNT];
 int length[LIMIT_NODE_COUNT];
@@ -58,7 +58,7 @@ int merge(int a, int b) {
 }
 
 void solve() {
-  piii temp;
+  pfii temp;
   int result;
 
   while(!graph.empty() || result >= v) {
