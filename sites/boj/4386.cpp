@@ -5,10 +5,10 @@
 #include <cmath>
 
 using namespace std;
-typedef pair<float, float> pff;
+typedef pair<float, float> pdd;
 typedef pair<float, pair<int,int> > pfii;
 
-pff stars[101];
+pdd stars[101];
 int links[101];
 int length[101];
 int n;
