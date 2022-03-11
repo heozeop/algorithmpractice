@@ -4,15 +4,13 @@
 #include <vector>
 
 using namespace std;
-typedef long long ll;
 const int INF = 1000000003;
 
 void input();
 void solve();
 
 int n, k;
-int dp[2][1001][1001];
-bool isLastSelected = true;
+int dp[1001][1001];
 
 int main(void) {
   input();
@@ -26,26 +24,13 @@ void input() {
 }
 
 int dfs(int now, int left) {
-  if(now <= 0) return 0;
-  if(left == 1) return now == 1 ? !isLastSelected : 1;
-  if(dp[isLastSelected][now][left]) return dp[isLastSelected][now][left];
-
-  int val = 0;
-  for(int i = now - 2; i > 0; --i) {
-    val += dfs(i, left - 1);
-  }
-  dp[isLastSelected][now][left] = val % INF;
-
-  return dp[isLastSelected][now][left];
+  if(now <= 0 || now < left * 2) return 0;
+  if(left == 1) return now;
+  if(dp[now][left]) return dp[now][left];
+  return dp[now][left] = (dfs(now - 1,left) + dfs(now - 2,left - 1)) % INF;
 }
 
 void solve() {
-  ll val = 0;
-  for(int i = n; i > 0; --i) {
-    val += dfs(i, k);
-    isLastSelected = false;
-  }
-  cout << val % INF;
-
+  cout << dfs(n, k);
   return;
 }
