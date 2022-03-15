@@ -8,10 +8,11 @@ O(n+m)에 문자열을 찾는 알고리즘 (n = 문서, m은 문자열)
 ### 접미사
 뒤에서 부터 차례로
 
-## pi 배열
-### Pi[i]
+## Failure Function
+### Failure function
 - 주어진 문자열의 0~i까지 문자에 대해서 접두사와 접미사가 같은 부분 문자열 중 가장 긴 것의 길이
 
+### Pi[i]는 failure function의 결과
 - pi배열 조차도 문자열의 비교이기 때문에, kmp테크닉을 사용할 수 있다.
  
 # 핵심 아이디어
@@ -21,7 +22,7 @@ O(n+m)에 문자열을 찾는 알고리즘 (n = 문서, m은 문자열)
 ## 구현
 ### pi
 ```c++
-vector<int> genPi(string s) {
+vector<int> failureFunction(string s) {
   vector<int> pi(s.length(), 0);
   int j = 0;
   for(int i = 0 ; i < s.length() ; i++) { 
