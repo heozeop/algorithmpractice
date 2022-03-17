@@ -33,39 +33,10 @@ vector<int> ff(string str) {
   }
   return pi;
 }
-bool isCorrect(string str, int length, int size) {
-  int nextLength = length - size;
-  for(int i = size, j = length; i < nextLength && j < str.length(); i++, j++) {
-    if(str[i] != str[j]) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-int getLength(string str) {
-  auto pi = ff(str);
-  int length = str.length();
-  int last = pi[length - 1];
-  
-
-  while(last) {
-    if(!isCorrect(str, length, last)) {
-      break;
-    }
-    length = length - last;
-    last = pi[length - 1];
-  }
-
-  return length;
-}
 
 void solve() {
-  int oriD = getLength(s);
-  reverse(s.begin(), s.end());
-  int reverseD = getLength(s);
-  cout << min(oriD, reverseD);
+  auto pi = ff(s);
+  cout << n - pi[n-1];
 
   return;
 }
