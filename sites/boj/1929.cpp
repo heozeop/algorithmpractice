@@ -6,7 +6,7 @@
 /*
   소수 출력하기 -> 소수 판단하기 -> 
     루트n: 주어인 수 a를 판별하기 위해 필요한 연산은 루트 a, 이걸 1~100만까지 -> O(n루트n)
-    아리스토테네스의 체
+    아리스토테네스의 체: m ~ n까지 늘어놓고, 소수와 그 배수를 전부 삭제 <- root n은 써야 할 듯 하다.
   소수의 정의 -> 자기자신과 자기 자신의 반수(modulo연산의 덧셈)로만 나누어 떨어지는 셈
 */
 
@@ -15,6 +15,7 @@
 #include <queue>
 #include <vector>
 #include <math.h>
+#include <cstring>
 
 using namespace std;
 
@@ -22,6 +23,7 @@ void input();
 void solve();
 
 int n, m;
+bool isPrime[1000001];
 
 int main(void) {
   input();
@@ -40,6 +42,25 @@ bool isPrimeByRootN(int n) {
   }
 
   return true;
+}
+
+void markAsPrime(int primeNum) {
+  for(int i = 2; i * primeNum <= n; ++i) {
+    isPrime[i * primeNum] = false;
+  }
+}
+
+void printPrimeWithSieve() {
+  memset(isPrime, true, sizeof(isPrime));
+  isPrime[1] = false;
+
+  for(int i = m; i <= n; ++i) {
+    if(!isPrime[i]) continue;
+    if(isPrimeByRootN(i)) {
+      markAsPrime(i);
+      printf("%d\n", i);
+    }
+  }
 }
 
 void printPrimeWithRootN() {
@@ -62,6 +83,7 @@ void input() {
 }
 
 void solve() {
-  printPrimeWithRootN();
+  // printPrimeWithRootN();
+  printPrimeWithSieve();
   return;
 }
