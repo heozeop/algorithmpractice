@@ -5,26 +5,14 @@
 #include <limits.h>
 
 using namespace std;
-typedef pair<int,int> pos;
-
-const int NUMBER_OF_POINTS = 6;
-const int DIRECTION[5][2] = {
-  {0,0},
-  {1,0},
-  {-1,0},
-  {0,-1},
-  {0,1},
-};
-
-vector<pos> positionList(NUMBER_OF_POINTS);
-int collapsePointIdx = 0;
-int n;
-
-int getAreaByPos(pos a, pos b);
-pos getPosByIndex(int);
 
 void input();
 void solve();
+
+const int NUMBER_OF_POINTS = 6;
+int directionCounts[4];
+int arr[NUMBER_OF_POINTS][2]; 
+int n;
 
 int main(void) {
   input();
@@ -34,52 +22,25 @@ int main(void) {
 
 void input() {
   cin >> n;
-  positionList[0].first = 0;
-  positionList[0].second = 0;
-  int prevXDirection = 0;
-  int prevYDirection = 0;
-
   for(int i = 0; i < NUMBER_OF_POINTS; i++) {
-    int curD, amount;
-    cin >> curD >> amount;
-    if(i < NUMBER_OF_POINTS - 1) {
-      positionList[i+1].first = positionList[i].first + DIRECTION[curD][0] * amount;
-      positionList[i+1].second = positionList[i].second + DIRECTION[curD][1] * amount;
-    }
-
-    if (curD < 3) {
-      if(prevXDirection == 0 || prevXDirection != curD) {
-        prevXDirection = curD;
-      } else {
-        collapsePointIdx = i - 1;
-      }
-    } else {
-      if(prevYDirection == 0 || prevYDirection != curD) {
-        prevYDirection = curD;
-      } else {
-        collapsePointIdx = i;
-      }
-    }
+    cin >> arr[i][0] >> arr[i][1];
+    directionCounts[arr[i][0] - 1]++;
   }
-
   return;
 }
 
 void solve() {
-  int smallArea = getAreaByPos(getPosByIndex(collapsePointIdx - 1), getPosByIndex(collapsePointIdx + 1));
-  int bigArea = getAreaByPos(getPosByIndex(collapsePointIdx - 2), getPosByIndex(collapsePointIdx + 2));
+  int smallArea, bigArea;
+  smallArea = bigArea = 1;
+
+  for(int i = 0; i < NUMBER_OF_POINTS; ++i) {
+    if(directionCounts[arr[i][0] - 1] == 1) {
+      bigArea *= arr[i][1];
+    } else if(arr[i][0] == arr[(i + 2) % 6][0]) {
+      smallArea *= arr[(i + 1) % 6][1];
+    }
+  }
+
   cout << (bigArea - smallArea) * n;
   return;
-}
-
-pos getPosByIndex(int idx) {
-  int validIdx = idx % NUMBER_OF_POINTS; 
-  if(validIdx < 0) {
-    validIdx += NUMBER_OF_POINTS;
-  }
-  return positionList[validIdx];
-}
-
-int getAreaByPos(pos a, pos b) {
-  return abs(a.first - b.first) * abs(a.second - b.second);
 }
