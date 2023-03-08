@@ -26,7 +26,7 @@ void input();
 void solve();
 pos getNextPos(pos curPos);
 bool isMovable(pos);
-void move(pos,pos);
+void move(deque<pos>& snake, pos nextPos);
 void changeDirection(char d);
 
 int main(void) {
@@ -48,8 +48,8 @@ void input() {
 
 void solve() {
   cin >> l;
-
-  pos curPos = {1,1};
+  deque<pos> snake;
+  snake.push_back({1,1});
   board[1][1] = SNAKE;
 
   int time, i, x;
@@ -60,18 +60,28 @@ void solve() {
 
     do {
       time += 1;
-      pos nextPos = getNextPos(curPos);
+      pos nextPos = getNextPos(snake.back());
       if(!isMovable(nextPos)) {
         isGameEnd = true;
         break;
       }
 
-      move(curPos, nextPos);
-      
-      curPos = nextPos;
+      move(snake, nextPos);
     } while(time < x);
 
     changeDirection(c);
+  }
+
+  if(!isGameEnd) {
+    while(1) {
+      time += 1;
+      pos nextPos = getNextPos(snake.back());
+      if(!isMovable(nextPos)) {
+        break;
+      } 
+
+      move(snake, nextPos);
+    }
   }
 
   cout << time;
@@ -99,20 +109,22 @@ bool isMovable(pos positionToMove) {
   return true;
 }
 
-void move(pos curPos,pos nextPos) {
+void move(deque<pos>& snake,pos nextPos) {
   if (board[nextPos.first][nextPos.second] == APPLE) {
     k -= 1;
   } else {
-    board[curPos.first][curPos.second] = EMPTY;
+    board[snake.front().first][snake.front().second] = EMPTY;
+    snake.pop_front();
   }
 
   board[nextPos.first][nextPos.second] = SNAKE;
+  snake.push_back(nextPos);
 }
 
 void changeDirection(char d) {
   int nextDirection = currentDirection + 1;
   if(d == LEFT) {
-    nextDirection = currentDirection - 1;
+    nextDirection = currentDirection + 3;
   }
 
   currentDirection = nextDirection % 4;
