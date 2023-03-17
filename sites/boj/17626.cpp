@@ -38,8 +38,9 @@ void solve() {
       continue;
     } 
 
+    
     dp[i] = 5;
-    for(int j = flooredTemp; j > 0 && dp[i] > 2; --j) {
+    for(int j = (int)(ceil(sqrt(flooredTemp))); j <= flooredTemp && dp[i] > 2; ++j) {
       dp[i] = min(1 + dp[i - (int)pow(j, 2)], dp[i]);
     }
   }
