@@ -29,8 +29,8 @@ void input() {
 }
 
 void solve() {
-  for(int i = 0; i < arr[i]; ++i) {
-    dp[n-1][i] = arr[i];
+  for(int i = 0; i < arr[n - 1]; ++i) {
+    dp[n-1][i] = arr[n - 1];
   }
 
   for(int i = n-2; i >= 0; --i) {
