@@ -1,6 +1,7 @@
 #include <iostream>
 #include <algorithm>
 #include <queue>
+#include <set>
 #include <vector>
 #include <limits.h>
 
@@ -10,7 +11,7 @@ void input();
 void solve();
 int n,k;
 int coin[101];
-int dp[101][10001];
+int dp[10001];
 
 int main(void) {
   input();
@@ -24,32 +25,26 @@ void input() {
   for(int i = 1; i <= n; ++i) {
     cin >> coin[i];
   }
+
   return;
 }
 
 void solve() {
+  for(int i = 1; i <= k; ++i) {
+    dp[i] = 10001;
+  }
+
   for(int i = 1; i <= n; ++i) {
-    for(int j = 1; j <= k; ++j) {
-      int temp = 0, localMin = 10000;
-
-      if (j % coin[i] == 0) {
-        localMin = j / coin[i];
-      } 
-
-      while(j > coin[i] * temp) {
-        if (dp[i - 1][j - coin[i] * temp] > 0) {
-          localMin = min(dp[i - 1][j - coin[i] * temp] + temp, localMin);
-        }
-        temp += 1;
-      }
-      dp[i][j] = localMin;
+    for(int j = coin[i]; j <= k; ++j) {
+      dp[j] = min(dp[j], dp[j - coin[i]] + 1);
     }
   }
 
-  if(dp[n][k] < 1) {
+  if(dp[k] == 10001) {
     cout << -1;
   } else {
-    cout << dp[n][k];
+    cout << dp[k];
   }
+  
   return;
 }
