@@ -1,54 +1,56 @@
 #include <iostream>
-#include <unordered_map>
-#include <string>
+#include <algorithm>
+#include <queue>
+#include <vector>
+#include <limits.h>
 
 using namespace std;
+const int MAX_N = 2001;
 
-const int PALINDROME = 1;
-const int NOT_PALINDROME = 0;
-const int MAX_SIZE = 100001;
+void input();
+void solve();
 
-unordered_map<string, bool> dp;
-int sequence[MAX_SIZE];
-
-string genKey(int s, int e) {
-  return "row" + to_string(s) + " col" + to_string(e);
-}
-
-bool isPalindrome(int s, int e) {
-  if(s == e) {
-    return true;
-  }
-  const string key = genKey(s, e);
-
-  if(dp.count(key) != 0) {
-    return dp[key];
-  }
-
-  if(e - s == 1 || isPalindrome(s + 1, e - 1)) {
-    bool result = sequence[s] == sequence[e];
-    dp.insert(make_pair(key, result));
-    return result;
-  }
-
-  dp.insert(make_pair(key, false));
-  return false;
-}
+int n, m;
+int arr[MAX_N];
+int dp[MAX_N][MAX_N];
 
 int main(void) {
-  int n, m;
-
-  cin >> n;
-  for(int i = 1; i <= n; i++) {
-    scanf("%d", &sequence[i]);
-  }
-
-  cin >> m;
-  while(m--) {
-    int s,e;
-    scanf("%d %d", &s, &e);
-    printf("%d\n", isPalindrome(s,e));
-  }
-
+  input();
+  solve();
   return 0;
+}
+
+void input() {
+  scanf("%d", &n);
+  for(int i = 1; i <= n; ++i) {
+    scanf("%d", &arr[i]);
+  }
+  scanf("%d", &m);
+
+  return;
+}
+
+void solve() {
+  dp[1][1] = 1;
+  for(int e = 2; e <= n; ++e) {
+    dp[e][e] = 1;
+    for(int s = e - 1; s > 0; --s) {
+      if(arr[s] == arr[e]) {
+        if(s+1 == e) {
+          dp[s][e] = 1;
+        } else {
+          dp[s][e] = dp[s+1][e-1];
+        }
+      } else {
+        dp[s][e] = 0;
+      }
+    }
+  }
+
+  int s,e;
+  for(int i = 0; i < m; ++i) {
+    scanf("%d %d", &s, &e);
+    printf("%d\n", dp[s][e]);
+  }
+  return;
 }
