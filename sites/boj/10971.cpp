@@ -11,7 +11,6 @@ void solve();
 
 int n;
 int pathMap[11][11];
-int sum;
 
 int main(void) {
   input();
@@ -30,31 +29,33 @@ void input() {
   return;
 }
 
-void dfs(int localSum, int idx, vector<bool>& visited, int count) { 
+int dfs(int idx, vector<bool>& visited, int count) { 
   if (count == n) {
     if(pathMap[idx][1]) {
-      sum = min(sum, localSum + pathMap[idx][1]);
+      return  pathMap[idx][1];
     }
-    return;
+
+    return 123456789;
   }
 
+  int val = 123456789;
   for(int i = 2; i <= n; i++) {
     if(visited[i] || pathMap[idx][i] == 0) {
       continue;
     }
 
     visited[i] = true;
-    dfs(localSum + pathMap[idx][i], i, visited, count + 1);
+    val = min(val, dfs(i, visited, count + 1) + pathMap[idx][i]);
     visited[i] = false;
   }
+
+  return val;
 }
 
 void solve() {
   vector<bool> visited(n+1, false);
   visited[1] = true;
-  sum = 123456789;
-  dfs(0, 1, visited, 1);
-  cout << sum;
+  cout << dfs(1, visited, 1);
 
   return;
 }
