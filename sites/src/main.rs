@@ -1,30 +1,32 @@
 use std::process::Command;
 use std::ffi::CString;
+use std::process::Stdio;
 use std::fs;
 use clap::{Arg, App, SubCommand};
 use std::io::{self, Write};
 use std::fs::File;
+use threadpool::ThreadPool;
+use std::sync::{Arc, Barrier};
+use std::sync::atomic::{AtomicUsize, Ordering};
 
-fn build_program(program_path: &str) {
+fn build_program(program_path: &str, build_path: &str) {
     let build_command = Command::new("g++")
         .arg("-o")
-        .arg(format!("./boj/{}/program.out", program_path).as_str())
-        .arg(format!("./boj/{}/{}.cpp",program_path, program_path).as_str())
+        .arg(build_path)
+        .arg(program_path)
         .output()
         .expect("Failed to build program");
 
     if !build_command.status.success() {
-      let mut errorMSG = format!("Failed to build program {}/{}.cpp", program_path, program_path);
-      panic!("{}", errorMSG);
+      panic!("Failed to build program {}/{}.cpp", program_path, program_path);
     }
 }
 
-fn run_program(program_path: &str, input_path: &str, output_path: &str) {
-  let run_command = Command::new(format!("./boj/{}/program.out", program_path))
+fn run_program(build_path: &str, input_path: &str, output_path: &str) {
+  let run_command = Command::new(build_path)
+      .stdout(Stdio::piped())
       .arg("<")
       .arg(input_path)
-      .arg(">")
-      .arg(output_path)
       .output()
       .expect("Failed to run program");
 
@@ -32,7 +34,9 @@ fn run_program(program_path: &str, input_path: &str, output_path: &str) {
       panic!("Failed to run program");
   }
 
-  io::stdout().flush().unwrap();
+  let mut file = File::create(output_path).unwrap();
+  file.write_all(String::from_utf8_lossy(&run_command.stdout).as_bytes());
+  drop(file);
 }
 
 fn validate_output(expected_path: &str, actual_path: &str) {
@@ -42,18 +46,38 @@ fn validate_output(expected_path: &str, actual_path: &str) {
 }
 
 fn run_tests(program_path: &str) {
-  build_program(program_path);
   let files = fs::read_dir(format!("./boj/{}/test_cases", program_path)).unwrap().collect::<Vec<_>>();
-  
+
+  let n_workers = 4;
+  let n_jobs = 8;
+  let pool = ThreadPool::new(n_workers);
+  let an_atomic = Arc::new(AtomicUsize::new(0)); 
+
+  let barrier = Arc::new(Barrier::new(n_jobs + 1));
+
   for n in 1..files.len() {
-    let input_path = format!("./boj/{}/test_cases/{}/input.txt", program_path, n);
+    let program_file_path = format!("./boj/{}/{}.cpp", program_path, program_path);
+    let input_path = format!("{}/test_cases/{}/input.txt", program_path, n);
     let expected_path =format!("./boj/{}/test_cases/{}/output.txt", program_path, n);
     let return_path = format!("./boj/{}/test_cases/{}/return.txt", program_path, n);
+    let build_path = format!("./boj/{}/test_cases/{}/program.out", program_path, n);
 
-    println!("{}\n{}\n{}", input_path, expected_path, return_path);
-    run_program(&program_path, &input_path, &return_path);
-    validate_output(&expected_path, &return_path);
+    let barrier = barrier.clone();
+    let an_atomic = an_atomic.clone();
+    pool.execute(move|| {
+      // do the heavy work
+      build_program(&program_file_path, &build_path);
+      run_program(&build_path, &input_path, &return_path);
+      validate_output(&expected_path, &return_path);
+
+      an_atomic.fetch_add(1, Ordering::Relaxed);
+      
+      // then wait for the other threads
+      barrier.wait();
+    });
   }
+
+  barrier.wait();
 }
 
 fn main() {
@@ -86,10 +110,6 @@ fn main() {
     // execute C++ program here
     if let Some(matches) = matches.subcommand_matches("run") {
         let program_path = CString::new(matches.value_of("program").unwrap()).unwrap();
-
-        let input_dir = program_path.to_str().unwrap().to_owned() + "/input";
-        let output_dir = program_path.to_str().unwrap().to_owned() + "/output";
-        let expected_dir = program_path.to_str().unwrap().to_owned() + "/expected";
 
         run_tests(program_path.to_str().unwrap());
     }
