@@ -1,141 +1,171 @@
-use std::process::Command;
-use std::ffi::CString;
-use std::process::Stdio;
-use std::fs;
-use clap::{Arg, App, SubCommand};
-use std::io::{self, Write};
-use std::fs::File;
-use threadpool::ThreadPool;
-use std::sync::{Arc, Barrier};
-use std::sync::atomic::{AtomicUsize, Ordering};
+use std::{io::{self, Write}, time::Duration, thread::sleep};
+use crossterm::{
+    terminal::{enable_raw_mode, disable_raw_mode},
+    event::{Event, KeyCode, KeyEvent, poll},
+    execute, queue,
+    style::{Color, Print, ResetColor, SetForegroundColor},
+    terminal,
+};
 
-fn build_program(program_path: &str, build_path: &str) {
-    let build_command = Command::new("g++")
-        .arg("-o")
-        .arg(build_path)
-        .arg(program_path)
-        .output()
-        .expect("Failed to build program");
+mod project;
 
-    if !build_command.status.success() {
-      panic!("Failed to build program {}/{}.cpp", program_path, program_path);
-    }
-}
+fn main() -> io::Result<()> {
+    // Raw mode로 전환
+    enable_raw_mode()?;
 
-fn run_program(build_path: &str, input_path: &str, output_path: &str) {
-  let run_command = Command::new(build_path)
-      .stdout(Stdio::piped())
-      .arg("<")
-      .arg(input_path)
-      .output()
-      .expect("Failed to run program");
+    // Terminal 초기화
+    let mut stdout = io::stdout();
+    execute!(stdout, terminal::EnterAlternateScreen)?;
 
-  if !run_command.status.success() {
-      panic!("Failed to run program");
+    // 명령어 리스트
+    let commands = vec!["init", "run", "exit"];
+
+    // 현재 선택된 명령어 인덱스
+    let mut selected_command_index = 0;
+
+    loop {
+        // 화면 초기화
+        execute!(
+            stdout,
+            terminal::Clear(terminal::ClearType::All),
+            terminal::ScrollUp(999)
+        )?;
+
+        // 명령어 출력
+        queue!(
+            stdout,
+            SetForegroundColor(Color::Yellow),
+            Print("Select a command:\n"),
+            ResetColor,
+        )?;
+        for (index, command) in commands.iter().enumerate() {
+            if index == selected_command_index {
+                queue!(
+                    stdout,
+                    SetForegroundColor(Color::Green),
+                    Print("> "),
+                    Print(command),
+                    ResetColor,
+                    Print("\n"),
+                )?;
+            } else {
+                queue!(stdout, Print("  "), Print(command), Print("\n"))?;
+            }
+        }
+
+        // 이벤트 처리
+        if poll(Duration::from_millis(100))? {
+            if let Event::Key(KeyEvent { code, .. }) = crossterm::event::read()? {
+                match code {
+                    KeyCode::Up => {
+                        if selected_command_index > 0 {
+                            selected_command_index -= 1;
+                        }
+                    }
+                    KeyCode::Down => {
+                        if selected_command_index < commands.len() - 1 {
+                            selected_command_index += 1;
+                        }
+                    }
+                    KeyCode::Enter => {
+                        let command = commands[selected_command_index];
+                        match command {
+                            "init" => {
+                                // 프로젝트 이름 입력
+                                queue!(
+                                    stdout,
+                                    SetForegroundColor(Color::Yellow),
+                                    Print("\nEnter a project name: "),
+                                    ResetColor,
+                                )?;
+                                stdout.flush()?;
+                                let mut project_name = String::new();
+                                io::stdin().read_line(&mut project_name)?;
+                                project_name = project_name.trim().to_string();
+                                                            // 프로젝트 생성
+                            match project::create_project(&project_name) {
+                              Ok(()) => {
+                                  queue!(
+                                      stdout,
+                                      SetForegroundColor(Color::Green),
+                                      Print(format!(
+                                          "\nProject \"{}\" created successfully!\n",
+                                          project_name
+                                      )),
+                                      ResetColor,
+                                  )?;
+                              }
+                              Err(err) => {
+                                  queue!(
+                                      stdout,
+                                      SetForegroundColor(Color::Red),
+                                      Print(format!(
+                                          "\nFailed to create project \"{}\": {}\n",
+                                          project_name, err
+                                      )),
+                                      ResetColor,
+                                  )?;
+                              }
+                          }
+
+                          // 잠시 대기
+                          sleep(Duration::from_secs(1));
+                      }
+                      "run" => {
+                        queue!(
+                            stdout,
+                            SetForegroundColor(Color::Yellow),
+                            Print("\nEnter a project name: "),
+                            ResetColor,
+                        )?;
+                        stdout.flush()?;
+                        let mut project_name = String::new();
+                        io::stdin().read_line(&mut project_name)?;
+                        project_name = project_name.trim().to_string();
+                          // 빌드 및 테스트 실행
+                          match project::build_and_test(&project_name) {
+                              Ok((pass,fail)) => {
+                                  queue!(
+                                      stdout,
+                                      SetForegroundColor(Color::Green),
+                                      Print(format!("\nBuild and test succeeded! success:{} fail:{}\n", pass,fail)),
+                                      ResetColor,
+                                  )?;
+                              }
+                              Err(err) => {
+                                  queue!(
+                                      stdout,
+                                      SetForegroundColor(Color::Red),
+                                      Print(format!(
+                                          "\nBuild and test failed: {}\n",
+                                          err
+                                      )),
+                                      ResetColor,
+                                  )?;
+                              }
+                          }
+
+                          // 잠시 대기
+                          sleep(Duration::from_secs(1));
+                      }
+                      "exit" => {
+                          // 프로그램 종료
+                          break;
+                      }
+                      _ => {}
+                  }
+              }
+              _ => {}
+          }
+      }
   }
-
-  let mut file = File::create(output_path).unwrap();
-  file.write_all(String::from_utf8_lossy(&run_command.stdout).as_bytes());
-  drop(file);
 }
 
-fn validate_output(expected_path: &str, actual_path: &str) {
-    let expected_output = fs::read_to_string(expected_path).unwrap();
-    let actual_output = fs::read_to_string(actual_path).unwrap();
-    assert_eq!(expected_output, actual_output);
-}
+// Raw mode 해제
+disable_raw_mode()?;
 
-fn run_tests(program_path: &str) {
-  let files = fs::read_dir(format!("./boj/{}/test_cases", program_path)).unwrap().collect::<Vec<_>>();
+// Terminal 초기화
+execute!(stdout, terminal::LeaveAlternateScreen)?;
 
-  let n_workers = 4;
-  let n_jobs = 8;
-  let pool = ThreadPool::new(n_workers);
-  let an_atomic = Arc::new(AtomicUsize::new(0)); 
-
-  let barrier = Arc::new(Barrier::new(n_jobs + 1));
-
-  for n in 1..files.len() {
-    let program_file_path = format!("./boj/{}/{}.cpp", program_path, program_path);
-    let input_path = format!("{}/test_cases/{}/input.txt", program_path, n);
-    let expected_path =format!("./boj/{}/test_cases/{}/output.txt", program_path, n);
-    let return_path = format!("./boj/{}/test_cases/{}/return.txt", program_path, n);
-    let build_path = format!("./boj/{}/test_cases/{}/program.out", program_path, n);
-
-    let barrier = barrier.clone();
-    let an_atomic = an_atomic.clone();
-    pool.execute(move|| {
-      // do the heavy work
-      build_program(&program_file_path, &build_path);
-      run_program(&build_path, &input_path, &return_path);
-      validate_output(&expected_path, &return_path);
-
-      an_atomic.fetch_add(1, Ordering::Relaxed);
-      
-      // then wait for the other threads
-      barrier.wait();
-    });
-  }
-
-  barrier.wait();
-}
-
-fn main() {
-  let matcher = App::new("My Program")
-  .subcommand(SubCommand::with_name("create")
-      .about("create the C++ program")
-      .arg(Arg::with_name("program")
-          .required(true)
-          .takes_value(true)
-          .help("Path to the C++ program")))
-  .subcommand(SubCommand::with_name("run")
-      .arg(Arg::with_name("program")
-          .required(true)
-          .takes_value(true)
-          .help("Path to the C++ program")));
-  loop {
-    print!("Enter command: ");
-    io::stdout().flush().unwrap();
-
-    let mut input = String::new();
-    io::stdin().read_line(&mut input).unwrap();
-
-    if input.trim() == "exit" {
-        break;
-    }
-
-    input = format!("hello {}", input); // cli에서 command 바로 쓰고 싶어서 사용
-    let matches = matcher.clone().get_matches_from(input.split_whitespace().collect::<Vec<&str>>());
-
-    // execute C++ program here
-    if let Some(matches) = matches.subcommand_matches("run") {
-        let program_path = CString::new(matches.value_of("program").unwrap()).unwrap();
-
-        run_tests(program_path.to_str().unwrap());
-    }
-
-    if let Some(matches) = matches.subcommand_matches("create") {
-      // Get the path to the C++ program from the command-line arguments
-      let program_name = CString::new(matches.value_of("program").unwrap()).unwrap();
-      let template_path = "./templates/cpp.cpp";
-      let dir_path = format!("{}{}","./boj/",program_name.to_str().unwrap());
-      fs::create_dir(dir_path.as_str()).expect(format!("Failed to create directory on {}", dir_path).as_str());
-
-      let test_dir = dir_path.clone() + "/test_cases";
-      fs::create_dir(test_dir.clone()).expect("Fail to create test directory");
-      fs::create_dir(test_dir.clone() + "/1").expect("Fail to create first case");
-      File::create(test_dir.clone() + "/1/input.txt").expect("Failed to create input file");
-      File::create(test_dir.clone() + "/1/output.txt").expect("Failed to create output file");
-
-      // file 복사
-      let mut template_file = fs::read_to_string(template_path).unwrap();
-      let file_name = format!("{}/{}{}", dir_path, program_name.to_str().unwrap(), ".cpp");
-      let mut file = File::create(file_name).unwrap();
-
-      file.write_all(template_file.as_bytes());
-      println!("files related with {} created", program_name.to_str().unwrap());
-      drop(file);
-    }
-  }
-    
+Ok(())
 }
