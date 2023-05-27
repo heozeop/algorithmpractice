@@ -17,12 +17,7 @@ typedef struct _point {
 } point;
 
 const int directions[][3] = {
-  {0, -1, 0},
-  {0, 1, 0},
-  {1, 0, 0},
-  {-1, 0, 0},
-  {0,0, 1},
-  {0,0, -1},
+    {0, -1, 0}, {0, 1, 0}, {1, 0, 0}, {-1, 0, 0}, {0, 0, 1}, {0, 0, -1},
 };
 
 queue<point> dailyTrace;
@@ -32,7 +27,7 @@ int lastDay;
 int m, n, h;
 
 bool isInsideBox(int x, int y, int z) {
-  if(x < 0 || y < 0 || z < 0 || x >= m || y >= n || z >= h) {
+  if (x < 0 || y < 0 || z < 0 || x >= m || y >= n || z >= h) {
     return false;
   }
 
@@ -40,7 +35,7 @@ bool isInsideBox(int x, int y, int z) {
 }
 
 bool isFresh(int x, int y, int z) {
-  if(box[z][y][x] == FRESH) {
+  if (box[z][y][x] == FRESH) {
     return true;
   }
 
@@ -48,23 +43,19 @@ bool isFresh(int x, int y, int z) {
 }
 
 int bfs() {
-  while(dailyTrace.size() > 0 && numOfFreshes > 0) {
+  while (dailyTrace.size() > 0 && numOfFreshes > 0) {
     const point now = dailyTrace.front();
     dailyTrace.pop();
     lastDay = now.day;
     printf("x: %d, y: %d, z: %d, day: %d\n", now.x, now.y, now.z, now.day);
 
-    for(auto i : directions) { 
+    for (auto i : directions) {
       int nextX = now.x + i[0];
       int nextY = now.y + i[1];
       int nextZ = now.z + i[2];
       point nextPoint = {
-          .x= nextX, 
-          .y= nextY,
-          .z = nextZ,
-          .day= lastDay + 1
-      };
-      if(isInsideBox(nextX, nextY, nextZ) && isFresh(nextX, nextY, nextZ)) {
+          .x = nextX, .y = nextY, .z = nextZ, .day = lastDay + 1};
+      if (isInsideBox(nextX, nextY, nextZ) && isFresh(nextX, nextY, nextZ)) {
         box[nextZ][nextY][nextX] = MEATURE;
         dailyTrace.push(nextPoint);
         --numOfFreshes;
@@ -72,7 +63,7 @@ int bfs() {
     }
   }
 
-  if(numOfFreshes > 0) {
+  if (numOfFreshes > 0) {
     return -1;
   }
 
@@ -80,36 +71,31 @@ int bfs() {
 }
 
 int main(void) {
-  // init 
+  // init
   cin >> m >> n >> h;
-  for(int i = 0; i < h; ++i) {
-    for(int j = 0; j < n; ++j) {
-      for(int k = 0; k < m; ++k) {
+  for (int i = 0; i < h; ++i) {
+    for (int j = 0; j < n; ++j) {
+      for (int k = 0; k < m; ++k) {
         cin >> box[i][j][k];
-        if(box[i][j][k] == FRESH) {
+        if (box[i][j][k] == FRESH) {
           ++numOfFreshes;
           continue;
         }
 
-        point nextPoint = {
-            .x= k, 
-            .y= j,
-            .z= i,
-            .day= 0
-        };
+        point nextPoint = {.x = k, .y = j, .z = i, .day = 0};
 
-        if(box[i][j][k] == MEATURE) {
+        if (box[i][j][k] == MEATURE) {
           dailyTrace.push(nextPoint);
         }
       }
+    }
   }
-  }
-  if(numOfFreshes == 0) {
+  if (numOfFreshes == 0) {
     cout << 0 << endl;
     return 0;
   }
 
-  if(dailyTrace.size() < 1) {
+  if (dailyTrace.size() < 1) {
     cout << -1 << endl;
     return 0;
   }

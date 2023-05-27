@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <assert.h>
+#include <iostream>
 #include <queue>
 #include <vector>
-#include<assert.h>
 using namespace std;
 
 void input();
@@ -13,7 +13,6 @@ vector<int> tree[100001];
 int ptree[100001][19];
 int depth[100001];
 bool visited[100001];
-
 
 int main(void) {
   ios_base::sync_with_stdio(false);
@@ -26,8 +25,8 @@ int main(void) {
 
 void input() {
   cin >> n;
-  int a,b;
-  for(int i = 0; i< n - 1; i++) {
+  int a, b;
+  for (int i = 0; i < n - 1; i++) {
     cin >> a >> b;
 
     tree[b].push_back(a);
@@ -36,11 +35,12 @@ void input() {
   return;
 }
 
-void initPtree(int cur){
+void initPtree(int cur) {
   visited[cur] = true;
-  if(tree[cur].empty()) return;
-  for(int i : tree[cur]) {
-    if(visited[i] == false) {
+  if (tree[cur].empty())
+    return;
+  for (int i : tree[cur]) {
+    if (visited[i] == false) {
       depth[i] = depth[cur] + 1;
       ptree[i][0] = cur;
       initPtree(i);
@@ -50,22 +50,22 @@ void initPtree(int cur){
 
 void setPTree() {
   initPtree(1);
-  for(int i = 1; i <= 18; i++) {
-    for(int j = 1; j <= n; j++) {
-      ptree[j][i] = ptree[ptree[j][i-1]][i-1];
+  for (int i = 1; i <= 18; i++) {
+    for (int j = 1; j <= n; j++) {
+      ptree[j][i] = ptree[ptree[j][i - 1]][i - 1];
     }
   }
 }
 
-pair<int,int> levelingTwo(int a,int b) {
+pair<int, int> levelingTwo(int a, int b) {
   int small = a, big = b;
-  if(depth[small] > depth[big]) {
+  if (depth[small] > depth[big]) {
     swap(small, big);
   }
 
   int diff = depth[big] - depth[small];
-  for(int i = 0; diff; i++) {
-    if(diff & 1) {
+  for (int i = 0; diff; i++) {
+    if (diff & 1) {
       big = ptree[big][i];
     }
     diff >>= 1;
@@ -75,10 +75,11 @@ pair<int,int> levelingTwo(int a,int b) {
 }
 
 int findP(int ta, int tb) {
-  if(ta == tb) return tb;
+  if (ta == tb)
+    return tb;
 
-  for(int i = 18; i >= 0; i--) {
-    if(ptree[ta][i] && ptree[ta][i] != ptree[tb][i]) {
+  for (int i = 18; i >= 0; i--) {
+    if (ptree[ta][i] && ptree[ta][i] != ptree[tb][i]) {
       ta = ptree[ta][i];
       tb = ptree[tb][i];
     }
@@ -92,9 +93,9 @@ void solve() {
 
   cin >> m;
   int a, b;
-  while(m--) {
+  while (m--) {
     cin >> a >> b;
-    auto level = levelingTwo(a,b);
+    auto level = levelingTwo(a, b);
     int foundP = findP(level.first, level.second);
     cout << foundP << '\n';
   }

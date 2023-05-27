@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -17,18 +17,19 @@ int main(void) {
 }
 
 void input() {
-  for(int i = 0; i < 3; i++) {
+  for (int i = 0; i < 3; i++) {
     cin >> points[i].first >> points[i].second;
   }
 
   return;
 }
 
-
-
 void solve() {
-  int ccw = points[0].first * points[1].second + points[1].first * points[2].second + points[2].first * points[0].second - points[2].first * points[1].second - points[1].first * points[0].second - points[0].first * points[2].second;
-  if(ccw == 0) {
+  int ccw =
+      points[0].first * points[1].second + points[1].first * points[2].second +
+      points[2].first * points[0].second - points[2].first * points[1].second -
+      points[1].first * points[0].second - points[0].first * points[2].second;
+  if (ccw == 0) {
     cout << 0;
   } else if (ccw > 0) {
     cout << 1;

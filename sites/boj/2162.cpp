@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -28,21 +28,23 @@ int main(void) {
 
 void input() {
   cin >> n;
-  for(int i = 0; i < n; i++) {
-    cin >> lineSegments[i].first.first >> lineSegments[i].first.second >> lineSegments[i].second.first >> lineSegments[i].second.second;
+  for (int i = 0; i < n; i++) {
+    cin >> lineSegments[i].first.first >> lineSegments[i].first.second >>
+        lineSegments[i].second.first >> lineSegments[i].second.second;
     lineSegmentGroup[i] = i;
   }
   return;
 }
 
 int ccw(pll a, pll b, pll c) {
-  ll result = (b.first - a.first) * (c.second - b.second) - (c.first - b.first) * (b.second - a.second);
-  
-  if(result > 0) {
+  ll result = (b.first - a.first) * (c.second - b.second) -
+              (c.first - b.first) * (b.second - a.second);
+
+  if (result > 0) {
     return 1;
   }
 
-  if(result < 0) {
+  if (result < 0) {
     return -1;
   }
 
@@ -50,23 +52,25 @@ int ccw(pll a, pll b, pll c) {
 }
 
 bool isSameGroup(lineSegment a, lineSegment b) {
-  int one = ccw(a.first, a.second, b.first), two = ccw(a.first, a.second, b.second),
-    three = ccw(b.first, b.second, a.first), four = ccw(b.first, b.second, a.second);
+  int one = ccw(a.first, a.second, b.first),
+      two = ccw(a.first, a.second, b.second),
+      three = ccw(b.first, b.second, a.first),
+      four = ccw(b.first, b.second, a.second);
 
   if (one * two == 0 && three * four == 0) {
-    pll at,bt,ct,dt;
+    pll at, bt, ct, dt;
     at = min(a.first, a.second);
     bt = max(a.first, a.second);
     ct = min(b.first, b.second);
     dt = max(b.first, b.second);
     return ct <= bt && at <= dt;
   }
-  
+
   return (one * two <= 0) && (three * four <= 0);
 }
 
 int find(int a) {
-  if(lineSegmentGroup[a] == a) {
+  if (lineSegmentGroup[a] == a) {
     return a;
   }
 
@@ -80,9 +84,9 @@ void merge(int a, int b) {
 }
 
 void gatherGroup() {
-  for(int i = 0; i < n; i++) {
-    for(int j = i + 1; j < n; j++) {
-      if(isSameGroup(lineSegments[i], lineSegments[j])) {
+  for (int i = 0; i < n; i++) {
+    for (int j = i + 1; j < n; j++) {
+      if (isSameGroup(lineSegments[i], lineSegments[j])) {
         merge(i, j);
       }
     }
@@ -91,13 +95,13 @@ void gatherGroup() {
 
 void printSizes() {
   int maxSize = 0, count = 0;
-  for(int i = 0; i < n; i++) { 
-    if(lineSegmentGroupSize[find(i)]++ == 0) {
+  for (int i = 0; i < n; i++) {
+    if (lineSegmentGroupSize[find(i)]++ == 0) {
       count++;
     }
   }
 
-  for(int i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++) {
     maxSize = max(maxSize, lineSegmentGroupSize[i]);
   }
 

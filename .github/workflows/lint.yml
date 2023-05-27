@@ -1,8 +1,6 @@
 name: Lint
 
 on:
-  # Trigger the workflow on push or pull request,
-  # but only for the main branch
   push:
     branches:
       - master
@@ -25,5 +23,7 @@ jobs:
       - name: Run linters
         uses: wearerequired/lint-action@v2
         with:
+          auto_fix: true
           clang_format: true
+          clang_format_auto_fix: true
 

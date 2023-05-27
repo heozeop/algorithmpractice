@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -32,14 +32,14 @@ void solve() {
   int weightOnBridge = 0;
   int startTime = 0;
   queue<int> truckOnBridge;
-  for(int i = 1; i <= n; i++) {
-    while(1) {
-      if(truckOnBridge.size() == w) {
+  for (int i = 1; i <= n; i++) {
+    while (1) {
+      if (truckOnBridge.size() == w) {
         weightOnBridge -= truckOnBridge.front();
         truckOnBridge.pop();
       }
 
-      if(weightOnBridge + truckWeightList[i] <= l) {
+      if (weightOnBridge + truckWeightList[i] <= l) {
         break;
       }
 

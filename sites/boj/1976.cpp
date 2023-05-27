@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -24,22 +24,22 @@ int main(void) {
 
 void input() {
   cin >> n >> m;
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     arr[i] = i;
   }
 
   int connection = 0;
-  for(int i = 1; i <= n; ++i) {
-    for(int j = 1; j <= n; ++j) {
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1; j <= n; ++j) {
       cin >> connection;
-      if(connection) {
-        merging(i,j);
+      if (connection) {
+        merging(i, j);
       }
     }
   }
 
   int temp = 0;
-  for(int i = 0; i <m; ++i) {
+  for (int i = 0; i < m; ++i) {
     cin >> temp;
     target.push_back(temp);
   }
@@ -47,7 +47,7 @@ void input() {
 }
 
 int find(int a) {
-  if(a == arr[a]) {
+  if (a == arr[a]) {
     return a;
   }
 
@@ -64,11 +64,11 @@ void merging(int a, int b) {
 void solve() {
   int a, b;
 
-  for(int i = 1; i < target.size(); ++i) {
+  for (int i = 1; i < target.size(); ++i) {
     a = target[i - 1];
     b = target[i];
 
-    if(find(a) != find(b)) {
+    if (find(a) != find(b)) {
       cout << "NO";
       return;
     }

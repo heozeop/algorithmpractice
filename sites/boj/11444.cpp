@@ -1,18 +1,19 @@
-#include <iostream>
 #include <algorithm>
-#include <vector>
+#include <iostream>
 #include <queue>
+#include <vector>
 
 using namespace std;
 
 typedef long long ll;
-typedef vector<vector<ll> > Matrix;
+typedef vector<vector<ll>> Matrix;
 
 const int MODE_NUM = 1000000007;
 const int MATRIX_SIZE = 2;
 
 ll n;
-int base[] = {0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597};
+int base[] = {0,  1,  1,  2,   3,   5,   8,   13,  21,
+              34, 55, 89, 144, 233, 377, 610, 987, 1597};
 
 void input();
 void solve();
@@ -23,11 +24,9 @@ int main(void) {
   return 0;
 }
 
-void input() {
-  cin >> n;
-}
+void input() { cin >> n; }
 
-Matrix multipleMatrix(Matrix& A, Matrix& B) {
+Matrix multipleMatrix(Matrix &A, Matrix &B) {
   Matrix C(MATRIX_SIZE, vector<ll>(MATRIX_SIZE));
   for (int i = 0; i < MATRIX_SIZE; i++) {
     for (int j = 0; j < MATRIX_SIZE; j++) {
@@ -42,8 +41,9 @@ Matrix multipleMatrix(Matrix& A, Matrix& B) {
 
 Matrix getP(Matrix n, ll k) {
   Matrix temp;
-  if(k == 1) return n;
-  if(k % 2 == 1) {
+  if (k == 1)
+    return n;
+  if (k % 2 == 1) {
     temp = getP(n, k - 1);
     return multipleMatrix(n, temp);
   }
@@ -52,7 +52,7 @@ Matrix getP(Matrix n, ll k) {
 }
 
 ll fibonacci() {
-  if(n < 18) {
+  if (n < 18) {
     return base[n];
   }
 

@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <limits.h>
 #include <queue>
 #include <vector>
-#include <limits.h>
 
 using namespace std;
 
@@ -31,7 +31,7 @@ void input() {
 }
 
 void solve() {
-  for(int i = 0; i < t; ++i) {
+  for (int i = 0; i < t; ++i) {
     cin >> n;
     getMap(n);
     cout << getMaxScore() << '\n';
@@ -41,8 +41,8 @@ void solve() {
 }
 
 void getMap(int n) {
-  for(int i = 0; i < 2; ++i) {
-    for(int j = 1; j <= n; ++j) {
+  for (int i = 0; i < 2; ++i) {
+    for (int j = 1; j <= n; ++j) {
       cin >> sticker[i][j];
     }
   }
@@ -53,9 +53,9 @@ int getMaxScore() {
   dp[0][1] = sticker[0][1];
   dp[1][1] = sticker[1][1];
 
-  for(int i = 2; i <= n; ++i) {
-    dp[0][i] = sticker[0][i] + max(dp[1][i-1], dp[1][i-2]);
-    dp[1][i] = sticker[1][i] + max(dp[0][i-1], dp[0][i-2]);
+  for (int i = 2; i <= n; ++i) {
+    dp[0][i] = sticker[0][i] + max(dp[1][i - 1], dp[1][i - 2]);
+    dp[1][i] = sticker[1][i] + max(dp[0][i - 1], dp[0][i - 2]);
   }
 
   return max(dp[0][n], dp[1][n]);

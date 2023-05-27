@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <limits.h>
 #include <queue>
 #include <vector>
-#include <limits.h>
 
 using namespace std;
 
@@ -25,12 +25,12 @@ void input() {
 void solve() {
   int curP = 2, nextP, localPower;
 
-  while(1) {
+  while (1) {
     localPower = 2;
     nextP = curP;
 
-    while(nextP <= n && k) {
-      if(!isDeleted[nextP])  {
+    while (nextP <= n && k) {
+      if (!isDeleted[nextP]) {
         isDeleted[nextP] = true;
         --k;
       }
@@ -39,17 +39,16 @@ void solve() {
       localPower += 1;
     }
 
-    if(k == 0) {
+    if (k == 0) {
       cout << nextP - curP;
       return;
     }
 
-    for(int j = curP+1; j <= n; ++j) {
-      if(!isDeleted[j]) {
+    for (int j = curP + 1; j <= n; ++j) {
+      if (!isDeleted[j]) {
         curP = j;
         break;
       }
     }
   }
 }
-

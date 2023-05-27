@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -33,14 +33,14 @@ void input() {
   return;
 }
 
-ll pickTwo(int cur, int* container) {
+ll pickTwo(int cur, int *container) {
   ll localTotal = 0;
-  for(int i = 0, j = cur; i < j; i++,j--) {
+  for (int i = 0, j = cur; i < j; i++, j--) {
     localTotal += container[i] * container[j];
   }
 
-  int middleCouple = container[cur/2];
-  if(cur % 2 == 0 && middleCouple >= 2) {
+  int middleCouple = container[cur / 2];
+  if (cur % 2 == 0 && middleCouple >= 2) {
     localTotal += middleCouple * (middleCouple - 1) / 2;
   }
 
@@ -49,11 +49,11 @@ ll pickTwo(int cur, int* container) {
 
 void solve() {
   ll total = 0;
-  for(int i = 1; i < 10001; i++) {
+  for (int i = 1; i < 10001; i++) {
     if (positive[i]) {
       total += pickTwo(i, negative) * positive[i];
     }
-    if(negative[i]) {
+    if (negative[i]) {
       total += pickTwo(i, positive) * negative[i];
     }
   }

@@ -3,9 +3,9 @@
 // 최소 크기를 구하는 문제
 // dnc할 것임
 
+#include <algorithm>
 #include <iostream>
 #include <string.h>
-#include <algorithm>
 
 using namespace std;
 
@@ -21,25 +21,23 @@ typedef struct _maxtrics {
 ll map[MAX][MAX];
 matrics matricsList[MAX];
 
-int calcMatric(matrics a, matrics b) {
-  return a.row * b.row * b.col;
-}
+int calcMatric(matrics a, matrics b) { return a.row * b.row * b.col; }
 
 ll findMin(int s, int e) {
-  if(map[s][e] != LIMIT) {
+  if (map[s][e] != LIMIT) {
     return map[s][e];
   }
 
-  if(s == e) {
+  if (s == e) {
     return 0;
   }
 
-  if(s + 1 == e) {
+  if (s + 1 == e) {
     map[s][e] = calcMatric(matricsList[s], matricsList[e]);
   }
 
   int val = matricsList[s].row * matricsList[e].col;
-  for(int i = s; i < e; i += 1) {
+  for (int i = s; i < e; i += 1) {
     ll left = findMin(s, i);
     ll right = findMin(i + 1, e);
     ll curSum = val * matricsList[i].col;
@@ -53,9 +51,9 @@ int main(void) {
   memset(map, LIMIT, sizeof(map));
 
   int n;
-  cin >> n; 
-  for(int i = 1; i <= n; i += 1) {
-    int r,c;
+  cin >> n;
+  for (int i = 1; i <= n; i += 1) {
+    int r, c;
     cin >> r >> c;
     matricsList[i].row = r;
     matricsList[i].col = c;
@@ -64,4 +62,3 @@ int main(void) {
   cout << findMin(1, n) << endl;
   return 0;
 }
-

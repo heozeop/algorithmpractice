@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <limits.h>
 #include <queue>
 #include <vector>
-#include <limits.h>
 
 using namespace std;
 
@@ -22,7 +22,7 @@ int main(void) {
 
 void input() {
   cin >> n >> d >> k >> c;
-  for(int i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++) {
     cin >> dishes[i];
   }
 
@@ -33,20 +33,20 @@ void solve() {
   int s = 0, e;
   int count = 0;
   int maxCount = 0;
-  for(int i = 0; i < n + k ; i++) {
+  for (int i = 0; i < n + k; i++) {
     e = i % n;
-    if(abs(e - s) >= k) {
+    if (abs(e - s) >= k) {
       dishCount[dishes[s]] -= 1;
-      if(dishCount[dishes[s]] == 0) {
+      if (dishCount[dishes[s]] == 0) {
         count -= 1;
       }
       s += 1;
-      if(dishCount[dishes[e]] == 0)  {
+      if (dishCount[dishes[e]] == 0) {
         count += 1;
       }
       dishCount[dishes[e]] += 1;
     } else {
-      if(dishCount[dishes[e]] == 0)  {
+      if (dishCount[dishes[e]] == 0) {
         count += 1;
       }
       dishCount[dishes[e]] += 1;
@@ -57,7 +57,7 @@ void solve() {
     } else {
       maxCount = min(max(maxCount, count), d);
     }
-    
+
     s %= n;
   }
 

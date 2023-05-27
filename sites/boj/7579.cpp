@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
@@ -11,9 +11,9 @@ int memory[MAX];
 int cost[MAX];
 int dp[MAX_COBINATION];
 
-int initiateVariables(int* container, int maximum){ 
+int initiateVariables(int *container, int maximum) {
   int sum = 0;
-  for(int i = 0; i < maximum; ++i) {
+  for (int i = 0; i < maximum; ++i) {
     cin >> container[i];
     sum += container[i];
   }
@@ -21,8 +21,8 @@ int initiateVariables(int* container, int maximum){
 }
 
 void setDP() {
-  for(int i = 0 ; i < n; ++i) {
-    for(int j = sumOfCost; j >= cost[i]; --j) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = sumOfCost; j >= cost[i]; --j) {
       dp[j] = max(dp[j - cost[i]] + memory[i], dp[j]);
     }
   }
@@ -30,7 +30,7 @@ void setDP() {
 
 void printMinCost() {
   int i = 0;
-  while(dp[i] < m) {
+  while (dp[i] < m) {
     ++i;
   }
   cout << i << endl;

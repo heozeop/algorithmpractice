@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <cmath>
+#include <iostream>
 #include <queue>
 #include <vector>
-#include <cmath>
 
 using namespace std;
 
@@ -20,15 +20,17 @@ int main(void) {
 }
 
 void input() {
-  for(int i = 0; i < 4; i++) {
+  for (int i = 0; i < 4; i++) {
     cin >> p[i].first >> p[i].second;
   }
   return;
 }
 
 int ccw(pll a, pll b, pll c) {
-  long long temp = (a.first * b.second) + (b.first * c.second) + (c.first * a.second) - (c.first* b.second) - (b.first* a.second) - (a.first * c.second);
-  if(temp < 0) { 
+  long long temp = (a.first * b.second) + (b.first * c.second) +
+                   (c.first * a.second) - (c.first * b.second) -
+                   (b.first * a.second) - (a.first * c.second);
+  if (temp < 0) {
     return 1;
   } else if (temp > 0) {
     return -1;
@@ -38,9 +40,10 @@ int ccw(pll a, pll b, pll c) {
 }
 
 void solve() {
-  int a = ccw(p[0], p[1], p[2]), b = ccw(p[0], p[1], p[3]), c = ccw(p[2], p[3], p[0]), d = ccw(p[2], p[3], p[1]);
+  int a = ccw(p[0], p[1], p[2]), b = ccw(p[0], p[1], p[3]),
+      c = ccw(p[2], p[3], p[0]), d = ccw(p[2], p[3], p[1]);
 
-  if(a * b <= 0 && c * d <= 0) {
+  if (a * b <= 0 && c * d <= 0) {
     cout << 1;
   } else {
     cout << 0;

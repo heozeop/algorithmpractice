@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -9,8 +9,8 @@ typedef pair<int, int> pii;
 
 struct Links {
   int cost, from, to;
-  Links(int cost, int from, int to):cost(cost), from(from), to(to) {}
-  bool operator <  (const Links& A) const { return cost < A.cost; }
+  Links(int cost, int from, int to) : cost(cost), from(from), to(to) {}
+  bool operator<(const Links &A) const { return cost < A.cost; }
 };
 
 const int LIMIT_NODE_COUNT = 100003;
@@ -29,10 +29,10 @@ int main(void) {
 }
 
 void input() {
-	ios_base::sync_with_stdio(false);
+  ios_base::sync_with_stdio(false);
   cin >> n;
-  int a,b,c;
-  for(int i = 1; i <= n; ++i) {
+  int a, b, c;
+  for (int i = 1; i <= n; ++i) {
     cin >> a >> b >> c;
     x[i] = {a, i};
     y[i] = {b, i};
@@ -43,7 +43,7 @@ void input() {
 }
 
 int find(int a) {
-  if(ternal[a] == a) {
+  if (ternal[a] == a) {
     return a;
   }
 
@@ -53,7 +53,7 @@ int find(int a) {
 bool merge(int a, int b) {
   int ap = find(a);
   int bp = find(b);
-  if(ap != bp) {
+  if (ap != bp) {
     ternal[ap] = bp;
     return true;
   }
@@ -67,19 +67,23 @@ void solve() {
   sort(z + 1, z + 1 + n);
 
   vector<Links> q;
-  for(int i = 1; i < n; i++) {
-    q.push_back(Links(x[i+1].first - x[i].first, x[i].second, x[i+1].second));
-    q.push_back(Links(y[i+1].first - y[i].first, y[i].second, y[i+1].second));
-    q.push_back(Links(z[i+1].first - z[i].first, z[i].second, z[i+1].second));
+  for (int i = 1; i < n; i++) {
+    q.push_back(
+        Links(x[i + 1].first - x[i].first, x[i].second, x[i + 1].second));
+    q.push_back(
+        Links(y[i + 1].first - y[i].first, y[i].second, y[i + 1].second));
+    q.push_back(
+        Links(z[i + 1].first - z[i].first, z[i].second, z[i + 1].second));
   }
   sort(q.begin(), q.end());
-  
+
   int count = 0;
   long long sum = 0;
-  for(int i = 0; i < q.size(); i++) {
-    if(count == n - 1) break;
+  for (int i = 0; i < q.size(); i++) {
+    if (count == n - 1)
+      break;
 
-    if(merge(q[i].from, q[i].to)) {
+    if (merge(q[i].from, q[i].to)) {
       sum += q[i].cost;
       count += 1;
     }

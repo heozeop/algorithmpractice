@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <limits.h>
 #include <queue>
 #include <vector>
-#include <limits.h>
 
 using namespace std;
 const int MAX_N = 2001;
@@ -22,7 +22,7 @@ int main(void) {
 
 void input() {
   scanf("%d", &n);
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     scanf("%d", &arr[i]);
   }
   scanf("%d", &m);
@@ -32,14 +32,14 @@ void input() {
 
 void solve() {
   dp[1][1] = 1;
-  for(int e = 2; e <= n; ++e) {
+  for (int e = 2; e <= n; ++e) {
     dp[e][e] = 1;
-    for(int s = e - 1; s > 0; --s) {
-      if(arr[s] == arr[e]) {
-        if(s+1 == e) {
+    for (int s = e - 1; s > 0; --s) {
+      if (arr[s] == arr[e]) {
+        if (s + 1 == e) {
           dp[s][e] = 1;
         } else {
-          dp[s][e] = dp[s+1][e-1];
+          dp[s][e] = dp[s + 1][e - 1];
         }
       } else {
         dp[s][e] = 0;
@@ -47,8 +47,8 @@ void solve() {
     }
   }
 
-  int s,e;
-  for(int i = 0; i < m; ++i) {
+  int s, e;
+  for (int i = 0; i < m; ++i) {
     scanf("%d %d", &s, &e);
     printf("%d\n", dp[s][e]);
   }

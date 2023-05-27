@@ -1,9 +1,9 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <map>
+#include <queue>
 #include <string>
 #include <vector>
-#include <queue>
-#include <map>
 
 using namespace std;
 
@@ -20,7 +20,7 @@ void solve();
 int main(void) {
   input();
   solve();
-  return 0; 
+  return 0;
 }
 
 void input() {
@@ -31,7 +31,7 @@ void input() {
 bool setOrNone(int key, int val) {
   bool needInsert = false;
   map<int, int>::iterator iter = dp.find(key);
-  if(iter == dp.end()) {
+  if (iter == dp.end()) {
     dp[key] = val + 1;
     needInsert = true;
   }
@@ -42,41 +42,45 @@ string getNextPath(string prevPath, int nextIndex) {
   return prevPath + " " + to_string(nextIndex);
 }
 
-void setDp(){
-  queue<pair<int, string> > q;
+void setDp() {
+  queue<pair<int, string>> q;
   dp[n] = 1;
   q.push(make_pair(n, to_string(n)));
-  while(!q.empty()) {
+  while (!q.empty()) {
     int currentPosition = q.front().first;
     string path = q.front().second;
     q.pop();
 
-    if(currentPosition == k) {
+    if (currentPosition == k) {
       shortestPath = path;
       break;
     }
 
-    if(currentPosition < 0 || currentPosition > k + n) {
+    if (currentPosition < 0 || currentPosition > k + n) {
       continue;
     }
 
-    if(setOrNone(currentPosition + 1, dp[currentPosition])) {
-      q.push(make_pair(currentPosition + 1, getNextPath(path, currentPosition + 1)));
+    if (setOrNone(currentPosition + 1, dp[currentPosition])) {
+      q.push(make_pair(currentPosition + 1,
+                       getNextPath(path, currentPosition + 1)));
     }
-    if(currentPosition > 0 && setOrNone(currentPosition - 1, dp[currentPosition])) {
-      q.push(make_pair(currentPosition - 1, getNextPath(path, currentPosition - 1)));
+    if (currentPosition > 0 &&
+        setOrNone(currentPosition - 1, dp[currentPosition])) {
+      q.push(make_pair(currentPosition - 1,
+                       getNextPath(path, currentPosition - 1)));
     }
-    if(setOrNone(currentPosition * 2, dp[currentPosition])) {
-      q.push(make_pair(currentPosition * 2, getNextPath(path, currentPosition * 2)));
+    if (setOrNone(currentPosition * 2, dp[currentPosition])) {
+      q.push(make_pair(currentPosition * 2,
+                       getNextPath(path, currentPosition * 2)));
     }
   }
   return;
 }
 
 void solve() {
-  if(k < n) {
+  if (k < n) {
     cout << n - k << endl;
-    for(int i = n; i >= k; --i) {
+    for (int i = n; i >= k; --i) {
       printf("%d ", i);
     }
     return;
@@ -84,6 +88,6 @@ void solve() {
 
   setDp();
   cout << dp[k] - 1 << endl << shortestPath;
-  
+
   return;
 }

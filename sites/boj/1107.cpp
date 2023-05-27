@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <limits.h>
 #include <queue>
 #include <vector>
-#include <limits.h>
 
 using namespace std;
 
@@ -15,10 +15,6 @@ int main(void) {
   return 0;
 }
 
-void input() {
-  return;
-}
+void input() { return; }
 
-void solve() {
-  return;
-}
+void solve() { return; }

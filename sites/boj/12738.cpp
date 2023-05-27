@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <queue>
 #include <string>
 #include <vector>
-#include <queue>
 
 using namespace std;
 
@@ -19,12 +19,12 @@ void solve();
 int main(void) {
   input();
   solve();
-  return 0; 
+  return 0;
 }
 
 void input() {
   cin >> n;
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     cin >> numArray[i];
   }
 }
@@ -32,10 +32,10 @@ void input() {
 int search(int val) {
   int startIndex = 0, endIndex = dp.size() - 1;
   int middleIndex;
-  while(startIndex < endIndex) {
-    middleIndex = (startIndex + endIndex)/2;
+  while (startIndex < endIndex) {
+    middleIndex = (startIndex + endIndex) / 2;
 
-    if(val <= dp[middleIndex]) {
+    if (val <= dp[middleIndex]) {
       endIndex = middleIndex;
     } else {
       startIndex = middleIndex + 1;
@@ -47,9 +47,9 @@ int search(int val) {
 void setDP() {
   int location = 0;
   dp.push_back(numArray[1]);
-  for(int i = 2; i <= n; ++i) {
+  for (int i = 2; i <= n; ++i) {
     int currentNum = numArray[i];
-    if(currentNum > dp.back()) {
+    if (currentNum > dp.back()) {
       dp.push_back(currentNum);
     } else {
       location = search(currentNum);

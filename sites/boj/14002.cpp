@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <queue>
 #include <string>
 #include <vector>
-#include <queue>
 
 using namespace std;
 
@@ -12,7 +12,7 @@ const int INDEX_LIMIT = 1000000 + 1;
 int n;
 int numArray[INDEX_LIMIT];
 int numIndexPath[INDEX_LIMIT];
-vector<int > dp;
+vector<int> dp;
 bool needRefresh;
 
 void input();
@@ -21,12 +21,12 @@ void solve();
 int main(void) {
   input();
   solve();
-  return 0; 
+  return 0;
 }
 
 void input() {
   cin >> n;
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     cin >> numArray[i];
   }
 }
@@ -34,10 +34,10 @@ void input() {
 int search(int val) {
   int startIndex = 0, endIndex = dp.size() - 1;
   int middleIndex;
-  while(startIndex < endIndex) {
-    middleIndex = (startIndex + endIndex)/2;
+  while (startIndex < endIndex) {
+    middleIndex = (startIndex + endIndex) / 2;
 
-    if(val <= dp[middleIndex]) {
+    if (val <= dp[middleIndex]) {
       endIndex = middleIndex;
     } else {
       startIndex = middleIndex + 1;
@@ -47,7 +47,7 @@ int search(int val) {
 }
 
 void refreshPath() {
-  for(int i = 1; i <= dp.size(); ++i) {
+  for (int i = 1; i <= dp.size(); ++i) {
     numIndexPath[i] = dp[i - 1];
   }
 }
@@ -56,11 +56,11 @@ void setDP() {
   int location = 0;
   needRefresh = false;
   dp.push_back(numArray[1]);
-  for(int i = 2; i <= n; ++i) {
+  for (int i = 2; i <= n; ++i) {
     int currentNum = numArray[i];
-    if(currentNum > dp.back()) {
+    if (currentNum > dp.back()) {
       dp.push_back(currentNum);
-      if(needRefresh) {
+      if (needRefresh) {
         refreshPath();
         needRefresh = false;
       } else {
@@ -77,7 +77,7 @@ void setDP() {
 void solve() {
   setDP();
   cout << dp.size() << endl;
-  for(int i = 1; i <= dp.size(); ++i) {
+  for (int i = 1; i <= dp.size(); ++i) {
     printf("%d ", numIndexPath[i]);
   }
 }

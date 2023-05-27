@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -23,14 +23,14 @@ int main(void) {
 
 void input() {
   cin >> n >> m;
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     arr[i] = i;
   }
   return;
 }
 
 int findParent(int a) {
-  if(arr[a] == a) {
+  if (arr[a] == a) {
     return a;
   }
 
@@ -44,7 +44,7 @@ void unionNode(int a, int b) {
 }
 
 void printResult(bool result) {
-  if(result) {
+  if (result) {
     cout << "YES\n";
   } else {
     cout << "NO\n";
@@ -53,11 +53,11 @@ void printResult(bool result) {
 
 void solve() {
   int val, a, b;
-  while(m--) {
+  while (m--) {
     scanf("%d %d %d", &val, &a, &b);
 
-    if(val == UNION) {
-      unionNode(a,b);
+    if (val == UNION) {
+      unionNode(a, b);
     } else {
       printResult(findParent(a) == findParent(b));
     }

@@ -1,6 +1,6 @@
 #include <iostream>
-#include <vector>
 #include <queue>
+#include <vector>
 using namespace std;
 
 vector<int> tree[100001];
@@ -10,13 +10,14 @@ int n;
 void bfs() {
   queue<int> q;
   q.push(1);
-  while(!q.empty()) {
+  while (!q.empty()) {
     int currNode = q.front();
     q.pop();
 
-    for(int i = 0 ; i < tree[currNode].size(); ++i) {
+    for (int i = 0; i < tree[currNode].size(); ++i) {
       int nextNode = tree[currNode][i];
-      if(parents[nextNode]) continue;
+      if (parents[nextNode])
+        continue;
       parents[nextNode] = currNode;
       q.push(nextNode);
     }
@@ -26,15 +27,15 @@ void bfs() {
 
 int main(void) {
   cin >> n;
-  int a,b;
-  for(int i = 1; i <= n; ++i){
+  int a, b;
+  for (int i = 1; i <= n; ++i) {
     scanf("%d %d", &a, &b);
     tree[a].push_back(b);
     tree[b].push_back(a);
   }
 
   bfs();
-  for(int i = 2; i <=n; ++i){
+  for (int i = 2; i <= n; ++i) {
     printf("%d\n", parents[i]);
   }
   return 0;

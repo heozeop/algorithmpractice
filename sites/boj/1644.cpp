@@ -1,5 +1,5 @@
-#include <iostream>
 #include <cmath>
+#include <iostream>
 #include <vector>
 using namespace std;
 
@@ -20,14 +20,12 @@ int main(void) {
   return 0;
 }
 
-void input () {
-  cin >> n;
-}
+void input() { cin >> n; }
 
 bool isPrime(int n) {
   int rootVal = sqrt(n);
-  for(int i = 2; i <= rootVal; ++i) {
-    if(n % i == 0) {
+  for (int i = 2; i <= rootVal; ++i) {
+    if (n % i == 0) {
       return false;
     }
   }
@@ -38,8 +36,8 @@ bool isPrime(int n) {
 void findPrimes() {
   sumOfPrimeNumbers.push_back(0);
   int prevSum = 0;
-  for(int i = 2; i <= n; ++i) {
-    if(isPrime(i)) {
+  for (int i = 2; i <= n; ++i) {
+    if (isPrime(i)) {
       sumOfPrimeNumbers.push_back(prevSum + i);
       prevSum += i;
     }
@@ -50,9 +48,9 @@ void solve() {
   int left = 0, right = 1;
   int curSum;
   int count = 0;
-  while(left < right && right < sumOfPrimeNumbers.size()) {
+  while (left < right && right < sumOfPrimeNumbers.size()) {
     curSum = sumOfPrimeNumbers[right] - sumOfPrimeNumbers[left];
-    if(curSum == n) {
+    if (curSum == n) {
       count += 1;
       left += 1;
       right += 1;

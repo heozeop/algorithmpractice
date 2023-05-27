@@ -1,9 +1,9 @@
-#include <iostream>
 #include <algorithm>
-#include <queue>
-#include <vector>
+#include <iostream>
 #include <limits.h>
+#include <queue>
 #include <set>
+#include <vector>
 
 using namespace std;
 
@@ -14,7 +14,7 @@ const char DELETE = 'D';
 const int MODE_DESC = 1;
 const int MODE_ASC = -1;
 
-int t,q;
+int t, q;
 
 void input();
 void solve();
@@ -31,14 +31,13 @@ void input() {
 }
 
 class DualPriorityQueue {
-  public:
+public:
   multiset<int> q;
 
-  DualPriorityQueue() {
-  }
+  DualPriorityQueue() {}
 
   int top(int mode) {
-    if(mode == MODE_ASC) {
+    if (mode == MODE_ASC) {
       return *q.begin();
     }
 
@@ -47,16 +46,14 @@ class DualPriorityQueue {
     return *iter;
   }
 
-  void insert(int val) {
-    this->q.insert(val);
-  }
+  void insert(int val) { this->q.insert(val); }
 
   void deleteOn(int mode) {
-    if(this->isEmpty()) {
+    if (this->isEmpty()) {
       return;
     }
 
-    if(mode == MODE_ASC) {
+    if (mode == MODE_ASC) {
       this->q.erase(this->q.begin());
       return;
     }
@@ -66,9 +63,7 @@ class DualPriorityQueue {
     this->q.erase(iter);
   }
 
-  bool isEmpty() {
-    return this->q.empty();
-  }
+  bool isEmpty() { return this->q.empty(); }
 };
 
 void handleTest(int t) {
@@ -76,19 +71,19 @@ void handleTest(int t) {
   int val;
   DualPriorityQueue q;
 
-  for(int i = 0; i < t; ++i) {
+  for (int i = 0; i < t; ++i) {
     scanf("%c %d%*c", &op, &val);
-    
-    switch(op) {
-      case INSERT:
-        q.insert(val);
-        break;
-      case DELETE:
-        q.deleteOn(val);
-        break;
+
+    switch (op) {
+    case INSERT:
+      q.insert(val);
+      break;
+    case DELETE:
+      q.deleteOn(val);
+      break;
     }
   }
-  
+
   if (q.isEmpty()) {
     printf("EMPTY\n");
   } else {
@@ -98,7 +93,7 @@ void handleTest(int t) {
 
 void solve() {
 
-  while(t--) {
+  while (t--) {
     scanf("%d\n", &q);
     handleTest(q);
   }

@@ -1,6 +1,6 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
-#include <algorithm>
 
 using namespace std;
 
@@ -10,7 +10,7 @@ const int NOT_VISITED = 0;
 
 int n, sum, fatNode;
 int visited[LIMIT_NODE];
-vector<pair<int, int> > tree[LIMIT_NODE];
+vector<pair<int, int>> tree[LIMIT_NODE];
 
 void initConditions() {
   sum = 0;
@@ -19,16 +19,17 @@ void initConditions() {
 }
 
 void dfs(int curNode, int len) {
-  if(visited[curNode] == VISITED) return;
+  if (visited[curNode] == VISITED)
+    return;
   visited[curNode] = VISITED;
 
-  if(sum < len) {
+  if (sum < len) {
     sum = len;
     fatNode = curNode;
   }
 
   int nextNode, nextWeight;
-  for(int i = 0; i < tree[curNode].size(); ++i) {
+  for (int i = 0; i < tree[curNode].size(); ++i) {
     nextNode = tree[curNode][i].first;
     nextWeight = tree[curNode][i].second + len;
     dfs(nextNode, nextWeight);
@@ -40,7 +41,7 @@ int main(void) {
   cin >> n;
   int pN, cN, val;
   n--;
-  while(n--) {
+  while (n--) {
     cin >> pN >> cN >> val;
     tree[pN].push_back(make_pair(cN, val));
     tree[cN].push_back(make_pair(pN, val));

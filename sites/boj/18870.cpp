@@ -1,9 +1,9 @@
-#include <iostream>
 #include <algorithm>
-#include <queue>
-#include <vector>
+#include <iostream>
 #include <limits.h>
 #include <map>
+#include <queue>
+#include <vector>
 
 using namespace std;
 
@@ -24,7 +24,7 @@ int main(void) {
 void input() {
   cin >> n;
 
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> arr[i];
   }
 
@@ -33,18 +33,18 @@ void input() {
 
 void solve() {
   map<int, int> m;
-  vector<int> a(arr, arr+n);
+  vector<int> a(arr, arr + n);
 
   sort(a.begin(), a.end());
 
-  for(int i = 0, j = 0; i < n; ++i) {
-    if(m.find(a[i]) == m.end()) {
+  for (int i = 0, j = 0; i < n; ++i) {
+    if (m.find(a[i]) == m.end()) {
       m[a[i]] = j++;
     }
   }
 
-  map<int,int>::iterator iter;
-  for(int i = 0; i < n;++i) {
+  map<int, int>::iterator iter;
+  for (int i = 0; i < n; ++i) {
     iter = m.find(arr[i]);
     cout << iter->second << " ";
   }

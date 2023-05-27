@@ -1,6 +1,6 @@
+#include <algorithm>
 #include <iostream>
 #include <string.h>
-#include <algorithm>
 
 using namespace std;
 
@@ -13,20 +13,20 @@ int container[MAX];
 int sum[MAX];
 
 int findMin(int s, int e) {
-  if(map[s][e] != LIMIT) {
+  if (map[s][e] != LIMIT) {
     return map[s][e];
   }
 
-  if(s == e) {
+  if (s == e) {
     return 0;
   }
 
-  if(s + 1 == e) {
+  if (s + 1 == e) {
     map[s][e] = container[s] + container[e];
     return map[s][e];
   }
 
-  for(int i = s; i < e; ++i) {
+  for (int i = s; i < e; ++i) {
     int left = findMin(s, i);
     int right = findMin(i + 1, e);
     map[s][e] = min(map[s][e], left + right);
@@ -39,12 +39,12 @@ int findMin(int s, int e) {
 int main() {
   int t;
   cin >> t;
-  while(t-- > 0) {
+  while (t-- > 0) {
     memset(map, LIMIT, sizeof(map));
 
     int k;
     cin >> k;
-    for(int i = 1; i <= k; i++) {
+    for (int i = 1; i <= k; i++) {
       cin >> container[i];
       sum[i] = sum[i - 1] + container[i];
     }

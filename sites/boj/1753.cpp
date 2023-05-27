@@ -1,27 +1,26 @@
+#include <cstring>
 #include <iostream>
 #include <map>
-#include <vector>
-#include <cstring>
 #include <queue>
+#include <vector>
 using namespace std;
 
 const int MAX_VERTEX_SIZE = 20001;
 const int MAX_EDGE_SIZE = 300000;
 const int INF = 11 * MAX_EDGE_SIZE;
 
-vector<pair<int,int> >values[MAX_VERTEX_SIZE];
+vector<pair<int, int>> values[MAX_VERTEX_SIZE];
 int minValues[MAX_VERTEX_SIZE];
 int visitedVertices[MAX_VERTEX_SIZE];
 int v, e;
 int startVertexNumber;
-
 
 void init() {
   // 기준값 입력
   cin >> v >> e >> startVertexNumber;
 
   // 최솟값 초기화
-  for(int i = 1; i <= v; ++i) {
+  for (int i = 1; i <= v; ++i) {
     minValues[i] = INF;
   }
   minValues[startVertexNumber] = 0;
@@ -31,12 +30,12 @@ void init() {
   for (int i = 0; i < e; ++i) {
     int u, v, w;
     scanf("%d %d %d", &u, &v, &w);
-    values[u].push_back(make_pair(v,w));
+    values[u].push_back(make_pair(v, w));
   }
 }
 
 void calcMinValues() {
-  priority_queue<pair<int, int>, vector<pair<int, int> > >minHeap;
+  priority_queue<pair<int, int>, vector<pair<int, int>>> minHeap;
   minHeap.push(make_pair(0, startVertexNumber));
 
   while (minHeap.size() > 0) {
@@ -45,16 +44,16 @@ void calcMinValues() {
     visitedVertices[index] = 1;
     minHeap.pop();
 
-    for(int i = 0; i < values[index].size(); ++i) {
+    for (int i = 0; i < values[index].size(); ++i) {
       int nextIndex = values[index][i].first;
       int value = values[index][i].second;
 
-      if(visitedVertices[nextIndex] == 1) {
+      if (visitedVertices[nextIndex] == 1) {
         continue;
       }
 
       int throughPathWeight = cost + value;
-      if(minValues[nextIndex] > throughPathWeight) {
+      if (minValues[nextIndex] > throughPathWeight) {
         minValues[nextIndex] = throughPathWeight;
         minHeap.push(make_pair(-throughPathWeight, nextIndex));
       }

@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <limits.h>
 #include <queue>
 #include <vector>
-#include <limits.h>
 
 using namespace std;
 
@@ -22,7 +22,7 @@ int main(void) {
 
 void input() {
   cin >> n;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     scanf("%d", &arr[i]);
   }
   return;
@@ -31,15 +31,14 @@ void input() {
 void find() {
   priority_queue<int, vector<int>, greater<int>> q;
 
-  q.push(arr[n-1]);
-  ans[n-1] = -1;
-  for(int i = n - 2; i >= 0; --i) {
-    while(!q.empty() && q.top() <= arr[i]) {
+  q.push(arr[n - 1]);
+  ans[n - 1] = -1;
+  for (int i = n - 2; i >= 0; --i) {
+    while (!q.empty() && q.top() <= arr[i]) {
       q.pop();
     }
 
-
-    if(q.empty()) {
+    if (q.empty()) {
       ans[i] = -1;
     } else {
       ans[i] = q.top();
@@ -51,7 +50,7 @@ void find() {
 
 void solve() {
   find();
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     printf("%d ", ans[i]);
   }
   return;

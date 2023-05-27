@@ -8,53 +8,52 @@ vector<char> lines;
 
 int main(void) {
 
+  while (1) {
+    char temp;
+    bool isLine = true, isEnd = true;
+    lines.clear();
+
     while (1) {
-        char temp;
-        bool isLine = true, isEnd = true;
-        lines.clear();
+      scanf("%c", &temp);
+      if (temp == '.') {
+        break;
+      }
+      isEnd = false;
 
-        while(1) {
-            scanf("%c", &temp);
-            if (temp == '.') {
-                break;
-            }
-            isEnd = false;
-
-            if (temp == '(' || temp == '[') {
-                lines.push_back(temp);
-            }
-            else if (temp == ')' || temp == ']') {
-                if (lines.empty()) {
-                    isLine = false;
-                    break;
-                }
-                if (lines.back() == '(') {
-                    if (temp == ']') {
-                        isLine = false;
-                        break;
-                    }
-                    lines.pop_back();
-                }else if (lines.back() == '[') {
-                    if (temp == ')') {
-                        isLine = false;
-                        break;
-                    }
-                    lines.pop_back();
-                }
-            }
+      if (temp == '(' || temp == '[') {
+        lines.push_back(temp);
+      } else if (temp == ')' || temp == ']') {
+        if (lines.empty()) {
+          isLine = false;
+          break;
         }
-
-        if (isEnd) {
+        if (lines.back() == '(') {
+          if (temp == ']') {
+            isLine = false;
             break;
+          }
+          lines.pop_back();
+        } else if (lines.back() == '[') {
+          if (temp == ')') {
+            isLine = false;
+            break;
+          }
+          lines.pop_back();
         }
-
-        while (getchar() != '\n') {}
-
-        if (isLine && lines.empty()) {
-            cout << "yes" << endl;
-        }
-        else {
-            cout << "no" << endl;
-        }
+      }
     }
+
+    if (isEnd) {
+      break;
+    }
+
+    while (getchar() != '\n') {
+    }
+
+    if (isLine && lines.empty()) {
+      cout << "yes" << endl;
+    } else {
+      cout << "no" << endl;
+    }
+  }
 }

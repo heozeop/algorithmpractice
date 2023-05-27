@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -8,8 +8,8 @@ using namespace std;
 void input();
 void solve();
 
-const int team1[15] = {0,0,0,0,0,1,1,1,1,2,2,2,3,3,4};
-const int team2[15] = {1,2,3,4,5,2,3,4,5,3,4,5,4,5,5};
+const int team1[15] = {0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 3, 3, 4};
+const int team2[15] = {1, 2, 3, 4, 5, 2, 3, 4, 5, 3, 4, 5, 4, 5, 5};
 
 const int WIN = 0;
 const int DREW = 1;
@@ -26,9 +26,9 @@ int main(void) {
 }
 
 void input() {
-  for(int i = 0; i < 4; i++) {
-    for(int j = 0; j < 6; j++) {
-      for(int k = 0; k < 3; k++) {
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 6; j++) {
+      for (int k = 0; k < 3; k++) {
         cin >> report[i][j][k];
       }
     }
@@ -36,26 +36,26 @@ void input() {
 }
 
 void dfs(int match) {
-  if(match == 15) {
-    for(int i = 0; i <4; i++) {
-      if(answer[i]) {
+  if (match == 15) {
+    for (int i = 0; i < 4; i++) {
+      if (answer[i]) {
         continue;
       }
       bool diffFlag = false;
 
-      for(int j = 0; j < 6; j++) {
-        for(int k = 0; k < 3; k++) {
-          if(report[i][j][k] != result[j][k]) {
+      for (int j = 0; j < 6; j++) {
+        for (int k = 0; k < 3; k++) {
+          if (report[i][j][k] != result[j][k]) {
             diffFlag = true;
             break;
           }
         }
-        if(diffFlag) {
+        if (diffFlag) {
           break;
         }
       }
 
-      if(!diffFlag) {
+      if (!diffFlag) {
         answer[i] = 1;
       }
     }
@@ -87,7 +87,7 @@ void dfs(int match) {
 void solve() {
   dfs(0);
 
-  for(int i = 0; i <4;i++){
+  for (int i = 0; i < 4; i++) {
     cout << answer[i] << " ";
   }
 

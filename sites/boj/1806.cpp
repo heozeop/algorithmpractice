@@ -23,11 +23,11 @@ int main(void) {
 
 void input() {
   cin >> n >> s;
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     cin >> numArray[i];
     sumArray[i] = numArray[i] + sumArray[i - 1];
 
-    if(sumArray[i] >= s && minLength > i) {
+    if (sumArray[i] >= s && minLength > i) {
       minLength = i;
     }
   }
@@ -37,11 +37,11 @@ void input() {
 void solve() {
   int leftNode = 1, rightNode = minLength;
   long long curSum = 0;
-  while(leftNode < rightNode && rightNode <= n) {
+  while (leftNode < rightNode && rightNode <= n) {
     curSum = sumArray[rightNode] - sumArray[leftNode];
 
-    if(curSum >= s) {
-      if(minLength > rightNode - leftNode) {
+    if (curSum >= s) {
+      if (minLength > rightNode - leftNode) {
         minLength = rightNode - leftNode;
       }
       leftNode += 1;
@@ -50,9 +50,9 @@ void solve() {
     }
   }
 
-  if(minLength == NODE_LIMIT) {
+  if (minLength == NODE_LIMIT) {
     minLength = 0;
-  } 
+  }
 
   cout << minLength;
   return;

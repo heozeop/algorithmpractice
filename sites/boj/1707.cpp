@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <cstring>
+#include <iostream>
 #include <queue>
 #include <vector>
-#include <cstring>
 
 using namespace std;
 
@@ -15,7 +15,7 @@ int visited[MAX_VERTEX];
 int testcases, v, e;
 
 void reset(int v) {
-  for(int i = 1; i <= v; ++i) {
+  for (int i = 1; i <= v; ++i) {
     graph[i].clear();
   }
   memset(visited, NOT_VISITED, sizeof(visited));
@@ -27,13 +27,13 @@ void setVertices(int from, int to) {
 }
 
 int getNextTeam(int currentTeam) {
-  switch(visited[currentTeam]) {
-    case TEAM_A:
-      return TEAM_B;
-    case TEAM_B:
-      return TEAM_A;
-    default:
-      return NOT_VISITED;
+  switch (visited[currentTeam]) {
+  case TEAM_A:
+    return TEAM_B;
+  case TEAM_B:
+    return TEAM_A;
+  default:
+    return NOT_VISITED;
   }
 }
 
@@ -58,16 +58,16 @@ void bfs(int start) {
   }
 }
 
-void runBFS(int v){
-  for (int i = 1; i <= v; ++i) { 
+void runBFS(int v) {
+  for (int i = 1; i <= v; ++i) {
     if (!visited[i]) {
       bfs(i);
-    } 
+    }
   }
 }
 
-bool isBiperate(int v) { 
-  for(int i = 1; i <= v; ++i) {
+bool isBiperate(int v) {
+  for (int i = 1; i <= v; ++i) {
     for (int next : graph[i]) {
       if (visited[i] == visited[next]) {
         return false;
@@ -79,7 +79,7 @@ bool isBiperate(int v) {
 }
 
 void printBiperate(bool isBiperate) {
-  if(isBiperate) {
+  if (isBiperate) {
     cout << "YES" << endl;
     return;
   }
@@ -90,11 +90,11 @@ void printBiperate(bool isBiperate) {
 
 int main(void) {
   cin >> testcases;
-  while(testcases--) {
+  while (testcases--) {
     cin >> v >> e;
-    for(int i = 0; i < e; ++i) {
+    for (int i = 0; i < e; ++i) {
       int temp1, temp2;
-      cin >>temp1 >> temp2;
+      cin >> temp1 >> temp2;
       setVertices(temp1, temp2);
     }
 

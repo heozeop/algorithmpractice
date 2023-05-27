@@ -1,15 +1,15 @@
-#include <iostream>
 #include <algorithm>
-#include <queue>
-#include <vector>
+#include <iostream>
 #include <limits.h>
+#include <queue>
 #include <set>
+#include <vector>
 
 using namespace std;
 
 class Node {
 public:
-  Node* parent;
+  Node *parent;
   int index;
 
   Node(int val) {
@@ -17,8 +17,8 @@ public:
     this->parent = nullptr;
   }
 
-  Node* getOldestParent() {
-    if(this->parent == nullptr) {
+  Node *getOldestParent() {
+    if (this->parent == nullptr) {
       return this;
     }
 
@@ -30,7 +30,7 @@ int n, m;
 
 void input();
 void solve();
-void merge(Node*, Node*);
+void merge(Node *, Node *);
 
 int main(void) {
   input();
@@ -44,21 +44,21 @@ void input() {
 }
 
 void solve() {
-  int v1,v2;
-  Node* p1;
-  Node* p2;
-  Node* nodeList[n + 1];
-  for(int i = 1; i <= n; ++i) {
+  int v1, v2;
+  Node *p1;
+  Node *p2;
+  Node *nodeList[n + 1];
+  for (int i = 1; i <= n; ++i) {
     nodeList[i] = new Node(i);
   }
 
-  while(m--) {
+  while (m--) {
     cin >> v1 >> v2;
 
     p1 = nodeList[v1]->getOldestParent();
     p2 = nodeList[v2]->getOldestParent();
 
-    merge(p1,p2);
+    merge(p1, p2);
   }
 
   set<int> clusters;
@@ -72,8 +72,8 @@ void solve() {
   return;
 }
 
-void merge(Node* p1, Node* p2) {
-  if(p1->index != p2->index) {
+void merge(Node *p1, Node *p2) {
+  if (p1->index != p2->index) {
     p1->parent = p2;
   }
 }

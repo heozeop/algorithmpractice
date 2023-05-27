@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -22,7 +22,7 @@ int main(void) {
 }
 
 int find(int a) {
-  if(nodes[a] == a) {
+  if (nodes[a] == a) {
     return a;
   }
 
@@ -38,19 +38,19 @@ void merge(int a, int b) {
 void input() {
   cin >> n >> m;
 
-  for(int i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++) {
     nodes[i] = i;
   }
 
-  int a,b;
-  for(int i = 0; i < m; i++) {
+  int a, b;
+  for (int i = 0; i < m; i++) {
     scanf("%d %d", &a, &b);
 
-    if(find(a) == find(b)) {
+    if (find(a) == find(b)) {
       cPoint = i + 1;
       break;
     }
-    merge(a,b);
+    merge(a, b);
   }
   return;
 }

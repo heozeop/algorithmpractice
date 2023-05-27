@@ -1,9 +1,9 @@
 #include <algorithm>
 #include <iostream>
 #include <limits.h>
+#include <map>
 #include <queue>
 #include <set>
-#include <map>
 #include <vector>
 
 using namespace std;
@@ -34,9 +34,9 @@ void solve() {
     return;
   }
 
-  map<int,int> arrMap;
-  for(int i = 0; i < n; ++i) {
-    if(arrMap.find(arr[i]) == arrMap.end()) {
+  map<int, int> arrMap;
+  for (int i = 0; i < n; ++i) {
+    if (arrMap.find(arr[i]) == arrMap.end()) {
       arrMap.insert({arr[i], 1});
     } else {
       arrMap[arr[i]] += 1;
@@ -55,7 +55,7 @@ void solve() {
         sameCount += 1;
       }
 
-      if(candidate == arr[j]) {
+      if (candidate == arr[j]) {
         sameCount += 1;
       }
 

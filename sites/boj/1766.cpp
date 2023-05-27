@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 using namespace std;
@@ -22,8 +22,8 @@ int main(void) {
 
 void input() {
   cin >> n >> m;
-  int a,b;
-  while(m--) {
+  int a, b;
+  while (m--) {
     cin >> a >> b;
     nodes[a].push_back(b);
     priority[b]++;
@@ -32,20 +32,20 @@ void input() {
 }
 
 void solve() {
-  priority_queue<int, vector<int>, greater<int> > q;
-  for(int i=1; i<=n; i++) {
-    if(priority[i] == 0) {
+  priority_queue<int, vector<int>, greater<int>> q;
+  for (int i = 1; i <= n; i++) {
+    if (priority[i] == 0) {
       q.push(i);
     }
   }
 
-  while(!q.empty()) {
+  while (!q.empty()) {
     int t = q.top();
     q.pop();
 
     cout << t << " ";
-    for(int i : nodes[t]) {
-      if(--priority[i] == 0) {
+    for (int i : nodes[t]) {
+      if (--priority[i] == 0) {
         q.push(i);
       }
     }
