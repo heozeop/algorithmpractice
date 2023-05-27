@@ -20,24 +20,24 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
 
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> arr[i];
   }
 
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   priority_queue<ll, vector<ll>, greater<ll>> q;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     q.push(arr[i]);
   }
 
   ll sum = 0, temp;
-  while(q.size() > 1) {
+  while (q.size() > 1) {
     temp = q.top();
     q.pop();
     temp += q.top();
@@ -48,7 +48,6 @@ void solve() {
   }
 
   cout << sum;
-  
 
-  return; 
+  return;
 }
