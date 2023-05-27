@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -16,8 +16,7 @@ void solve();
 ll v, sum;
 int endNode;
 bool visited[LIMIT_NODE];
-vector<pair<int, int> > tree[LIMIT_NODE];
-
+vector<pair<int, int>> tree[LIMIT_NODE];
 
 int main(void) {
   input();
@@ -28,7 +27,7 @@ int main(void) {
 void init() {
   sum = 0;
   fill(&visited[0], &visited[LIMIT_NODE] + 1, false);
-  for(auto node : tree) {
+  for (auto node : tree) {
     node.clear();
   }
   return;
@@ -37,32 +36,33 @@ void init() {
 void input() {
   cin >> v;
   int from, to, val;
-  while(v--) {
+  while (v--) {
     cin >> from;
 
     do {
       cin >> to;
-      if(to == END) {
+      if (to == END) {
         break;
       }
 
       cin >> val;
       tree[from].push_back(make_pair(to, val));
-    } while(1);
+    } while (1);
   }
   return;
 }
 
 void dfs(int curNode, int curVal) {
-  if(visited[curNode]) return;
+  if (visited[curNode])
+    return;
   visited[curNode] = true;
 
-  if(sum < curVal) {
+  if (sum < curVal) {
     sum = curVal;
     endNode = curNode;
   }
 
-  for(auto nextNode : tree[curNode]) {
+  for (auto nextNode : tree[curNode]) {
     dfs(nextNode.first, curVal + nextNode.second);
   }
 

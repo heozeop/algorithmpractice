@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -22,18 +22,18 @@ int main(void) {
 
 void input() {
   cin >> n;
-  for(int i = 1; i <= n; i++) {
+  for (int i = 1; i <= n; i++) {
     cin >> inOrder[i];
   }
-  for(int i = 1; i <= n; i++) {
+  for (int i = 1; i <= n; i++) {
     cin >> postOrder[i];
   }
   return;
 }
 
-int findIndex(int* arr, int target,int start, int end) {
-  for(int i = start; i <= end; ++i) {
-    if(arr[i] == target) {
+int findIndex(int *arr, int target, int start, int end) {
+  for (int i = start; i <= end; ++i) {
+    if (arr[i] == target) {
       return i;
     }
   }
@@ -42,7 +42,7 @@ int findIndex(int* arr, int target,int start, int end) {
 }
 
 void printPreOrder(int iStart, int iEnd, int pStart, int pEnd) {
-  if(iStart > iEnd || pStart > pEnd) {
+  if (iStart > iEnd || pStart > pEnd) {
     return;
   }
 
@@ -50,7 +50,7 @@ void printPreOrder(int iStart, int iEnd, int pStart, int pEnd) {
   printf("%d ", curRoot);
 
   int rootIndex = findIndex(inOrder, curRoot, iStart, iEnd);
-  if(rootIndex == -1) {
+  if (rootIndex == -1) {
     return;
   }
 

@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <limits.h>
 #include <queue>
 #include <vector>
-#include <limits.h>
 
 using namespace std;
 
@@ -12,7 +12,6 @@ int n, k;
 
 void input();
 void solve();
-
 
 int main(void) {
   input();
@@ -32,26 +31,26 @@ void solve() {
   }
 
   int seconds = 0;
-  queue<pair<int,int>> q;
+  queue<pair<int, int>> q;
   vector<int> arr(MAX_N, EMPTY);
 
   q.push({n, 0});
   int cur, sec, nc;
-  while(!q.empty()) {
+  while (!q.empty()) {
     cur = q.front().first;
     sec = q.front().second;
     q.pop();
 
-    if(cur == k) {
+    if (cur == k) {
       seconds = sec;
       break;
     }
 
     arr[cur] = sec;
-    
+
     // 2배
     nc = cur * 2;
-    while(nc <= k && arr[nc] == EMPTY) {
+    while (nc <= k && arr[nc] == EMPTY) {
       q.push({nc, sec});
       nc *= 2;
     }
@@ -59,13 +58,13 @@ void solve() {
     // -1
     nc = cur - 1;
     if (arr[nc] == EMPTY && nc >= 0) {
-      q.push({nc, sec+1});
+      q.push({nc, sec + 1});
     }
 
     // +1
     nc = cur + 1;
     if (arr[nc] == EMPTY && nc <= k) {
-      q.push({nc, sec+1});
+      q.push({nc, sec + 1});
     }
   }
 

@@ -1,9 +1,9 @@
+#include <algorithm>
 #include <iostream>
 #include <map>
-#include <algorithm>
 #include <queue>
-#include <vector>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -34,24 +34,23 @@ void input() {
 }
 
 void init() {
-  for(int i = 0; i < LIMIT_NODE_COUNT; ++i) {
+  for (int i = 0; i < LIMIT_NODE_COUNT; ++i) {
     nodes[i] = i;
     connected[i] = 1;
   }
 }
 
 int find(int a) {
-  if(a == nodes[a]) {
+  if (a == nodes[a]) {
     return a;
   }
-  
+
   return nodes[a] = find(nodes[a]);
 }
 
 int merge(int a, int b) {
   int aP = find(a);
   int bP = find(b);
-
 
   int big, small;
   if (connected[aP] < connected[bP]) {
@@ -62,7 +61,7 @@ int merge(int a, int b) {
     small = bP;
   }
 
-  if(aP == bP) {
+  if (aP == bP) {
     return connected[big];
   }
 
@@ -73,8 +72,8 @@ int merge(int a, int b) {
 }
 
 void solve() {
-  string a,b;
-  while(n--) {
+  string a, b;
+  while (n--) {
     cin >> f;
 
     map<string, int> nameIdMap;
@@ -82,14 +81,14 @@ void solve() {
 
     init();
 
-    while(f--) {
+    while (f--) {
       cin >> a >> b;
 
-      if(nameIdMap.count(a) == 0) {
+      if (nameIdMap.count(a) == 0) {
         nameIdMap[a] = friendId++;
       }
 
-      if(nameIdMap.count(b) == 0) {
+      if (nameIdMap.count(b) == 0) {
         nameIdMap[b] = friendId++;
       }
 

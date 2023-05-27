@@ -1,30 +1,30 @@
 #include <iostream>
-#include <vector>
 #include <queue>
+#include <vector>
 
 using namespace std;
 
 typedef long long ll;
 
 ll absoluting(ll x) {
-  if(x < 0) {
+  if (x < 0) {
     return x * -1;
   }
   return x;
 }
 
 class Compare {
-  public:
-    bool operator() (ll a, ll b) {
-      ll aAbs = absoluting(a);
-      ll bAbs = absoluting(b);
+public:
+  bool operator()(ll a, ll b) {
+    ll aAbs = absoluting(a);
+    ll bAbs = absoluting(b);
 
-      if(aAbs == bAbs) {
-        return a > b;
-      }
-
-      return aAbs > bAbs;
+    if (aAbs == bAbs) {
+      return a > b;
     }
+
+    return aAbs > bAbs;
+  }
 };
 
 int main() {
@@ -32,16 +32,16 @@ int main() {
 
   int n;
   cin >> n;
-  while(n-- > 0) {
+  while (n-- > 0) {
     ll temp;
     scanf("%lld", &temp);
 
-    if(temp != 0) {
+    if (temp != 0) {
       queue.push(temp);
       continue;
     }
 
-    if(queue.empty()) {
+    if (queue.empty()) {
       printf("%d\n", 0);
       continue;
     }

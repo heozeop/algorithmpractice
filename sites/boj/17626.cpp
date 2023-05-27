@@ -1,9 +1,9 @@
-#include <iostream>
 #include <algorithm>
-#include <queue>
-#include <vector>
+#include <iostream>
 #include <limits.h>
 #include <math.h>
+#include <queue>
+#include <vector>
 
 using namespace std;
 int n;
@@ -30,17 +30,17 @@ void solve() {
   dp[4] = 1;
 
   float temp, flooredTemp;
-  for(int i = 5; i <= n; ++i) {
+  for (int i = 5; i <= n; ++i) {
     temp = sqrt(i);
     flooredTemp = floor(temp);
-    if(flooredTemp == temp) {
+    if (flooredTemp == temp) {
       dp[i] = 1;
       continue;
-    } 
+    }
 
-    
     dp[i] = 5;
-    for(int j = (int)(ceil(sqrt(flooredTemp))); j <= flooredTemp && dp[i] > 2; ++j) {
+    for (int j = (int)(ceil(sqrt(flooredTemp))); j <= flooredTemp && dp[i] > 2;
+         ++j) {
       dp[i] = min(1 + dp[i - (int)pow(j, 2)], dp[i]);
     }
   }

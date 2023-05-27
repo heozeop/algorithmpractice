@@ -40,14 +40,12 @@ int bfs() {
   queue<pair<int, pair<int, int>>> q;
   q.push({0, {1, 1}});
 
-
   while (!q.empty()) {
     auto temp = q.front();
     q.pop();
 
     int curAlphabetNumber = board[temp.second.first][temp.second.second] - 'A';
     temp.first += (1 << curAlphabetNumber);
-    
 
     int nx, ny, nextAlphabetNumber;
     for (int i = 0; i < 4; ++i) {
@@ -67,9 +65,9 @@ int bfs() {
     }
 
     int localMax = 0;
-    for(int i = 0; i < 26; ++i) {
-      if(temp.first & (1 << i)) {
-        localMax += 1;    
+    for (int i = 0; i < 26; ++i) {
+      if (temp.first & (1 << i)) {
+        localMax += 1;
       }
     }
     gmax = max(gmax, localMax);

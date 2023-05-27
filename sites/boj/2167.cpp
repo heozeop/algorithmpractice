@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <limits.h>
 #include <queue>
 #include <vector>
-#include <limits.h>
 
 using namespace std;
 
@@ -20,8 +20,8 @@ int main(void) {
 
 void input() {
   cin >> n >> m;
-  for(int i = 1; i <= n; ++i) {
-    for(int j = 1; j <= m; ++j) {
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1; j <= m; ++j) {
       cin >> array2D[i][j];
     }
   }
@@ -30,7 +30,7 @@ void input() {
 }
 
 void solve() {
-  for(int i = 0 ; i < k; ++i) {
+  for (int i = 0; i < k; ++i) {
     cout << calculateSum() << '\n';
   }
 
@@ -38,12 +38,12 @@ void solve() {
 }
 
 int calculateSum() {
-  int i,j,x,y;
+  int i, j, x, y;
   int sum = 0;
 
   cin >> i >> j >> x >> y;
-  for(int row = i; row <= x; ++row) {
-    for(int col = j; col <= y; ++col) {
+  for (int row = i; row <= x; ++row) {
+    for (int col = j; col <= y; ++col) {
       sum += array2D[row][col];
     }
   }

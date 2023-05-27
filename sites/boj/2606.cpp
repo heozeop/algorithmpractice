@@ -14,7 +14,7 @@ int visited[MAX];
 void getVariables() {
   cin >> n >> numOfConnections;
 
-  for(int i = 1; i <= numOfConnections; ++i) {
+  for (int i = 1; i <= numOfConnections; ++i) {
     int from, to;
     cin >> from >> to;
     connections[from][to] = CONNECTED;
@@ -27,20 +27,19 @@ void printConnectedWithOne() {
   links.push(1);
   visited[1] = VISITED;
   int count = 0;
-  while(links.size() > 0) {
+  while (links.size() > 0) {
     int from = links.front();
     links.pop();
-    for(int i = 1; i <= n; ++i) { 
+    for (int i = 1; i <= n; ++i) {
       const int isConnected = connections[from][i] == CONNECTED;
       const int isVisited = visited[i] == VISITED;
 
-      if(isConnected && !isVisited) {
+      if (isConnected && !isVisited) {
         count += 1;
         links.push(i);
         visited[i] = VISITED;
       }
     }
-
   }
 
   cout << count << endl;

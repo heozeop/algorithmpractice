@@ -1,15 +1,15 @@
-#include <iostream>
 #include <algorithm>
+#include <cmath>
+#include <iostream>
 #include <queue>
 #include <vector>
-#include <cmath>
 
 using namespace std;
 
 void input();
 void solve();
 
-int x,y,d,t;
+int x, y, d, t;
 
 int main(void) {
   input();
@@ -30,7 +30,7 @@ void solve() {
   double left = distance - jumpCount * d;
   ans = min(ans, left + jumpCount * t);
   ans = min(ans, d - left + (jumpCount + 1) * t);
-  if(distance < d) {
+  if (distance < d) {
     ans = min(ans, 2.0 * t);
   } else {
     ans = min(ans, (double)(jumpCount + 1) * t);

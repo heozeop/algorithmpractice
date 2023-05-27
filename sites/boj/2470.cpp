@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 using namespace std;
 
@@ -20,31 +20,31 @@ int main(void) {
 
 void input() {
   cin >> n;
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     cin >> solutions[i];
   }
 }
 
 void solve() {
   sort(&solutions[1], &solutions[n] + 1);
-  int left = 1, right = n; 
+  int left = 1, right = n;
   int min1 = left, min2 = right;
   long long curmin = solutions[min1] + solutions[min2], result;
-  while(left < right) {
+  while (left < right) {
     result = solutions[left] + solutions[right];
-    if(result == 0) {
+    if (result == 0) {
       min1 = left;
       min2 = right;
       break;
     }
 
-    if(abs(result) < abs(curmin)) {
+    if (abs(result) < abs(curmin)) {
       curmin = result;
       min1 = left;
       min2 = right;
     }
 
-    if(result < 0) {
+    if (result < 0) {
       left += 1;
     } else {
       right -= 1;

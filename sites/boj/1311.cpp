@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -23,8 +23,8 @@ int main(void) {
 
 void input() {
   cin >> n;
-  for(int i = 0; i < n; i++) {
-    for(int j = 0; j < n; j++) {
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
       cin >> D[i][j];
     }
   }
@@ -32,21 +32,24 @@ void input() {
 }
 
 int find(int pn, unsigned int workLeft) {
-  if(pn >= n || workLeft == ((1 << n) - 1)) return 0;
-  if(dp[pn][workLeft]) return dp[pn][workLeft];
+  if (pn >= n || workLeft == ((1 << n) - 1))
+    return 0;
+  if (dp[pn][workLeft])
+    return dp[pn][workLeft];
 
   int val = INF;
   unsigned int nextLeft;
 
-  for(int i = 0; i < n; i++) {
-    if(workLeft & (1 << i)) continue;
+  for (int i = 0; i < n; i++) {
+    if (workLeft & (1 << i))
+      continue;
 
     nextLeft = workLeft + (1 << i);
 
     val = min(val, find(pn + 1, nextLeft) + D[pn][i]);
   }
 
-  if(!dp[pn][workLeft] || dp[pn][workLeft] > val) {
+  if (!dp[pn][workLeft] || dp[pn][workLeft] > val) {
     dp[pn][workLeft] = val;
   }
 

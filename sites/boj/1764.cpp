@@ -1,10 +1,10 @@
-#include <iostream>
 #include <algorithm>
-#include <queue>
-#include <vector>
+#include <iostream>
 #include <limits.h>
-#include <string>
+#include <queue>
 #include <set>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -24,9 +24,9 @@ void input() {
   cin >> n >> m;
 
   string temp;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> temp;
-    
+
     a.insert(temp);
   }
   return;
@@ -36,7 +36,7 @@ void solve() {
 
   string temp;
   vector<string> tt;
-  for(int i = 0; i < m; ++i) {
+  for (int i = 0; i < m; ++i) {
     cin >> temp;
     if (a.find(temp) != a.end()) {
       tt.push_back(temp);
@@ -46,7 +46,7 @@ void solve() {
   sort(tt.begin(), tt.end());
 
   cout << tt.size() << '\n';
-  for(int i = 0; i < tt.size(); ++i) {
+  for (int i = 0; i < tt.size(); ++i) {
     cout << tt[i] << '\n';
   }
 

@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
-#include <vector>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -19,10 +19,10 @@ bool dfs();
 void printPrompt();
 
 int main(void) {
-  while(1){
+  while (1) {
     c++;
     cin >> n >> m;
-    if(n == 0 && m == 0) {
+    if (n == 0 && m == 0) {
       break;
     }
 
@@ -35,15 +35,15 @@ int main(void) {
 
 void init() {
   numOfTrees = 0;
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     tree[i].clear();
   }
   fill(&visited[0], &visited[n] + 1, false);
 }
 
 void input() {
-  int a,b;
-  for(int i = 0; i < m; ++i) {
+  int a, b;
+  for (int i = 0; i < m; ++i) {
     cin >> a >> b;
     tree[a].push_back(b);
     tree[b].push_back(a);
@@ -55,11 +55,14 @@ bool dfs(int curNode, int prevNode) {
   visited[curNode] = true;
 
   int nextNode;
-  for(int i = 0; i < tree[curNode].size(); ++i) {
+  for (int i = 0; i < tree[curNode].size(); ++i) {
     nextNode = tree[curNode][i];
-    if(nextNode == prevNode) continue;
-    if(visited[nextNode]) return false;
-    if(!dfs(nextNode, curNode)) return false;
+    if (nextNode == prevNode)
+      continue;
+    if (visited[nextNode])
+      return false;
+    if (!dfs(nextNode, curNode))
+      return false;
   }
 
   return true;
@@ -67,9 +70,9 @@ bool dfs(int curNode, int prevNode) {
 
 void printPrompt() {
   string text;
-  if(numOfTrees == 0) {
+  if (numOfTrees == 0) {
     text = "No trees.";
-  } else if(numOfTrees == 1) {
+  } else if (numOfTrees == 1) {
     text = "There is one tree.";
   } else {
     text = "A forest of " + to_string(numOfTrees) + " trees.";
@@ -78,9 +81,10 @@ void printPrompt() {
 }
 
 void solve() {
-  for(int i = 1; i <= n; ++i) {
-    if(visited[i]) continue;
-    if(dfs(i, 0)) {
+  for (int i = 1; i <= n; ++i) {
+    if (visited[i])
+      continue;
+    if (dfs(i, 0)) {
       numOfTrees++;
     }
   }

@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <vector>
 using namespace std;
 
@@ -20,24 +20,25 @@ int main(void) {
   return 0;
 }
 
-void input(){
+void input() {
   cin >> n >> m;
   fill(&cityMap[0][0], &cityMap[n][n] + 1, INF);
   int x, y, z;
-  for(int i = 0; i < m; ++i) {
+  for (int i = 0; i < m; ++i) {
     scanf("%d %d %d", &x, &y, &z);
-    if(cityMap[x][y] > z) {
+    if (cityMap[x][y] > z) {
       cityMap[x][y] = z;
     }
   }
 }
 
 void floydWarshall() {
-  for(int i = 1; i <= n; ++i) {
-    for(int from = 1; from <= n; ++from) {
-      for(int to = 1; to <= n; ++to) {
-        if(from == to) continue;
-        if(cityMap[from][to] > cityMap[from][i] + cityMap[i][to]) {
+  for (int i = 1; i <= n; ++i) {
+    for (int from = 1; from <= n; ++from) {
+      for (int to = 1; to <= n; ++to) {
+        if (from == to)
+          continue;
+        if (cityMap[from][to] > cityMap[from][i] + cityMap[i][to]) {
           cityMap[from][to] = cityMap[from][i] + cityMap[i][to];
           middlePath[from][to] = i;
         }
@@ -47,7 +48,7 @@ void floydWarshall() {
 }
 
 void findPath(int start, int end) {
-  if(middlePath[start][end] == 0) {
+  if (middlePath[start][end] == 0) {
     path.push_back(start);
     path.push_back(end);
     return;
@@ -59,9 +60,9 @@ void findPath(int start, int end) {
 
 void solve() {
   floydWarshall();
-  for(int i = 1; i <= n; ++i) {
-    for(int j = 1; j <= n; ++j) {
-      if(cityMap[i][j] == INF) {
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1; j <= n; ++j) {
+      if (cityMap[i][j] == INF) {
         printf("0 ");
       } else {
         printf("%d ", cityMap[i][j]);
@@ -69,16 +70,16 @@ void solve() {
     }
     cout << '\n';
   }
-  for(int i = 1; i <= n; ++i) {
-    for(int j = 1; j <= n; ++j) {
-      if(cityMap[i][j] == INF) {
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1; j <= n; ++j) {
+      if (cityMap[i][j] == INF) {
         printf("0\n");
         continue;
       }
       path.clear();
-      findPath(i,j);
+      findPath(i, j);
       printf("%d ", path.size());
-      for(int k = 0; k < path.size(); ++k) {
+      for (int k = 0; k < path.size(); ++k) {
         printf("%d ", path[k]);
       }
       printf("\n");

@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -28,7 +28,7 @@ void input() {
 }
 
 void init() {
-  for(int i = 1; i <= n; i++) {
+  for (int i = 1; i <= n; i++) {
     cost[i] = dp[i] = inComming[i] = 0;
     order[i].clear();
   }
@@ -37,24 +37,25 @@ void init() {
 long long bfs() {
   long long val = 0;
   queue<int> q;
-  for(int i = 1; i <= n; i++) {
-    if(inComming[i] == 0) {
+  for (int i = 1; i <= n; i++) {
+    if (inComming[i] == 0) {
       q.push(i);
       dp[i] = cost[i];
     }
   }
 
-  while(!q.empty()) {
+  while (!q.empty()) {
     int now = q.front();
     q.pop();
 
-    if(now == w) break;
+    if (now == w)
+      break;
 
-    for(int next : order[now]) {
-      if(--inComming[next] == 0) {
+    for (int next : order[now]) {
+      if (--inComming[next] == 0) {
         q.push(next);
       }
-      if(dp[next] < cost[next] + dp[now]) {
+      if (dp[next] < cost[next] + dp[now]) {
         dp[next] = cost[next] + dp[now];
       }
     }
@@ -64,13 +65,13 @@ long long bfs() {
 }
 
 void solve() {
-  while(t--) {
+  while (t--) {
     cin >> n >> k;
-    for(int i = 1; i <= n; i++) {
+    for (int i = 1; i <= n; i++) {
       cin >> cost[i];
     }
-    int a,b;
-    for(int i = 0; i < k; i++) {
+    int a, b;
+    for (int i = 0; i < k; i++) {
       cin >> a >> b;
       order[a].push_back(b);
       inComming[b]++;

@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
-#include <vector>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -25,9 +25,10 @@ void input() {
 vector<int> ff(string str) {
   vector<int> pi(str.length(), 0);
   int j = 0;
-  for(int i = 1; i < str.length(); i++) {
-    while(j > 0 && str[i] != str[j]) j = pi[j - 1];
-    if(str[i] == str[j]) {
+  for (int i = 1; i < str.length(); i++) {
+    while (j > 0 && str[i] != str[j])
+      j = pi[j - 1];
+    if (str[i] == str[j]) {
       pi[i] = ++j;
     }
   }
@@ -36,7 +37,7 @@ vector<int> ff(string str) {
 
 void solve() {
   auto pi = ff(s);
-  cout << n - pi[n-1];
+  cout << n - pi[n - 1];
 
   return;
 }

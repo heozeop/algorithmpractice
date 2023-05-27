@@ -1,9 +1,9 @@
-#include <iostream>
 #include <algorithm>
-#include <queue>
-#include <vector>
-#include <string>
 #include <bitset>
+#include <iostream>
+#include <queue>
+#include <string>
+#include <vector>
 
 using namespace std;
 
@@ -29,24 +29,24 @@ void solve() {
   bitset<21> bs;
   string op;
   int val;
-  for(int i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++) {
     cin >> op;
-    if(op == "all") {
+    if (op == "all") {
       bs.set();
-    } else if(op == "empty") {
+    } else if (op == "empty") {
       bs.reset();
     } else {
       cin >> val;
-      if(op == "add") {
+      if (op == "add") {
         bs.set(val);
       }
-      if(op == "remove") {
+      if (op == "remove") {
         bs.reset(val);
       }
-      if(op == "check") {
+      if (op == "check") {
         cout << bs.test(val) << '\n';
       }
-      if(op == "toggle") {
+      if (op == "toggle") {
         bs.flip(val);
       }
     }

@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <limits.h>
 #include <queue>
 #include <vector>
-#include <limits.h>
 
 using namespace std;
 
@@ -30,21 +30,21 @@ void input() {
   cin >> n;
   string temp;
   int val;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> temp;
-    for(int j = 0; j < n; ++j) {
-      switch(temp[j]) {
-        case 'C':
-          val = RED;
-          break;
-        case 'P':
-          val = BLUE;
-          break;
-        case 'Z':
-          val = GREEN;
-          break;
-        case 'Y':
-          val = YELLOW;
+    for (int j = 0; j < n; ++j) {
+      switch (temp[j]) {
+      case 'C':
+        val = RED;
+        break;
+      case 'P':
+        val = BLUE;
+        break;
+      case 'Z':
+        val = GREEN;
+        break;
+      case 'Y':
+        val = YELLOW;
       }
       board[i][j] = val;
     }
@@ -54,29 +54,29 @@ void input() {
 }
 
 void solve() {
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     maxVal = max(maxVal, countWithFixedRow(i));
     maxVal = max(maxVal, countWithFixedCol(i));
   }
 
-  if(maxVal == n) {
+  if (maxVal == n) {
     cout << n;
     return;
   }
 
-  for(int i = 0; i < n; ++i) {
-    for(int j = 0; j < n - 1; ++j) {
-      swap(board[i][j], board[i][j+1]);
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < n - 1; ++j) {
+      swap(board[i][j], board[i][j + 1]);
       maxVal = max(maxVal, countWithFixedRow(i));
       maxVal = max(maxVal, countWithFixedCol(j));
-      maxVal = max(maxVal, countWithFixedCol(j+1));
-      swap(board[i][j+1],board[i][j]);
+      maxVal = max(maxVal, countWithFixedCol(j + 1));
+      swap(board[i][j + 1], board[i][j]);
 
-      swap(board[j][i],board[j+1][i]);
+      swap(board[j][i], board[j + 1][i]);
       maxVal = max(maxVal, countWithFixedCol(i));
       maxVal = max(maxVal, countWithFixedRow(j));
-      maxVal = max(maxVal, countWithFixedRow(j+1));
-      swap(board[j+1][i], board[j][i]);
+      maxVal = max(maxVal, countWithFixedRow(j + 1));
+      swap(board[j + 1][i], board[j][i]);
     }
   }
 
@@ -89,7 +89,7 @@ int countWithFixedRow(int row) {
   prevC = board[row][0];
   count = 1;
   int localMax = 0;
-  for(int i = 1; i < n; ++i) {
+  for (int i = 1; i < n; ++i) {
     if (board[row][i] == prevC) {
       count += 1;
     } else {
@@ -107,7 +107,7 @@ int countWithFixedCol(int col) {
   prevC = board[0][col];
   count = 1;
   localMax = 0;
-  for(int i = 1; i < n; ++i) {
+  for (int i = 1; i < n; ++i) {
     if (board[i][col] == prevC) {
       count += 1;
     } else {

@@ -1,9 +1,9 @@
-#include <iostream>
 #include <algorithm>
-#include <queue>
-#include <vector>
+#include <iostream>
 #include <limits.h>
+#include <queue>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -29,9 +29,9 @@ void input() {
 }
 
 void solve() {
-  for(int i = 0; i < inputString.length(); ++i) {
-    if(isTagStart) {
-      if(inputString[i] == '>') {
+  for (int i = 0; i < inputString.length(); ++i) {
+    if (isTagStart) {
+      if (inputString[i] == '>') {
         isTagStart = false;
       }
 
@@ -39,9 +39,9 @@ void solve() {
       continue;
     }
 
-    if(inputString[i] == '<') {
-      if(wordStartIndex != NOT_STARTED) {
-        printInverseAndReset(i); 
+    if (inputString[i] == '<') {
+      if (wordStartIndex != NOT_STARTED) {
+        printInverseAndReset(i);
       }
 
       isTagStart = true;
@@ -49,18 +49,18 @@ void solve() {
       continue;
     }
 
-    if(inputString[i] == ' ') {
+    if (inputString[i] == ' ') {
       printInverseAndReset(i);
       cout << ' ';
       continue;
     }
 
-    if(wordStartIndex == NOT_STARTED) {
+    if (wordStartIndex == NOT_STARTED) {
       wordStartIndex = i;
     }
   }
 
-  if(wordStartIndex != NOT_STARTED) {
+  if (wordStartIndex != NOT_STARTED) {
     printInverseAndReset(inputString.length());
   }
 
@@ -68,7 +68,8 @@ void solve() {
 }
 
 void printInverseAndReset(int currentIndex) {
-  string strToReverse = inputString.substr(wordStartIndex, currentIndex - wordStartIndex);
+  string strToReverse =
+      inputString.substr(wordStartIndex, currentIndex - wordStartIndex);
   reverse(strToReverse.begin(), strToReverse.end());
   cout << strToReverse;
   wordStartIndex = NOT_STARTED;

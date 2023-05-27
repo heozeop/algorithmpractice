@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -27,7 +27,7 @@ void input() {
   cin >> n >> r >> q;
 
   int a, b;
-  for(int i = 0; i < n - 1; i++) {
+  for (int i = 0; i < n - 1; i++) {
     cin >> a >> b;
     graph[a].push_back(b);
     graph[b].push_back(a);
@@ -37,14 +37,14 @@ void input() {
 
 int dfs(int nextNode) {
   visited[nextNode] = true;
-  if(graph[nextNode].size() == 0) {
+  if (graph[nextNode].size() == 0) {
     return 1;
   }
 
   int localNum = 0;
-  for(int i = 0; i < graph[nextNode].size(); ++i) {
+  for (int i = 0; i < graph[nextNode].size(); ++i) {
     int child = graph[nextNode][i];
-    if(!visited[child]) {
+    if (!visited[child]) {
       int numOfGrandChildren = dfs(graph[nextNode][i]);
 
       localNum += numOfGrandChildren;
@@ -52,7 +52,7 @@ int dfs(int nextNode) {
   }
 
   numOfChildren[nextNode] = localNum + 1;
-  if(localNum == 0) {
+  if (localNum == 0) {
     return 1;
   }
 
@@ -62,7 +62,7 @@ int dfs(int nextNode) {
 void solve() {
   dfs(r);
   int nQ;
-  while(q--) {
+  while (q--) {
     cin >> nQ;
     cout << numOfChildren[nQ] << '\n';
   }

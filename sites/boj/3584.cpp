@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -9,7 +9,7 @@ void input();
 void solve();
 int t, n;
 int tree[10001];
-int A,B;
+int A, B;
 
 int main(void) {
   ios_base::sync_with_stdio(false);
@@ -26,8 +26,8 @@ void input() {
 
 void init(int n) {
   fill(&tree[0], &tree[n + 1], 0);
-  int a,b;
-  for(int i = 0; i < n - 1; i++) {
+  int a, b;
+  for (int i = 0; i < n - 1; i++) {
     cin >> a >> b;
     tree[b] = a;
   }
@@ -36,7 +36,7 @@ void init(int n) {
 
 vector<int> getToRootPath(int a) {
   vector<int> toRoot;
-  while(a != 0) {
+  while (a != 0) {
     toRoot.push_back(a);
     a = tree[a];
   }
@@ -46,8 +46,8 @@ vector<int> getToRootPath(int a) {
 
 void printNCA(vector<int> a, vector<int> b) {
   int localMax = max(a.size(), b.size());
-  for(int i = 0; i < localMax; i++) {
-    if(a[i] != b[i]) {
+  for (int i = 0; i < localMax; i++) {
+    if (a[i] != b[i]) {
       cout << a[max(i - 1, 0)] << '\n';
       break;
     }
@@ -55,7 +55,7 @@ void printNCA(vector<int> a, vector<int> b) {
 }
 
 void solve() {
-  while(t--) {
+  while (t--) {
     cin >> n;
     init(n);
     auto fromA = getToRootPath(A);

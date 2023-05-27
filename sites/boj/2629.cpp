@@ -1,5 +1,5 @@
-#include <iostream>
 #include <cmath>
+#include <iostream>
 #include <string.h>
 
 using namespace std;
@@ -17,22 +17,19 @@ int n;
 
 bool isCheckable(int index, int weight) {
   const bool isConditionUnCheckable = index > n || weight > sum;
-  if(isConditionUnCheckable) {
+  if (isConditionUnCheckable) {
     return UNCHECKABLE;
   }
 
-  if(dp[index][weight] != UNKNOWN) {
+  if (dp[index][weight] != UNKNOWN) {
     return dp[index][weight];
   }
 
-  const int conditions[] = { 
-      abs(weight - weights[index]),
-      weight + weights[index],
-      weight
-  };
+  const int conditions[] = {abs(weight - weights[index]),
+                            weight + weights[index], weight};
 
-  for(const int condition : conditions) {
-    if(isCheckable(index + 1, condition)) {
+  for (const int condition : conditions) {
+    if (isCheckable(index + 1, condition)) {
       dp[index][weight] = CHECKABLE;
       return CHECKABLE;
     }
@@ -46,7 +43,7 @@ int main(void) {
   memset(dp, UNKNOWN, sizeof(dp));
 
   cin >> n;
-  for(int i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++) {
     int temp;
     cin >> temp;
 
@@ -57,11 +54,11 @@ int main(void) {
 
   int t;
   cin >> t;
-  while(t--) {
+  while (t--) {
     int temp;
     cin >> temp;
 
-    if(isCheckable(0, temp)) {
+    if (isCheckable(0, temp)) {
       cout << "Y ";
     } else {
       cout << "N ";

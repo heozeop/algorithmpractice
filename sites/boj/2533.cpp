@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -24,8 +24,8 @@ int main(void) {
 
 void input() {
   cin >> n;
-  int u,v;
-  for(int i = 0; i < n - 1; i++) {
+  int u, v;
+  for (int i = 0; i < n - 1; i++) {
     cin >> u >> v;
     tree[u].push_back(v);
     tree[v].push_back(u);
@@ -36,20 +36,22 @@ void input() {
 
 int findDp(int curNode, bool selected, int prevNode) {
   int sum = selected;
-  if(dp[curNode][selected] > 0) {
+  if (dp[curNode][selected] > 0) {
     return dp[curNode][selected];
   }
 
-  for(int i = 0; i < tree[curNode].size(); i++) {
-    if(tree[curNode][i] == prevNode) continue;
-    if(selected) {
-      sum += min(findDp(tree[curNode][i], !selected, curNode), findDp(tree[curNode][i], selected, curNode));
+  for (int i = 0; i < tree[curNode].size(); i++) {
+    if (tree[curNode][i] == prevNode)
+      continue;
+    if (selected) {
+      sum += min(findDp(tree[curNode][i], !selected, curNode),
+                 findDp(tree[curNode][i], selected, curNode));
     } else {
       sum += findDp(tree[curNode][i], !selected, curNode);
     }
   }
 
-  if(dp[curNode][selected] > 0) {
+  if (dp[curNode][selected] > 0) {
     dp[curNode][selected] = min(sum, dp[curNode][selected]);
   } else {
     dp[curNode][selected] = sum;
@@ -58,9 +60,7 @@ int findDp(int curNode, bool selected, int prevNode) {
   return sum;
 }
 
-void printMax() {
-  cout << min(dp[1][0], dp[1][1]) << '\n';
-}
+void printMax() { cout << min(dp[1][0], dp[1][1]) << '\n'; }
 
 void solve() {
   findDp(1, true, 0);

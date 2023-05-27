@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -22,8 +22,8 @@ int main(void) {
 
 void input() {
   cin >> n;
-  for(int i = 0; i < n; i++) {
-    for(int j = 0; j < n; j++) {
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < n; j++) {
       cin >> city[i][j];
     }
   }
@@ -31,18 +31,22 @@ void input() {
 }
 
 long long dfs(int now, unsigned int visited) {
-  if(now >= n) return 0;
-  if(visited == ((1 << n) - 1)) return city[now][0] != 0 ? city[now][0] : INF;
-  if(dp[now][visited]) return dp[now][visited];
+  if (now >= n)
+    return 0;
+  if (visited == ((1 << n) - 1))
+    return city[now][0] != 0 ? city[now][0] : INF;
+  if (dp[now][visited])
+    return dp[now][visited];
 
   long long val = INF;
-  for(int i = 0; i < n; ++i) {
-    if(!city[now][i] || visited & (1 << i)) continue;
+  for (int i = 0; i < n; ++i) {
+    if (!city[now][i] || visited & (1 << i))
+      continue;
 
     val = min(val, city[now][i] + dfs(i, visited + (1 << i)));
   }
 
-  if(!dp[now][visited] || dp[now][visited] > val) {
+  if (!dp[now][visited] || dp[now][visited] > val) {
     dp[now][visited] = val;
   }
 

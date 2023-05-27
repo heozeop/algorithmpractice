@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -22,8 +22,8 @@ int main(void) {
 
 void input() {
   cin >> n;
-  for(int i = 0; i < n; i++) {
-    for(int j = 0; j < 3; j++) {
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < 3; j++) {
       cin >> house[i][j];
     }
   }
@@ -32,18 +32,22 @@ void input() {
 }
 
 int dfs(int now, int color) {
-  if(now >= n) return 0;
-  if(now == n - 1 && color == startColor) return INF;
-  if(dp[startColor][now][color]) return dp[startColor][now][color];
+  if (now >= n)
+    return 0;
+  if (now == n - 1 && color == startColor)
+    return INF;
+  if (dp[startColor][now][color])
+    return dp[startColor][now][color];
 
   int val = INF;
-  for(int i = 0; i < 3; i++) {
-    if(color == i) continue;
+  for (int i = 0; i < 3; i++) {
+    if (color == i)
+      continue;
 
     val = min(val, dfs(now + 1, i) + house[now][color]);
   }
 
-  if(!dp[startColor][now][color] || dp[startColor][now][color] > val) {
+  if (!dp[startColor][now][color] || dp[startColor][now][color] > val) {
     dp[startColor][now][color] = val;
   }
 
@@ -52,7 +56,7 @@ int dfs(int now, int color) {
 
 void solve() {
   int val = INF;
-  for(startColor = 0; startColor < 3; startColor++) {
+  for (startColor = 0; startColor < 3; startColor++) {
     val = min(val, dfs(0, startColor));
   }
 

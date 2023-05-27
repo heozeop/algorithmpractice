@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <limits.h>
 #include <queue>
 #include <vector>
-#include <limits.h>
 
 using namespace std;
 
@@ -21,7 +21,7 @@ int main(void) {
 void input() {
   cin >> n;
 
-  for(int i = 1; i <= n; i++) {
+  for (int i = 1; i <= n; i++) {
     for (int j = 1; j <= n; j++) {
       cin >> pathMap[i][j];
     }
@@ -29,18 +29,18 @@ void input() {
   return;
 }
 
-int dfs(int idx, vector<bool>& visited, int count) { 
+int dfs(int idx, vector<bool> &visited, int count) {
   if (count == n) {
-    if(pathMap[idx][1]) {
-      return  pathMap[idx][1];
+    if (pathMap[idx][1]) {
+      return pathMap[idx][1];
     }
 
     return 123456789;
   }
 
   int val = 123456789;
-  for(int i = 2; i <= n; i++) {
-    if(visited[i] || pathMap[idx][i] == 0) {
+  for (int i = 2; i <= n; i++) {
+    if (visited[i] || pathMap[idx][i] == 0) {
       continue;
     }
 
@@ -53,7 +53,7 @@ int dfs(int idx, vector<bool>& visited, int count) {
 }
 
 void solve() {
-  vector<bool> visited(n+1, false);
+  vector<bool> visited(n + 1, false);
   visited[1] = true;
   cout << dfs(1, visited, 1);
 

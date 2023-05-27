@@ -1,8 +1,8 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
+#include <limits.h>
 #include <queue>
 #include <vector>
-#include <limits.h>
 
 using namespace std;
 
@@ -21,7 +21,7 @@ int main(void) {
 
 void input() {
   cin >> n;
-  for(int i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++) {
     cin >> arr[i];
     maxN = max(maxN, arr[i]);
   }
@@ -29,12 +29,12 @@ void input() {
 }
 
 void solve() {
-  for(int i = 0; i < arr[n - 1]; ++i) {
-    dp[n-1][i] = arr[n - 1];
+  for (int i = 0; i < arr[n - 1]; ++i) {
+    dp[n - 1][i] = arr[n - 1];
   }
 
-  for(int i = n-2; i >= 0; --i) {
-    for(int j = 0; j <= maxN; ++j) {
+  for (int i = n - 2; i >= 0; --i) {
+    for (int j = 0; j <= maxN; ++j) {
       if (j < arr[i]) {
         dp[i][j] = max(dp[i + 1][j], dp[i + 1][arr[i]] + arr[i]);
       } else {
@@ -44,7 +44,7 @@ void solve() {
   }
 
   int maxValue = 0;
-  for(int i = 0; i <= maxN; ++i) {
+  for (int i = 0; i <= maxN; ++i) {
     maxValue = max(maxValue, dp[0][i]);
   }
   cout << maxValue;

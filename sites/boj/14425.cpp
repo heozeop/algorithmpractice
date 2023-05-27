@@ -1,18 +1,19 @@
-#include <iostream>
 #include <algorithm>
-#include <queue>
-#include <vector>
-#include <string>
+#include <iostream>
 #include <map>
+#include <queue>
+#include <string>
+#include <vector>
 
 using namespace std;
 
 class Node {
 private:
-  map<char, Node*> children;
+  map<char, Node *> children;
   bool isLastNode = false;
+
 public:
-  void insert(string& nodes, int index = 0) {
+  void insert(string &nodes, int index = 0) {
     if (index == nodes.size()) {
       isLastNode = true;
       return;
@@ -24,10 +25,11 @@ public:
     children[nodes[index]]->insert(nodes, index + 1);
   }
 
-  bool find(string& str, int index = 0) {
-    if(index == str.size()) return isLastNode;
+  bool find(string &str, int index = 0) {
+    if (index == str.size())
+      return isLastNode;
 
-    if(children.find(str[index]) != children.end()) {
+    if (children.find(str[index]) != children.end()) {
       return children[str[index]]->find(str, index + 1);
     }
     return false;
@@ -38,7 +40,7 @@ void input();
 void solve();
 
 int n, m;
-Node* root;
+Node *root;
 vector<string> finds;
 
 int main(void) {
@@ -52,12 +54,12 @@ int main(void) {
 
 void input() {
   cin >> n >> m;
-  for(int i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++) {
     string a;
     cin >> a;
     root->insert(a);
   }
-  for(int i = 0; i < m; i++) {
+  for (int i = 0; i < m; i++) {
     string a;
     cin >> a;
     finds.push_back(a);
@@ -67,8 +69,9 @@ void input() {
 
 void solve() {
   int found = 0;
-  for(int i = 0; i < m; i++) {
-    if(root->find(finds[i])) found++;
+  for (int i = 0; i < m; i++) {
+    if (root->find(finds[i]))
+      found++;
   }
   cout << found;
   return;

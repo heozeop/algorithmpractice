@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -26,7 +26,7 @@ int main(void) {
 void setMultiplicity(int start, int limit) {
   if (visited[start] != NO_CHECK) {
     for (int i = start; i <= limit + 2; i += start) {
-      if(visited[i] != NO_CHECK) {
+      if (visited[i] != NO_CHECK) {
         visited[i] = CHECKED;
       }
     }

@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -24,7 +24,7 @@ int main(void) {
 
 void input() {
   cin >> n;
-  for(int i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++) {
     cin >> numbers[i];
   }
   cin >> m;
@@ -42,7 +42,7 @@ bool isExist(int a) {
     middle = (start + end) / 2;
     if (numbers[middle] < a) {
       start = middle + 1;
-    } else if (numbers[middle] > a){
+    } else if (numbers[middle] > a) {
       end = middle - 1;
     } else {
       existance = true;

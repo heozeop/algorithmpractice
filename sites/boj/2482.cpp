@@ -1,5 +1,5 @@
-#include <iostream>
 #include <algorithm>
+#include <iostream>
 #include <queue>
 #include <vector>
 
@@ -24,10 +24,13 @@ void input() {
 }
 
 int dfs(int now, int left) {
-  if(now <= 0 || now < left * 2) return 0;
-  if(left == 1) return now;
-  if(dp[now][left]) return dp[now][left];
-  return dp[now][left] = (dfs(now - 1,left) + dfs(now - 2,left - 1)) % INF;
+  if (now <= 0 || now < left * 2)
+    return 0;
+  if (left == 1)
+    return now;
+  if (dp[now][left])
+    return dp[now][left];
+  return dp[now][left] = (dfs(now - 1, left) + dfs(now - 2, left - 1)) % INF;
 }
 
 void solve() {
