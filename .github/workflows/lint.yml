@@ -24,5 +24,6 @@ jobs:
         uses: wearerequired/lint-action@v2
         with:
           auto_fix: true
+          clang_format: true
           clang_format_auto_fix: true
 
