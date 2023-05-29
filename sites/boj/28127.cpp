@@ -20,16 +20,16 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> q;
-  return; 
+  return;
 }
 
 void calc() {
   int cur = a;
   int row = 1;
 
-  while(cur < x) {
+  while (cur < x) {
     cur += a + row * d;
     row += 1;
   }
@@ -38,14 +38,11 @@ void calc() {
   cout << row << " " << x - col << "\n";
 }
 
-
-void solve() { 
-  while(q--) {
+void solve() {
+  while (q--) {
     cin >> a >> d >> x;
     calc();
   }
 
-  return; 
+  return;
 }
-
-
