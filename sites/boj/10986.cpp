@@ -34,17 +34,17 @@ void input() {
 void solve() {
 
   long long csum = 0;
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     csum += arr[i];
 
     cnt[(csum % (long long)m)] += 1;
   }
 
   long long mcount = 0;
-  for(int i = 0; i < m; ++i) {
+  for (int i = 0; i < m; ++i) {
     mcount += cnt[i] * (cnt[i] - 1) / 2;
   }
-    
+
   cout << mcount + cnt[0]; // 조합 + 1개
 
   return;
