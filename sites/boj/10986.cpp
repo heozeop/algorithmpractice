@@ -22,20 +22,20 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> m;
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     scanf("%d", &arr[i]);
   }
 
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
 
   // init sum
   int csum = 0;
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     csum += arr[i];
 
     cnt[csum % m] += 1;
@@ -43,11 +43,11 @@ void solve() {
 
   // travel with two pointer
   int mcount = 0;
-  for(int i = 0; i <= MAX_M; ++i) {
+  for (int i = 0; i <= MAX_M; ++i) {
     mcount += cnt[i] * (cnt[i] - 1) / 2;
   }
-    
+
   cout << mcount + cnt[0]; // 조합 + 일반
 
-  return; 
+  return;
 }
