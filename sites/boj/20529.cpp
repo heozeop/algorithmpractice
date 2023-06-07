@@ -1,11 +1,11 @@
 #include <algorithm>
+#include <cstring>
 #include <iostream>
 #include <limits.h>
 #include <map>
 #include <queue>
 #include <string>
 #include <vector>
-#include <cstring>
 
 using namespace std;
 const int MAX_N = 100000;
@@ -91,7 +91,7 @@ void solve() {
       mbti[i] += 1;
     }
 
-    cout << minD << '\n'; 
+    cout << minD << '\n';
   }
 
   return;
