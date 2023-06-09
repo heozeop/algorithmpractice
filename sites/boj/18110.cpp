@@ -1,9 +1,9 @@
 #include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <limits.h>
 #include <queue>
 #include <vector>
-#include <cmath>
 
 using namespace std;
 
@@ -21,26 +21,25 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> arr[i];
   }
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   int a = round(0.15 * n);
 
   sort(arr, arr + n);
 
   int sum = 0;
-  for(int i = a; i < n - a; ++i) {
+  for (int i = a; i < n - a; ++i) {
     sum += arr[i];
   }
 
   float b = n - 2 * a;
-  
 
   if (b) {
     cout << round(sum / b);
@@ -48,7 +47,5 @@ void solve() {
     cout << 0;
   }
 
-  
-
-  return; 
+  return;
 }

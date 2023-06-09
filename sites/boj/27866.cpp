@@ -2,8 +2,8 @@
 #include <iostream>
 #include <limits.h>
 #include <queue>
-#include <vector>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -19,12 +19,12 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> inputString >> l;
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   cout << inputString[l - 1];
-  return; 
+  return;
 }

@@ -17,13 +17,13 @@ int main(void) {
 
 void input() { return; }
 
-void solve() { 
+void solve() {
   cout << "         ,r\'\"7" << endl;
   cout << "r`-_   ,'  ,/" << endl;
   cout << " \\. \". L_r\'" << endl;
-  cout << "   `~\\/ "<< endl;
+  cout << "   `~\\/ " << endl;
   cout << "      |" << endl;
   cout << "      |" << endl;
 
-  return; 
+  return;
 }
