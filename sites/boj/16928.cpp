@@ -20,40 +20,40 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> m;
-  int a,b;
-  for(int i = 0; i < n; ++i) {
+  int a, b;
+  for (int i = 0; i < n; ++i) {
     cin >> a >> b;
     ladder[a] = b;
   }
 
-  for(int i = 0; i < m; ++i) {
+  for (int i = 0; i < m; ++i) {
     cin >> a >> b;
     snake[a] = b;
   }
 
-  return; 
+  return;
 }
 
-bool isSafeToMove(int v, int a, vector<int>& b) {
+bool isSafeToMove(int v, int a, vector<int> &b) {
   return v && v <= 100 && b[v] > a + 1;
 }
 
-void solve() { 
+void solve() {
   vector<int> board(MAX_NUM, INT_MAX);
-  queue<pair<int,int>> q;
-  q.push({0,1});
+  queue<pair<int, int>> q;
+  q.push({0, 1});
   board[1] = 0;
 
-  int a,b;
-  while(!q.empty()) {
+  int a, b;
+  while (!q.empty()) {
     a = q.front().first;
     b = q.front().second;
     q.pop();
 
     int nextP;
-    for(int i = 1; i <= 6; ++i) {
+    for (int i = 1; i <= 6; ++i) {
       nextP = b + i;
       if (nextP > 100) {
         break;
@@ -64,7 +64,7 @@ void solve() {
       }
 
       board[nextP] = a + 1;
-      if(!snake[nextP] && !ladder[nextP]) {
+      if (!snake[nextP] && !ladder[nextP]) {
         q.push({a + 1, b + i});
       } else if (isSafeToMove(snake[nextP], a, board)) {
         board[snake[nextP]] = a + 1;
@@ -73,11 +73,10 @@ void solve() {
         board[ladder[nextP]] = a + 1;
         q.push({a + 1, ladder[nextP]});
       }
-
     }
   }
 
   cout << board[100];
 
-  return; 
+  return;
 }
