@@ -2,8 +2,8 @@
 #include <iostream>
 #include <limits.h>
 #include <queue>
-#include <vector>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -14,8 +14,8 @@ int arr[MAX_SIZE];
 
 void input();
 void solve();
-void dfs(vector<int>& numberArray, vector<bool>& visited);
-void printNumberArray(vector<int>& numberArray);
+void dfs(vector<int> &numberArray, vector<bool> &visited);
+void printNumberArray(vector<int> &numberArray);
 
 int main(void) {
   input();
@@ -23,54 +23,53 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> m;
 
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> arr[i];
   }
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   sort(arr, arr + n);
 
   vector<int> numberArray;
   vector<bool> visited(n, false);
 
   dfs(numberArray, visited);
-  return; 
+  return;
 }
 
-void dfs(vector<int>& numberArray, vector<bool>& visited) {
+void dfs(vector<int> &numberArray, vector<bool> &visited) {
   if (numberArray.size() == m) {
     printNumberArray(numberArray);
     return;
   }
 
   int prevTemp = 0;
-  for(int i = 0; i < n; ++i) {
-    if(visited[i]) {
+  for (int i = 0; i < n; ++i) {
+    if (visited[i]) {
       continue;
     }
 
-    if(prevTemp == arr[i]) {
+    if (prevTemp == arr[i]) {
       continue;
     }
 
     prevTemp = arr[i];
     visited[i] = true;
-    numberArray.push_back(arr[i]);    
+    numberArray.push_back(arr[i]);
     dfs(numberArray, visited);
     numberArray.pop_back();
     visited[i] = false;
   }
 }
 
-void printNumberArray(vector<int>& numberArray) {
-  for(int i = 0; i < numberArray.size(); ++i) {
+void printNumberArray(vector<int> &numberArray) {
+  for (int i = 0; i < numberArray.size(); ++i) {
     cout << numberArray[i] << " ";
   }
   cout << "\n";
 }
-
