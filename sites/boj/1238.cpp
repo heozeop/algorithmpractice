@@ -22,22 +22,22 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> m >> x;
 
-  int s,e,t;
+  int s, e, t;
 
-  for(int i = 0; i < m; ++i) {
+  for (int i = 0; i < m; ++i) {
     cin >> s >> e >> t;
 
     village[s][e] = t;
   }
 
-  return; 
+  return;
 }
 
-void solve() { 
-  for(int i = 1; i <= n; ++i) {
+void solve() {
+  for (int i = 1; i <= n; ++i) {
     if (x == i) {
       continue;
     }
@@ -49,17 +49,17 @@ void solve() {
   priority_queue<pair<int, int>> q;
 
   visited[x] = true;
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     int value = village[x][i];
     if (!value) {
       continue;
     }
 
-    q.push({ -value, i });
+    q.push({-value, i});
   }
 
   int globalMax = 0;
-  while(!q.empty()) {
+  while (!q.empty()) {
     auto fromVal = q.top();
     q.pop();
 
@@ -70,7 +70,7 @@ void solve() {
     visited[fromVal.second] = true;
     globalMax = max(globalMax, shortestPath[fromVal.second] - fromVal.first);
 
-    for(int i = 1; i <= n; ++i) {
+    for (int i = 1; i <= n; ++i) {
       if (visited[i]) {
         continue;
       }
@@ -80,13 +80,13 @@ void solve() {
         continue;
       }
 
-      q.push({ fromVal.first - value,  i });
+      q.push({fromVal.first - value, i});
     }
   }
 
   cout << globalMax;
 
-  return; 
+  return;
 }
 
 int dijkstraFindPath(int from, int end) {
@@ -94,16 +94,16 @@ int dijkstraFindPath(int from, int end) {
   priority_queue<pair<int, int>> q;
 
   visited[from] = true;
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     int value = village[from][i];
     if (!value) {
       continue;
     }
 
-    q.push({ -value, i });
+    q.push({-value, i});
   }
 
-  while(!q.empty()) {
+  while (!q.empty()) {
     auto fromVal = q.top();
     q.pop();
 
@@ -117,7 +117,7 @@ int dijkstraFindPath(int from, int end) {
 
     visited[fromVal.second] = true;
 
-    for(int i = 1; i <= n; ++i) {
+    for (int i = 1; i <= n; ++i) {
       if (visited[i]) {
         continue;
       }
@@ -127,10 +127,9 @@ int dijkstraFindPath(int from, int end) {
         continue;
       }
 
-      q.push({ fromVal.first - value,  i });
+      q.push({fromVal.first - value, i});
     }
   }
 
   return 0;
 }
-
