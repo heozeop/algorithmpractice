@@ -2,8 +2,8 @@
 #include <iostream>
 #include <limits.h>
 #include <queue>
-#include <vector>
 #include <string>
+#include <vector>
 
 using namespace std;
 const int FAIL_FIND_NEXT_I = -1;
@@ -25,16 +25,16 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> m >> ioi;
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   int follower = findNextIIndex(0);
   int numberOfPn = 0;
 
-  while(follower != FAIL_FIND_NEXT_I) {
+  while (follower != FAIL_FIND_NEXT_I) {
     int pioneer = follower + 1;
 
     if (pioneer >= m) {
@@ -42,14 +42,14 @@ void solve() {
     }
 
     int numberOfIO = 0;
-    for(; pioneer < m; pioneer += 2) {
-      if(!checkOI(pioneer)) {
-        break;    
+    for (; pioneer < m; pioneer += 2) {
+      if (!checkOI(pioneer)) {
+        break;
       }
 
       numberOfIO += 1;
 
-      if(numberOfIO == n) {
+      if (numberOfIO == n) {
         numberOfPn += 1;
         numberOfIO -= 1;
         follower += 2;
@@ -66,7 +66,7 @@ void solve() {
 
 int findNextIIndex(int from) {
   int localFrom = from;
-  while(localFrom < m) {
+  while (localFrom < m) {
     if (ioi[localFrom] == I) {
       return localFrom;
     }
@@ -86,10 +86,9 @@ bool checkOI(int from) {
     return false;
   }
 
-  if(ioi[from + 1] != I) {
+  if (ioi[from + 1] != I) {
     return false;
   }
 
   return true;
 }
-
