@@ -1,10 +1,10 @@
 #include <algorithm>
 #include <iostream>
 #include <limits.h>
-#include <queue>
-#include <vector>
 #include <map>
+#include <queue>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -23,31 +23,31 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> m;
 
   string id, password;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> id >> password;
 
     idPasswordMap.insert({id, password});
   }
 
-  for(int i = 0; i < m; ++i) {
+  for (int i = 0; i < m; ++i) {
     cin >> siteList[i];
   }
 
-  return; 
+  return;
 }
 
-void solve() { 
-  for(int i = 0; i < m; ++i) {
+void solve() {
+  for (int i = 0; i < m; ++i) {
     auto iter = idPasswordMap.find(siteList[i]);
 
-    if(iter != idPasswordMap.end()) {
+    if (iter != idPasswordMap.end()) {
       cout << iter->second << '\n';
     }
   }
 
-  return; 
+  return;
 }
