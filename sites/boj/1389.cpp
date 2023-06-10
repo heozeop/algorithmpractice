@@ -20,34 +20,34 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> m;
 
-  int a,b;
-  for(int i = 0; i < m; ++i) {
+  int a, b;
+  for (int i = 0; i < m; ++i) {
     cin >> a >> b;
 
     arr[a][b] = 1;
     arr[b][a] = 1;
   }
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   const int START_INDEX = 1;
   const int END_INDEX = n + 1;
 
-  for(int i = START_INDEX ; i < END_INDEX; ++i) {
-    for(int j = START_INDEX ; j < END_INDEX; ++j) {
-      if(!arr[i][j]) {
+  for (int i = START_INDEX; i < END_INDEX; ++i) {
+    for (int j = START_INDEX; j < END_INDEX; ++j) {
+      if (!arr[i][j]) {
         arr[i][j] = INT_MAX;
       }
     }
   }
 
-  for(int i = START_INDEX ; i < END_INDEX; ++i) {
-    for(int j = START_INDEX ; j < END_INDEX ; ++j) {
-      for(int k = START_INDEX ; k < END_INDEX; ++k) {
+  for (int i = START_INDEX; i < END_INDEX; ++i) {
+    for (int j = START_INDEX; j < END_INDEX; ++j) {
+      for (int k = START_INDEX; k < END_INDEX; ++k) {
         if (j == k) {
           continue;
         }
@@ -67,14 +67,14 @@ void solve() {
   }
 
   int minIndex = 0, minValue = INT_MAX;
-  for(int i = START_INDEX ; i < END_INDEX; ++i) {
+  for (int i = START_INDEX; i < END_INDEX; ++i) {
     int localSum = 0;
-    for(int j = START_INDEX ; j < END_INDEX; ++j) {
+    for (int j = START_INDEX; j < END_INDEX; ++j) {
       if (i == j) {
         continue;
       }
 
-      localSum = min(arr[i][j] + localSum , INT_MAX);
+      localSum = min(arr[i][j] + localSum, INT_MAX);
     }
 
     // assume that everyone connected
@@ -86,5 +86,5 @@ void solve() {
 
   cout << minIndex;
 
-  return; 
+  return;
 }
