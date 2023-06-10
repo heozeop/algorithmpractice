@@ -25,23 +25,23 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
   START_IDX = 0;
   END_IDX = n;
 
-  for(int i = START_IDX; i < END_IDX; ++i) {
-    for(int j = START_IDX; j < END_IDX; ++j) {
+  for (int i = START_IDX; i < END_IDX; ++i) {
+    for (int j = START_IDX; j < END_IDX; ++j) {
       cin >> directedGraph[i][j];
     }
   }
   return;
 }
 
-void solve() { 
-  for(int i = START_IDX; i < END_IDX; ++i) {
-    for(int j = START_IDX; j < END_IDX; ++j) {
-      if(i == j) {
+void solve() {
+  for (int i = START_IDX; i < END_IDX; ++i) {
+    for (int j = START_IDX; j < END_IDX; ++j) {
+      if (i == j) {
         continue;
       }
 
@@ -49,28 +49,28 @@ void solve() {
         continue;
       }
 
-      dfs(i,j);
+      dfs(i, j);
     }
   }
 
-  for(int i = START_IDX; i < END_IDX; ++i) {
-    for(int j = START_IDX; j < END_IDX; ++j) {
+  for (int i = START_IDX; i < END_IDX; ++i) {
+    for (int j = START_IDX; j < END_IDX; ++j) {
       cout << visited[i][j] << " ";
     }
     cout << '\n';
   }
-  
-  return; 
+
+  return;
 }
 
 void dfs(int from, int to) {
-  if(visited[from][to] == VISITED) {
+  if (visited[from][to] == VISITED) {
     return;
   }
 
   visited[from][to] = VISITED;
 
-  for(int i = START_IDX; i < END_IDX; ++i) {
+  for (int i = START_IDX; i < END_IDX; ++i) {
     if (!directedGraph[to][i]) {
       continue;
     }
@@ -78,4 +78,3 @@ void dfs(int from, int to) {
     dfs(from, i);
   }
 }
-
