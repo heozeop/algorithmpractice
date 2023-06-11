@@ -8,7 +8,7 @@ using namespace std;
 
 typedef long long ll;
 
-int a,b;
+int a, b;
 
 void input();
 void solve();
@@ -19,23 +19,23 @@ int main(void) {
   return 0;
 }
 
-void input() { 
-  cin >> a >>  b;
+void input() {
+  cin >> a >> b;
   return;
 }
 
-void solve() { 
+void solve() {
   queue<pair<int, ll>> q;
   q.push({0, a});
 
-  while(!q.empty()) {
+  while (!q.empty()) {
     auto temp = q.front();
     q.pop();
 
-    if(temp.second == b) {
+    if (temp.second == b) {
       cout << temp.first + 1;
       return;
-    } 
+    }
 
     if (temp.second * 2 <= b) {
       q.push({temp.first + 1, temp.second * 2});
@@ -48,5 +48,5 @@ void solve() {
 
   cout << -1;
 
-  return; 
+  return;
 }

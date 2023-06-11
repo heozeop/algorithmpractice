@@ -39,13 +39,13 @@ void solve() {
     if (isAlphabet(curCharacter)) {
       cout << curCharacter;
     } else if (isPlusMinus(curCharacter)) {
-      while(!op.empty() && !isOpenParenthesis(op.back())) {
+      while (!op.empty() && !isOpenParenthesis(op.back())) {
         cout << op.back();
         op.pop_back();
       }
       op.push_back(curCharacter);
     } else if (isMultipleDivider(curCharacter)) {
-      while(!op.empty() && isMultipleDivider(op.back())) {
+      while (!op.empty() && isMultipleDivider(op.back())) {
         cout << op.back();
         op.pop_back();
       }
@@ -53,7 +53,7 @@ void solve() {
     } else if (isOpenParenthesis(curCharacter)) {
       op.push_back(curCharacter);
     } else if (isCloseParenthesis(curCharacter)) {
-      while(!op.empty() && !isOpenParenthesis(op.back())) {
+      while (!op.empty() && !isOpenParenthesis(op.back())) {
         cout << op.back();
         op.pop_back();
       }

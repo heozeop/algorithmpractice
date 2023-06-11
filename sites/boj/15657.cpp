@@ -2,9 +2,9 @@
 #include <iostream>
 #include <limits.h>
 #include <queue>
+#include <set>
 #include <string>
 #include <vector>
-#include <set>
 
 using namespace std;
 
@@ -16,7 +16,7 @@ int arr[MAX_SIZE];
 
 void input();
 void solve();
-void dfs(vector<int> &numberArray, int i, set<int>& s);
+void dfs(vector<int> &numberArray, int i, set<int> &s);
 void printNumberArray(vector<int> &numberArray);
 
 int main(void) {
@@ -44,14 +44,14 @@ void solve() {
   return;
 }
 
-void dfs(vector<int> &numberArray, int prevVal, set<int>& s) {
+void dfs(vector<int> &numberArray, int prevVal, set<int> &s) {
   if (numberArray.size() == m) {
     printNumberArray(numberArray);
     return;
   }
 
-  for(int iter : s) {
-    if(prevVal > iter) {
+  for (int iter : s) {
+    if (prevVal > iter) {
       continue;
     }
 
@@ -67,4 +67,3 @@ void printNumberArray(vector<int> &numberArray) {
   }
   cout << "\n";
 }
-
