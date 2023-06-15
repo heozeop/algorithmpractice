@@ -55,12 +55,12 @@ void solve() {
     }
 
     nextPos = currentPos + 1;
-    if (nextPos <= 2 * k && !visited[nextPos]){
+    if (nextPos <= 2 * k && !visited[nextPos]) {
       q.push({timeInSec + 1, nextPos});
     }
 
     nextPos = currentPos * 2;
-    if (nextPos <= 2 * k && !visited[nextPos]){
+    if (nextPos <= 2 * k && !visited[nextPos]) {
       q.push({timeInSec + 1, nextPos});
     }
   }

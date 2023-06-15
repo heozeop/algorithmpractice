@@ -13,8 +13,8 @@ const ll PRIME = 1000000007;
 ll pow(ll a, ll b) {
   ll ans = 1;
 
-  while(b) {
-    if (b & 1) { 
+  while (b) {
+    if (b & 1) {
       ans *= a;
       ans %= PRIME;
     }
@@ -25,7 +25,6 @@ ll pow(ll a, ll b) {
 
   return ans;
 }
-
 
 ll m;
 pair<ll, ll> arr[10001];
@@ -39,22 +38,22 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> m;
 
   int a, b;
-  for(int i = 0; i < m; ++i) {
+  for (int i = 0; i < m; ++i) {
     cin >> a >> b;
     arr[i] = {a, b};
   }
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   ll sum = 0;
 
   ll s, n, l;
-  for(int i = 0; i < m; ++i) {
+  for (int i = 0; i < m; ++i) {
     n = arr[i].first;
     s = arr[i].second;
 
@@ -71,5 +70,5 @@ void solve() {
 
   cout << sum;
 
-  return; 
+  return;
 }
