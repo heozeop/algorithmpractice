@@ -47,6 +47,7 @@ void solve() {
       methodCount += 1;
       continue;
     }
+    visited[currentPos] = true;
 
     int nextPos = currentPos - 1;
     if (nextPos >= 0 && !visited[nextPos]) {
