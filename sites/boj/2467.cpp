@@ -19,23 +19,23 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> arr[i];
   }
 
   return;
 }
 
-void solve() { 
+void solve() {
   int minValIdx = 0, maxValIdx = n - 1;
   int lowestVal = INT_MAX;
   int globalMin, globalMax;
 
   int sumVal;
 
-  while(minValIdx < maxValIdx) {
+  while (minValIdx < maxValIdx) {
     sumVal = arr[minValIdx] + arr[maxValIdx];
 
     if (lowestVal > abs(sumVal)) {
