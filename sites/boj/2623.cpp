@@ -1,10 +1,10 @@
 #include <algorithm>
+#include <deque>
 #include <iostream>
 #include <limits.h>
 #include <queue>
-#include <deque>
-#include <vector>
 #include <set>
+#include <vector>
 
 using namespace std;
 const int MAX_N = 1001;
@@ -21,15 +21,15 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> m;
 
   int temp, prevOne, nextOne;
-  for(int i = 0; i < m; ++i) {
+  for (int i = 0; i < m; ++i) {
     cin >> temp;
     cin >> prevOne;
 
-    for(int j = 0; j < temp - 1; ++j) {
+    for (int j = 0; j < temp - 1; ++j) {
       cin >> nextOne;
       arr[nextOne].insert(prevOne);
       prevOne = nextOne;
@@ -39,13 +39,13 @@ void input() {
   return;
 }
 
-void solve() { 
+void solve() {
   queue<int> emptyList;
   vector<bool> visited(n, false);
   vector<int> ansList;
 
-  for(int i = 1; i <= n; ++i) {
-    if(!arr[i].empty()) {
+  for (int i = 1; i <= n; ++i) {
+    if (!arr[i].empty()) {
       continue;
     }
 
@@ -53,12 +53,12 @@ void solve() {
     visited[i] = true;
   }
 
-  while(!emptyList.empty()) {
+  while (!emptyList.empty()) {
     int popTarget = emptyList.front();
     emptyList.pop();
 
-    for(int i = 1; i <= n; ++i) {
-      if(visited[i]) {
+    for (int i = 1; i <= n; ++i) {
+      if (visited[i]) {
         continue;
       }
 
@@ -72,17 +72,16 @@ void solve() {
     ansList.push_back(popTarget);
   }
 
-  for(int i = 1; i <= n; ++i) {
-    if(!arr[i].empty()) {
+  for (int i = 1; i <= n; ++i) {
+    if (!arr[i].empty()) {
       cout << 0;
       return;
     }
   }
 
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cout << ansList[i] << '\n';
   }
-  
 
   return;
 }
