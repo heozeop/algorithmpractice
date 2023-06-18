@@ -35,11 +35,10 @@ bool checkMap(int row, int col) {
   return true;
 }
 
-bool solve(int m, vector<pair<int,int>>& zeroLocation) {
+bool solve(int m, vector<pair<int, int>> &zeroLocation) {
   if (m == zeroLocation.size()) {
     return true;
   }
-
 
   for (int i = 1; i <= 9; i++) {
     int row = zeroLocation[m].first;
