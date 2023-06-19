@@ -22,72 +22,70 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
 
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> arr[i];
   }
 
   return;
 }
 
-void solve() { 
+void solve() {
   sort(arr, arr + n);
 
   ll minABS = 3000000000;
   int idxList[3];
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     int maxIdx = n - 1;
     int minIdx = 0;
 
-    if(i == 0) {
+    if (i == 0) {
       minIdx = 1;
     }
 
-    if (i == n-1) {
+    if (i == n - 1) {
       maxIdx = n - 2;
     }
 
     ll sumVal;
-    while(minIdx < maxIdx) {
+    while (minIdx < maxIdx) {
       sumVal = arr[i] + arr[minIdx] + arr[maxIdx];
 
-      if(minABS > abs(sumVal)) {
+      if (minABS > abs(sumVal)) {
         idxList[0] = arr[i];
         idxList[1] = arr[minIdx];
         idxList[2] = arr[maxIdx];
         minABS = abs(sumVal);
       }
 
-      if(!sumVal) {
+      if (!sumVal) {
         break;
       }
 
-      if(sumVal < 0) {
+      if (sumVal < 0) {
         minIdx += 1;
-        if(minIdx == i){
+        if (minIdx == i) {
           minIdx += 1;
         }
       } else {
         maxIdx -= 1;
-        if(maxIdx == i) {
+        if (maxIdx == i) {
           maxIdx -= 1;
         }
       }
     }
 
-    if(!sumVal) {
+    if (!sumVal) {
       break;
     }
   }
 
   sort(idxList, idxList + 3);
-  for(int i = 0 ; i < 3; ++i) {
+  for (int i = 0; i < 3; ++i) {
     cout << idxList[i] << " ";
   }
-
-
 
   return;
 }
