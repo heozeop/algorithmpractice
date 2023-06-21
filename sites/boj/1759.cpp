@@ -22,36 +22,36 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> l >> c;
-  for(int i = 0; i < c; ++i) {
+  for (int i = 0; i < c; ++i) {
     cin >> characters[i];
   }
   return;
 }
 
-void solve() { 
+void solve() {
   sort(characters, characters + c);
   dfs(0, 0);
   return;
 }
 
 void dfs(int currentLength, int currentIndex) {
-  if(currentLength == l) {
-    if(!atLeastOneVowel()) {
+  if (currentLength == l) {
+    if (!atLeastOneVowel()) {
       return;
     }
 
-    for(int i = 0; i < l; ++i) {
+    for (int i = 0; i < l; ++i) {
       cout << secret[i];
     }
     cout << '\n';
     return;
   }
 
-  for(int i = currentIndex; i < c; ++i) {
+  for (int i = currentIndex; i < c; ++i) {
     secret[currentLength] = characters[i];
-    dfs(currentLength+1, i + 1);
+    dfs(currentLength + 1, i + 1);
     secret[currentLength] = 0;
   }
 }
@@ -59,8 +59,9 @@ void dfs(int currentLength, int currentIndex) {
 bool atLeastOneVowel() {
   int numOfVowel = 0;
   int numOfConsonant = 0;
-  for(int i = 0; i < l; ++i) {
-    if (secret[i] == 'a' || secret[i] == 'e' || secret[i] == 'i' || secret[i] == 'o' || secret[i] == 'u') {
+  for (int i = 0; i < l; ++i) {
+    if (secret[i] == 'a' || secret[i] == 'e' || secret[i] == 'i' ||
+        secret[i] == 'o' || secret[i] == 'u') {
       numOfVowel += 1;
     } else {
       numOfConsonant += 1;
