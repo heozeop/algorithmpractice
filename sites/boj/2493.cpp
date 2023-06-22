@@ -32,7 +32,7 @@ void solve() {
   for (int i = 0; i < n; ++i) {
     int returnIndex = 0;
 
-    while(!temp.empty()) {
+    while (!temp.empty()) {
       if (arr[temp.back()] < arr[i]) {
         temp.pop_back();
       } else {
@@ -43,7 +43,6 @@ void solve() {
 
     cout << returnIndex << " ";
     temp.push_back(i);
-
   }
   return;
 }
