@@ -1,9 +1,9 @@
 #include <algorithm>
 #include <iostream>
 #include <limits.h>
+#include <map>
 #include <queue>
 #include <vector>
-#include <map>
 
 using namespace std;
 const int MAX_N = 40;
@@ -26,30 +26,30 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> s;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> arr[i];
   }
 
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   leftStore(0, 0);
-  rightStore(n/2, 0);
+  rightStore(n / 2, 0);
 
-  if(s == 0) {
+  if (s == 0) {
     countOfS -= 1;
   }
 
   cout << countOfS;
 
-  return; 
+  return;
 }
 
 void leftStore(int curIdx, ll sum) {
-  if(curIdx == n/2) {
+  if (curIdx == n / 2) {
     sumVal[sum]++;
     return;
   }
@@ -59,7 +59,7 @@ void leftStore(int curIdx, ll sum) {
 }
 
 void rightStore(int curIdx, ll sum) {
-  if(curIdx == n) {
+  if (curIdx == n) {
     countOfS += sumVal[s - sum];
     return;
   }
@@ -67,4 +67,3 @@ void rightStore(int curIdx, ll sum) {
   rightStore(curIdx + 1, sum);
   rightStore(curIdx + 1, sum + arr[curIdx]);
 }
-
