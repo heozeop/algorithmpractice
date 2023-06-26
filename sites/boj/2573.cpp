@@ -1,16 +1,16 @@
 #include <algorithm>
+#include <cstring>
 #include <iostream>
 #include <limits.h>
 #include <queue>
 #include <vector>
-#include <cstring>
 
 using namespace std;
 const int DIRECTION[4][2] = {
-  {0, 1},
-  {0, -1},
-  {1, 0},
-  {-1, 0},
+    {0, 1},
+    {0, -1},
+    {1, 0},
+    {-1, 0},
 };
 const int MAX_SIZE = 300;
 
@@ -33,10 +33,10 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> m;
-  for(int i = 0; i < n; ++i) {
-    for(int j = 0; j < m; ++j) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
       cin >> arr[i][j];
     }
   }
@@ -44,19 +44,19 @@ void input() {
 }
 
 void printArr() {
-  for(int i = 0; i < n; ++i) {
-    for(int j = 0; j < m; ++j) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
       cout << arr[i][j] << " ";
     }
     cout << '\n';
   }
 }
 
-void solve() { 
+void solve() {
   bool isDivided = false;
   int time = 0;
-  while(!isDivided) {
-    if(isNoIceLeft()) {
+  while (!isDivided) {
+    if (isNoIceLeft()) {
       cout << 0;
       return;
     }
@@ -67,16 +67,14 @@ void solve() {
     time += 1;
   }
 
-
   cout << time;
   return;
 }
 
-
 bool isNoIceLeft() {
-  for(int i = 0; i < n; ++i) {
-    for(int j = 0; j < m; ++j) {
-      if(arr[i][j]) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
+      if (arr[i][j]) {
         return false;
       }
     }
@@ -86,18 +84,18 @@ bool isNoIceLeft() {
 }
 
 void melt() {
-  for(int i = 0; i < n; ++i) {
-    for(int j = 0; j < m; ++j) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
       if (!arr[i][j]) {
         continue;
       }
 
-      int nx,ny, seacount = 0;
-      for(int k = 0; k < 4; ++k) {
+      int nx, ny, seacount = 0;
+      for (int k = 0; k < 4; ++k) {
         nx = i + DIRECTION[k][0];
         ny = j + DIRECTION[k][1];
-        
-        if(!isSea(nx,ny)) {
+
+        if (!isSea(nx, ny)) {
           continue;
         }
 
@@ -108,8 +106,8 @@ void melt() {
     }
   }
 
-  for(int i = 0; i < n; ++i) {
-    for(int j = 0; j < m; ++j) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
       arr[i][j] = arr2[i][j];
     }
   }
@@ -118,20 +116,20 @@ void melt() {
 void dfs(int x, int y) {
   visited[x][y] = -1;
 
-  int nx,ny;
-  for(int i = 0; i < 4; ++i) {
+  int nx, ny;
+  for (int i = 0; i < 4; ++i) {
     nx = x + DIRECTION[i][0];
     ny = y + DIRECTION[i][1];
 
-    if(isSea(nx, ny)) {
+    if (isSea(nx, ny)) {
       continue;
     }
 
-    if (!isInArea(nx,ny)) {
+    if (!isInArea(nx, ny)) {
       continue;
     }
 
-    if(visited[nx][ny] < 0) {
+    if (visited[nx][ny] < 0) {
       continue;
     }
 
@@ -143,8 +141,8 @@ bool checkDivided() {
   bool isNamed = false;
   memset(visited, 0, sizeof(visited));
 
-  for(int i = 0; i < n; ++i) {
-    for(int j = 0; j < m; ++j) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
       if (!arr[i][j]) {
         continue;
       }
@@ -153,7 +151,7 @@ bool checkDivided() {
         continue;
       }
 
-      if(!isNamed) {
+      if (!isNamed) {
         dfs(i, j);
         isNamed = true;
         continue;
@@ -166,11 +164,6 @@ bool checkDivided() {
   return false;
 }
 
-bool isSea(int x, int y) {
-  return isInArea(x, y) && arr[x][y] == 0;
-}
+bool isSea(int x, int y) { return isInArea(x, y) && arr[x][y] == 0; }
 
-bool isInArea(int x, int y) {
-  return x >= 0 && y >= 0 && x < n && y < m;
-}
-
+bool isInArea(int x, int y) { return x >= 0 && y >= 0 && x < n && y < m; }
