@@ -20,11 +20,11 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
 
   int p;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> p;
     if (p == -1) {
       rootIdx = i;
@@ -35,26 +35,25 @@ void input() {
   }
 
   cin >> m;
-  return; 
+  return;
 }
 
-void solve() { 
-  if(rootIdx == m) {
+void solve() {
+  if (rootIdx == m) {
     cout << 0;
     return;
   }
 
-
   dfs(rootIdx);
   cout << leafCnt;
 
-  return; 
+  return;
 }
 
 void dfs(int cur) {
   bool isChildrenExist = false;
 
-  for(int i : parent[cur]) {
+  for (int i : parent[cur]) {
     if (i == m) {
       continue;
     }
@@ -63,7 +62,7 @@ void dfs(int cur) {
     isChildrenExist = true;
   }
 
-  if(!isChildrenExist) {
+  if (!isChildrenExist) {
     leafCnt += 1;
   }
 }
