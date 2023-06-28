@@ -23,15 +23,15 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> arr[i];
   }
   return;
 }
 
-void solve() { 
+void solve() {
   fillUp();
   matching();
   cout << sumAll();
@@ -44,7 +44,7 @@ void fillUp() {
     int base = 1;
     reverse(arr[i].begin(), arr[i].end());
 
-    for(int j = 0; j < arr[i].size(); ++j) {
+    for (int j = 0; j < arr[i].size(); ++j) {
       weight[arr[i][j] - 'A'] += base;
       base *= 10;
     }
@@ -53,8 +53,8 @@ void fillUp() {
 
 void matching() {
   int curMax = 9;
-  priority_queue<pair<int,int>> q;
-  for(int j = 0; j < 26; ++j) {
+  priority_queue<pair<int, int>> q;
+  for (int j = 0; j < 26; ++j) {
     if (match[j]) {
       continue;
     }
@@ -64,7 +64,7 @@ void matching() {
     }
   }
 
-  while(!q.empty()) {
+  while (!q.empty()) {
     int np = q.top().second;
     q.pop();
     match[np] = curMax--;
@@ -73,9 +73,9 @@ void matching() {
 
 int sumAll() {
   int sum = 0;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     int base = 1;
-    for(int j = 0; j < arr[i].length(); ++j) {
+    for (int j = 0; j < arr[i].length(); ++j) {
       sum += match[arr[i][j] - 'A'] * base;
       base *= 10;
     }
