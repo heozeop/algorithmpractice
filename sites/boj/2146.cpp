@@ -15,7 +15,7 @@ const int DIRECTION[4][2] = {
     {-1, 0},
 };
 
-queue<pair<int, pair<int,int>>> q;
+queue<pair<int, pair<int, int>>> q;
 int d[MAX_N][MAX_N];
 int visited[MAX_N][MAX_N];
 int arr[MAX_N][MAX_N];
@@ -79,7 +79,7 @@ void dfs(int s, int x, int y) {
     }
 
     if (arr[nx][ny] == SEA) {
-      q.push({s, {nx,ny}});
+      q.push({s, {nx, ny}});
       visited[nx][ny] = s;
       d[nx][ny] = 1;
       continue;
@@ -91,18 +91,18 @@ void dfs(int s, int x, int y) {
 
     arr[nx][ny] = s;
     visited[nx][ny] = s;
-    dfs(s,nx,ny);
+    dfs(s, nx, ny);
   }
 }
 
 void printVisited() {
   cout << '\n';
-  for(int i= 0; i < n; ++i) {
-    for(int j = 0; j < n; ++j) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < n; ++j) {
       cout << d[i][j] << " ";
     }
     cout << " ";
-    for(int j = 0; j < n; ++j) {
+    for (int j = 0; j < n; ++j) {
       cout << visited[i][j] << " ";
     }
     cout << '\n';
@@ -110,14 +110,14 @@ void printVisited() {
 }
 
 void bfs() {
-  while(!q.empty()) {
+  while (!q.empty()) {
     int mark = q.front().first;
     int x = q.front().second.first;
     int y = q.front().second.second;
     q.pop();
 
     int nx, ny;
-    for(int i = 0; i < 4; ++i) {
+    for (int i = 0; i < 4; ++i) {
       nx = x + DIRECTION[i][0];
       ny = y + DIRECTION[i][1];
 
@@ -129,10 +129,10 @@ void bfs() {
         continue;
       }
 
-      if(visited[nx][ny] == 0) {
+      if (visited[nx][ny] == 0) {
         visited[nx][ny] = mark;
         d[nx][ny] = d[x][y] + 1;
-        q.push({mark, {nx,ny}});
+        q.push({mark, {nx, ny}});
         continue;
       }
 
@@ -140,4 +140,3 @@ void bfs() {
     }
   }
 }
-
