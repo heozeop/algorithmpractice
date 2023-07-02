@@ -1,9 +1,9 @@
 #include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <limits.h>
 #include <queue>
 #include <vector>
-#include <cmath>
 
 using namespace std;
 const int CLOCK_WISE = 1;
@@ -27,9 +27,9 @@ int main(void) {
   return 0;
 }
 
-void input() { 
-  for(int i = 1; i <= 4; ++i) {
-    for(int j = 0; j < 8; ++j) {
+void input() {
+  for (int i = 1; i <= 4; ++i) {
+    for (int j = 0; j < 8; ++j) {
       cin >> wheel[i][j];
     }
   }
@@ -37,8 +37,8 @@ void input() {
   return;
 }
 
-void solve() { 
-  while(k--) {
+void solve() {
+  while (k--) {
     int target, direction;
 
     cin >> target >> direction;
@@ -54,15 +54,15 @@ void solve() {
 
 void role(int target, int direction) {
   int temp;
-  if(direction == CLOCK_WISE) {
+  if (direction == CLOCK_WISE) {
     temp = wheel[target][MAX_NEE - 1];
-    for(int i = MAX_NEE - 1; i > 0; --i) {
+    for (int i = MAX_NEE - 1; i > 0; --i) {
       wheel[target][i] = wheel[target][i - 1];
     }
     wheel[target][0] = temp;
   } else {
     temp = wheel[target][0];
-    for(int i = 0; i < MAX_NEE - 1; ++i) {
+    for (int i = 0; i < MAX_NEE - 1; ++i) {
       wheel[target][i] = wheel[target][i + 1];
     }
     wheel[target][MAX_NEE - 1] = temp;
@@ -74,7 +74,7 @@ bool condition(int left, int right) {
 }
 
 void spreadLeft(int from, int to, int direction) {
-  if (from  == 1) {
+  if (from == 1) {
     return;
   }
 
@@ -85,7 +85,7 @@ void spreadLeft(int from, int to, int direction) {
 }
 
 void spreadRight(int from, int to, int direction) {
-  if (from  == 4) {
+  if (from == 4) {
     return;
   }
 
@@ -97,7 +97,7 @@ void spreadRight(int from, int to, int direction) {
 
 void printCnt() {
   int sum = 0;
-  for(int i = 1; i <= 4; ++i) {
+  for (int i = 1; i <= 4; ++i) {
     if (wheel[i][0] == SOUTH) {
       sum += pow(2, i - 1);
     }
