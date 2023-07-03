@@ -18,6 +18,8 @@ const int WALL = 1;
 
 struct Info {
   int x, y, sum;
+
+  bool operator()(Info &a, Info &b) { return a.sum > b.sum; }
 };
 
 int n, m;
@@ -47,6 +49,44 @@ void input() {
   return;
 }
 
+// dijkstra
+void solve() {
+  priority_queue<Info, vector<Info>, Info> q;
+  q.push({0, 0, 0});
+  while (!q.empty()) {
+    Info cur = q.top();
+    q.pop();
+
+    int x = cur.x;
+    int y = cur.y;
+    int sum = cur.sum;
+
+    if (x == n - 1 && y == m - 1) {
+      cout << sum;
+      break;
+    }
+
+    int nx, ny;
+    for (int i = 0; i < 4; ++i) {
+      nx = x + DIRECTION[i][0];
+      ny = y + DIRECTION[i][1];
+
+      if (!isInArea(nx, ny)) {
+        continue;
+      }
+
+      if (visited[nx][ny]) {
+        continue;
+      }
+
+      visited[nx][ny] = true;
+      q.push({nx, ny, sum + (arr[nx][ny] == WALL)});
+    }
+  }
+}
+
+// 0 1 bfs
+/*
 void solve() {
   deque<Info> q;
   q.push_back({0,0,0});
@@ -86,7 +126,6 @@ void solve() {
     }
   }
 }
+*/
 
-bool isInArea(int x, int y) {
-  return x >= 0 && y >= 0 && x < n && y < m;
-}
+bool isInArea(int x, int y) { return x >= 0 && y >= 0 && x < n && y < m; }
