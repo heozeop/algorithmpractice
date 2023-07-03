@@ -6,10 +6,10 @@
 
 using namespace std;
 const int DIRECTION[4][2] = {
-  {0, 1},
-  {0, -1},
-  {-1, 0},
-  {1, 0},
+    {0, 1},
+    {0, -1},
+    {-1, 0},
+    {1, 0},
 };
 const int MAX_N = 50;
 const char ROCK = 'X';
@@ -28,7 +28,7 @@ int gx, gy;
 void input();
 void solve();
 void waterSpread();
-bool isInArea(int,int);
+bool isInArea(int, int);
 
 int main(void) {
   input();
@@ -36,10 +36,10 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> m;
-  for(int i = 0; i < n; ++i) {
-    for(int j = 0; j < m; ++j) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
       cin >> arr[i][j];
 
       if (arr[i][j] == GOSMDOCHI) {
@@ -51,15 +51,14 @@ void input() {
   return;
 }
 
-
-void solve() { 
-  queue<pair<int, pair<int,int>>> q;
+void solve() {
+  queue<pair<int, pair<int, int>>> q;
   q.push({1, {gx, gy}});
   arr[gx][gy] = EMPTY;
   int prevSpreadTime = 1;
   visited[gx][gy] = 1;
 
-  while(!q.empty()) {
+  while (!q.empty()) {
     int localTime = q.front().first;
     gx = q.front().second.first;
     gy = q.front().second.second;
@@ -70,12 +69,12 @@ void solve() {
       prevSpreadTime += 1;
     }
 
-    int nx,ny;
-    for(int i = 0; i < 4; ++i) {
+    int nx, ny;
+    for (int i = 0; i < 4; ++i) {
       nx = gx + DIRECTION[i][0];
       ny = gy + DIRECTION[i][1];
 
-      if (!isInArea(nx,ny)) {
+      if (!isInArea(nx, ny)) {
         continue;
       }
 
@@ -93,34 +92,32 @@ void solve() {
         continue;
       }
 
-      q.push({localTime + 1, {nx,ny}});
+      q.push({localTime + 1, {nx, ny}});
     }
   }
 
   cout << NOT_AVAILABLE;
-  return; 
+  return;
 }
 
-bool isInArea(int x, int y) {
-  return x >= 0 && y >= 0 && x < n && y < m;
-}
+bool isInArea(int x, int y) { return x >= 0 && y >= 0 && x < n && y < m; }
 
 void waterSpread() {
-  for(int i = 0; i < n; ++i) {
-    for(int j = 0; j < m; ++j) {
-      if(arr[i][j] != WATER) {
-        if(arr2[i][j] != WATER) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
+      if (arr[i][j] != WATER) {
+        if (arr2[i][j] != WATER) {
           arr2[i][j] = arr[i][j];
         }
         continue;
       }
 
       int nx, ny;
-      for(int k = 0; k < 4; ++k) {
+      for (int k = 0; k < 4; ++k) {
         nx = i + DIRECTION[k][0];
         ny = j + DIRECTION[k][1];
 
-        if (!isInArea(nx,ny)) {
+        if (!isInArea(nx, ny)) {
           continue;
         }
 
@@ -132,11 +129,9 @@ void waterSpread() {
     }
   }
 
-  for(int i = 0; i < n; ++i) {
-    for(int j = 0; j < m; ++j) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
       arr[i][j] = arr2[i][j];
     }
   }
-
 }
-
