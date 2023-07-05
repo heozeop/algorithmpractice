@@ -22,45 +22,44 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> l;
-  for(int i = 0; i < n; ++i) {
-    for(int j = 0; j < n; ++j) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < n; ++j) {
       cin >> arr[i][j];
     }
   }
-  return; 
+  return;
 }
 
-void solve() { 
-  for(int i = 0; i < n; ++i) {
-    if(test(i, 0, 0, 1)) {
+void solve() {
+  for (int i = 0; i < n; ++i) {
+    if (test(i, 0, 0, 1)) {
       cnt += 1;
     }
 
-  if(test(0, i, 1, 0)) {
+    if (test(0, i, 1, 0)) {
       cnt += 1;
     }
   }
 
   cout << cnt;
 
-  return; 
+  return;
 }
 
 bool test(int row, int col, int dx, int dy) {
   int prevDownHill = -1;
-  int temp = arr[row][col];  
-  
-  for(int i = 1; i < n; ++i) {
+  int temp = arr[row][col];
+
+  for (int i = 1; i < n; ++i) {
     int cur = arr[row + dx * i][col + dy * i];
-    if (temp == cur)
-    {
+    if (temp == cur) {
       continue;
     }
 
-    if(cur == temp - 1) {
-      for(int j = 0; j < l; ++j) {
+    if (cur == temp - 1) {
+      for (int j = 0; j < l; ++j) {
         if (j + i >= n) {
           return false;
         }
@@ -78,7 +77,7 @@ bool test(int row, int col, int dx, int dy) {
     }
 
     if (cur == temp + 1) {
-      for(int j = 1; j <= l; ++j) {
+      for (int j = 1; j <= l; ++j) {
         if (i - j <= prevDownHill) {
           return false;
         }

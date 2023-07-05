@@ -18,36 +18,35 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
   return;
 }
 
-void solve() { 
-  for(int i = 1; i <= n; ++i) {
+void solve() {
+  for (int i = 1; i <= n; ++i) {
     printSpace(n - i);
     printStar(i);
     cout << '\n';
   }
 
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     printSpace(i);
     printStar(n - i);
     cout << '\n';
   }
 
-  return; 
+  return;
 }
 
-
 void printSpace(int amount) {
-  for(int i = 0; i < amount; ++i) {
+  for (int i = 0; i < amount; ++i) {
     cout << " ";
   }
 }
 
 void printStar(int amount) {
-  for(int i = 0; i < 2 * amount - 1; ++i) {
+  for (int i = 0; i < 2 * amount - 1; ++i) {
     cout << "*";
   }
 }
