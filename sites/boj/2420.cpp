@@ -16,6 +16,12 @@ int main(void) {
   return 0;
 }
 
-void input() { cin >> a >> b;return; }
+void input() {
+  cin >> a >> b;
+  return;
+}
 
-void solve() { cout << abs(a - b);return; }
+void solve() {
+  cout << abs(a - b);
+  return;
+}

@@ -16,12 +16,12 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> name;
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   cout << name << "??!";
-  return; 
+  return;
 }

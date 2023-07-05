@@ -16,12 +16,12 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   cout << n - 543;
-  return; 
+  return;
 }

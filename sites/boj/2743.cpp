@@ -17,6 +17,12 @@ int main(void) {
   return 0;
 }
 
-void input() { cin >> temp;return; }
+void input() {
+  cin >> temp;
+  return;
+}
 
-void solve() { cout << temp.length(); return; }
+void solve() {
+  cout << temp.length();
+  return;
+}

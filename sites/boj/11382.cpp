@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int a,b,c;
+int a, b, c;
 void input();
 void solve();
 
@@ -16,12 +16,12 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> a >> b >> c;
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   cout << a + b + c;
-  return; 
+  return;
 }
