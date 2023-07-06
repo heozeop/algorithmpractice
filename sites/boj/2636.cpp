@@ -7,10 +7,10 @@
 using namespace std;
 
 const int DIRECTION[4][2] = {
-  {0,1},
-  {0,-1},
-  {-1,0},
-  {1,0},
+    {0, 1},
+    {0, -1},
+    {-1, 0},
+    {1, 0},
 };
 const int AIR = -1;
 const int EMPTY = 0;
@@ -36,39 +36,39 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> m;
 
-  for(int i = 0 ; i < n; ++i) {
-    for(int j = 0; j < m; ++j) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
       cin >> arr[i][j];
     }
   }
-  return; 
+  return;
 }
 
 void printArr() {
-  for(int i = 0 ; i < n; ++i) {
-    for(int j = 0; j < m; ++j) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
       cout << arr[i][j] << " ";
     }
     cout << '\n';
   }
-    cout << '\n';
+  cout << '\n';
 }
 
-void solve() { 
+void solve() {
   int time = 0;
   int leftCount = numberOfCheese();
 
-  while(1) {
+  while (1) {
     spreadAir();
     mark();
     melt();
     ++time;
 
     int localLeftCount = numberOfCheese();
-    if(localLeftCount == 0) {
+    if (localLeftCount == 0) {
       break;
     }
 
@@ -77,14 +77,14 @@ void solve() {
 
   cout << time << '\n' << leftCount;
 
-  return; 
+  return;
 }
 
 int numberOfCheese() {
   int numOfCheese = 0;
-  for(int i = 0 ; i < n; ++i) {
-    for(int j = 0; j < m; ++j) {
-      if(arr[i][j] == CHEESE) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
+      if (arr[i][j] == CHEESE) {
         ++numOfCheese;
       }
     }
@@ -94,30 +94,30 @@ int numberOfCheese() {
 }
 
 void spreadAir() {
-  queue<pair<int,int>> q;
-  vector<vector<bool>> visited(n, vector<bool>(m,false));
-  q.push({0,0});
+  queue<pair<int, int>> q;
+  vector<vector<bool>> visited(n, vector<bool>(m, false));
+  q.push({0, 0});
   arr[0][0] = AIR;
 
-  pair<int,int> temp;
+  pair<int, int> temp;
 
-  while(!q.empty()) {
+  while (!q.empty()) {
     temp = q.front();
     q.pop();
 
     int x = temp.first;
     int y = temp.second;
 
-    int nx,ny;
-    for(int i = 0; i < 4; ++i) {
+    int nx, ny;
+    for (int i = 0; i < 4; ++i) {
       nx = x + DIRECTION[i][0];
       ny = y + DIRECTION[i][1];
 
-      if(!isInArea(nx, ny)) {
+      if (!isInArea(nx, ny)) {
         continue;
       }
 
-      if(arr[nx][ny] == CHEESE) {
+      if (arr[nx][ny] == CHEESE) {
         continue;
       }
 
@@ -133,8 +133,8 @@ void spreadAir() {
 }
 
 void mark() {
-  for(int i = 0 ; i < n; ++i) {
-    for(int j = 0; j < m; ++j) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
       if (arr[i][j] == CHEESE && isAirNear(i, j)) {
         arr[i][j] = MARK;
       }
@@ -143,8 +143,8 @@ void mark() {
 }
 
 void melt() {
-  for(int i = 0 ; i < n; ++i) {
-    for(int j = 0; j < m; ++j) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < m; ++j) {
       if (arr[i][j] == MARK) {
         arr[i][j] = AIR;
       }
@@ -152,21 +152,19 @@ void melt() {
   }
 }
 
-bool isInArea(int x, int y) {
-  return x >= 0 && y >= 0 && x < n && y < m;
-}
+bool isInArea(int x, int y) { return x >= 0 && y >= 0 && x < n && y < m; }
 
 bool isAirNear(int x, int y) {
   int nx, ny;
-  for(int i = 0; i < 4; ++i) {
-      nx = x + DIRECTION[i][0];
-      ny = y + DIRECTION[i][1];
+  for (int i = 0; i < 4; ++i) {
+    nx = x + DIRECTION[i][0];
+    ny = y + DIRECTION[i][1];
 
-    if(!isInArea(nx, ny)) {
+    if (!isInArea(nx, ny)) {
       continue;
     }
 
-    if(arr[nx][ny] == AIR) {
+    if (arr[nx][ny] == AIR) {
       return true;
     }
   }
