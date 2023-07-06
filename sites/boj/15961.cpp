@@ -5,7 +5,7 @@
 #include <vector>
 
 using namespace std;
-const int MAX_N =3000001;
+const int MAX_N = 3000001;
 const int MAX_D = 3001;
 
 void input();
@@ -35,10 +35,10 @@ void solve() {
   int count = 0;
   deque<int> dishTypes;
 
-  for(int i = 0; i < k; ++i) {
+  for (int i = 0; i < k; ++i) {
     dishTypes.push_back(dishes[i]);
 
-    if(dishCount[dishes[i]] == 0) {
+    if (dishCount[dishes[i]] == 0) {
       count += 1;
     }
     dishCount[dishes[i]] += 1;
@@ -51,13 +51,12 @@ void solve() {
 
   int maxCount = 0;
   int startIdx = 0, endIdx = k - 1;
-  for(startIdx = 0; startIdx < n; ++startIdx) {
+  for (startIdx = 0; startIdx < n; ++startIdx) {
 
     maxCount = max(maxCount, count + !isCouponInSet());
 
     endIdx += 1;
     endIdx %= n;
-
 
     dishCount[dishes[startIdx]] -= 1;
     dishTypes.pop_front();
@@ -77,6 +76,4 @@ void solve() {
   return;
 }
 
-bool isCouponInSet() {
-  return dishCount[c] >= 1;
-}
+bool isCouponInSet() { return dishCount[c] >= 1; }
