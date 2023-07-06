@@ -5,14 +5,16 @@
 #include <vector>
 
 using namespace std;
+const int MAX_N =3000001;
+const int MAX_D = 3001;
 
 void input();
 void solve();
 
 int n, c, k, d;
-int dishes[3000001];
-int count;
-int dishCount[3001];
+int dishes[MAX_N];
+int dishCount[MAX_D];
+bool isCouponInSet();
 
 int main(void) {
   input();
@@ -30,38 +32,51 @@ void input() {
 }
 
 void solve() {
-  int s = 0, e;
   int count = 0;
+  deque<int> dishTypes;
+
+  for(int i = 0; i < k; ++i) {
+    dishTypes.push_back(dishes[i]);
+
+    if(dishCount[dishes[i]] == 0) {
+      count += 1;
+    }
+    dishCount[dishes[i]] += 1;
+  }
+
+  if (k == n) {
+    cout << dishTypes.size() + !isCouponInSet();
+    return;
+  }
+
   int maxCount = 0;
-  for (int i = 0; i < n + k; i++) {
-    e = i % n;
-    if (abs(e - s) >= k) {
-      dishCount[dishes[s]] -= 1;
-      if (dishCount[dishes[s]] == 0) {
-        count -= 1;
-      }
-      s += 1;
-      if (dishCount[dishes[e]] == 0) {
-        count += 1;
-      }
-      dishCount[dishes[e]] += 1;
-    } else {
-      if (dishCount[dishes[e]] == 0) {
-        count += 1;
-      }
-      dishCount[dishes[e]] += 1;
+  int startIdx = 0, endIdx = k - 1;
+  for(startIdx = 0; startIdx < n; ++startIdx) {
+
+    maxCount = max(maxCount, count + !isCouponInSet());
+
+    endIdx += 1;
+    endIdx %= n;
+
+
+    dishCount[dishes[startIdx]] -= 1;
+    dishTypes.pop_front();
+    if (dishCount[dishes[startIdx]] == 0) {
+      count -= 1;
     }
 
-    if (dishCount[c] == 0) {
-      maxCount = min(max(maxCount, count + 1), d);
-    } else {
-      maxCount = min(max(maxCount, count), d);
+    if (dishCount[dishes[endIdx]] == 0) {
+      count += 1;
     }
-
-    s %= n;
+    dishTypes.push_back(dishes[endIdx]);
+    dishCount[dishes[endIdx]] += 1;
   }
 
   cout << maxCount;
 
   return;
+}
+
+bool isCouponInSet() {
+  return dishCount[c] >= 1;
 }
