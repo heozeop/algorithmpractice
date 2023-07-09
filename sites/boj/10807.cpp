@@ -19,19 +19,19 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> arr[i];
   }
   cin >> t;
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   int count = 0;
-  for(int i = 0; i < n; ++i) {
-    if(arr[i] == t){
+  for (int i = 0; i < n; ++i) {
+    if (arr[i] == t) {
       count += 1;
     }
   }
