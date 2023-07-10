@@ -16,12 +16,12 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> h >> m >> t;
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   m += t;
 
   h += m / 60;
@@ -29,5 +29,5 @@ void solve() {
   h %= 24;
 
   cout << h << " " << m;
-  return; 
+  return;
 }
