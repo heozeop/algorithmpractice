@@ -43,14 +43,14 @@ void input() {
 
 void solve() {
   int maxVal = 0;
-  for(int i= 0; i < n; ++i) {
-    for(int j = 0; j < n; ++j) {
+  for (int i = 0; i < n; ++i) {
+    for (int j = 0; j < n; ++j) {
       maxVal = max(maxVal, dfs(i, j));
     }
   }
 
   cout << maxVal;
-  
+
   return;
 }
 
@@ -59,10 +59,10 @@ int dfs(int x, int y) {
     return dp[x][y];
   }
 
-  int nx,ny;
+  int nx, ny;
 
   dp[x][y] = 1;
-  for(int i = 0; i < 4; ++i) {
+  for (int i = 0; i < 4; ++i) {
     nx = x + DIRECTION[i][0];
     ny = y + DIRECTION[i][1];
 
@@ -81,4 +81,3 @@ int dfs(int x, int y) {
 }
 
 bool isInArea(int x, int y) { return x >= 0 && y >= 0 && x < n && y < n; }
-
