@@ -24,22 +24,22 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> arr[i];
   }
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   maxVal = LOWER_BOUND;
   backTrack(0, 0);
   cout << maxVal;
   return;
 }
 
-void backTrack(int curIdx, ll curSum){
+void backTrack(int curIdx, ll curSum) {
   if (curIdx == n) {
     maxVal = max(maxVal, (ll)curSum);
     return;
@@ -51,7 +51,7 @@ void backTrack(int curIdx, ll curSum){
 
   backTrack(curIdx + 1, curSum + arr[curIdx]);
 
-  for(int i = curIdx + 1; i < n; ++i) {
+  for (int i = curIdx + 1; i < n; ++i) {
     if (binded[i]) {
       continue;
     }
