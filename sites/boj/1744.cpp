@@ -33,26 +33,25 @@ void solve() {
 
   int maxVal = 0;
   int left = 0, right = n - 1;
-  for(; left < right; left += 2) {
-    if (arr[left] >= 1 || arr[left+1] >= 1) {
+  for (; left < right; left += 2) {
+    if (arr[left] >= 1 || arr[left + 1] >= 1) {
       break;
     }
 
     maxVal += arr[left] * arr[left + 1];
   }
 
-  for(; right > 0; right -= 2) {
-    if(arr[right] <= 1 || arr[right - 1] <= 1) {
+  for (; right > 0; right -= 2) {
+    if (arr[right] <= 1 || arr[right - 1] <= 1) {
       break;
     }
 
     maxVal += arr[right] * arr[right - 1];
   }
 
-  for(; right >= left; --right) {
+  for (; right >= left; --right) {
     maxVal += arr[right];
   }
-
 
   cout << maxVal;
   return;
