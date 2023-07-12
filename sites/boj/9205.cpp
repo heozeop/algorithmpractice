@@ -53,14 +53,27 @@ void solve() {
 
     bool isMet = false;
     vector<bool> visited(n, false);
-    for(int i = 0; i < n; ++i) {
-      if(distance(home, convinient[i]) > 1000) {
-          continue;
-      }
+    queue<pii> q;
+    q.push(home);
+    while(!q.empty()) {
+      pii temp = q.front();
+      q.pop();
 
-      if(backtrack(i, festival, visited, convinient)){ 
+      if (distance(temp, festival) <= 1000) {
         isMet = true;
         break;
+      }
+
+      for(int i = 0; i < n;++i) {
+        if(distance(temp, convinient[i]) > 1000) {
+          continue;
+            }
+
+        if(visited[i]) {
+          continue;
+        }
+        visited[i] = true;
+        q.push(convinient[i]);
       }
     }
 
@@ -78,33 +91,5 @@ void solve() {
 
 int distance(pii first, pii last) {
   return abs(first.first - last.first) + abs(first.second - last.second);
-}
-
-bool backtrack(int n, pii festival, vector<bool>& visited, vector<pii>& convinient) {
-  if(distance(convinient[n], festival) <= 1000) {
-    return true;
-  }
-
-  for(int i = 0; i < convinient.size(); ++i) {
-    if (distance(convinient[n], convinient[i]) > 1000) {
-      continue;
-    }
-
-    if (distance(convinient[i], festival) <= 1000) {
-      return true;
-    }
-
-    if (visited[i]) {
-      continue;
-    }
-    visited[i] = true;
-
-    if (backtrack(i, festival, visited, convinient)) {
-      return true;
-    }
-    visited[i] = false;
-  }
-
-  return false;
 }
 
