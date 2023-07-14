@@ -25,24 +25,24 @@ void input() {
     for (int j = 0; j < m; ++j) {
       cin >> temp;
       arr[i][j] = temp - '0';
-   }
+    }
   }
   return;
 }
 
-void solve() { 
+void solve() {
   int maxVal = 0;
-  for(int i = 1; i <= n; ++i){
-    for(int j = 1; j <= m; ++j) {
-      if(arr[i][j] == 0) {
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1; j <= m; ++j) {
+      if (arr[i][j] == 0) {
         continue;
       }
 
-      arr[i][j] = min(arr[i-1][j], min(arr[i-1][j-1], arr[i][j-1])) + 1;
+      arr[i][j] = min(arr[i - 1][j], min(arr[i - 1][j - 1], arr[i][j - 1])) + 1;
       maxVal = max(maxVal, arr[i][j]);
     }
   }
 
-   cout << maxVal * maxVal;
-  return; 
+  cout << maxVal * maxVal;
+  return;
 }
