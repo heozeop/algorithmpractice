@@ -5,7 +5,7 @@
 #include <vector>
 
 using namespace std;
-const int MAX_N = 1000;
+const int MAX_N = 1001;
 
 int n, m;
 int arr[MAX_N][MAX_N];
@@ -20,42 +20,29 @@ int main(void) {
 
 void input() {
   cin >> n >> m;
+  char temp;
   for (int i = 0; i < n; ++i) {
     for (int j = 0; j < m; ++j) {
-      cin >> arr[i][j];
-    }
+      cin >> temp;
+      arr[i][j] = temp - '0';
+   }
   }
   return;
 }
 
-void solve() {
-  vector<int> row(n, 0);
-  vector<int> col(m, 0);
-
-  for (int i = 0; i < n; ++i) {
-    int localMax = 0;
-    for (int j = 0; j < m; ++j) {
-      if (arr[i][j] == 1) {
-        localMax += 1;
-      } else {
-        row[i] = max(row[i], localMax);
-        localMax = 0;
+void solve() { 
+  int maxVal = 0;
+  for(int i = 1; i <= n; ++i){
+    for(int j = 1; j <= m; ++j) {
+      if(arr[i][j] == 0) {
+        continue;
       }
+
+      arr[i][j] = min(arr[i-1][j], min(arr[i-1][j-1], arr[i][j-1])) + 1;
+      maxVal = max(maxVal, arr[i][j]);
     }
-    row[i] = max(row[i], localMax);
   }
 
-  for (int i = 0; i < m; ++i) {
-    int localMax = 0;
-    for (int j = 0; j < n; ++j) {
-      if (arr[j][i] == 1) {
-        localMax += 1;
-      } else {
-        col[i] = max(col[i], localMax);
-        localMax = 0;
-      }
-    }
-    col[i] = max(col[i], localMax);
-  }
-  return;
+   cout << maxVal * maxVal;
+  return; 
 }
