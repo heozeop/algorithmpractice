@@ -17,19 +17,19 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> f;
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   int minI = 101;
 
-  for(int i = 0; i < f; ++i) {
+  for (int i = 0; i < f; ++i) {
     long long temp = (n / 100) * 100;
     temp += i;
 
-    if(temp % f != 0) {
+    if (temp % f != 0) {
       continue;
     }
 
@@ -37,6 +37,5 @@ void solve() {
     break;
   }
 
-
-  return; 
+  return;
 }
