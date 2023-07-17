@@ -22,62 +22,61 @@ void undo(int row, int col);
 bool putable(int row, int col);
 bool validate();
 
-
 int main(void) {
   input();
   solve();
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> m >> h;
   COL = n;
   ROW = h;
 
-  for(int i = 1; i <= ROW; ++i) { 
-    for(int j = 1; j <= COL; ++j) {
+  for (int i = 1; i <= ROW; ++i) {
+    for (int j = 1; j <= COL; ++j) {
       endpoint[i][j] = j;
     }
   }
 
-  int a,b;
-  for(int i = 0 ; i < m; ++i) {
-     cin >> a >> b;
-     endpoint[a][b] = b + 1;
-     endpoint[a][b + 1] = b;
+  int a, b;
+  for (int i = 0; i < m; ++i) {
+    cin >> a >> b;
+    endpoint[a][b] = b + 1;
+    endpoint[a][b + 1] = b;
   }
-  
-  return; 
+
+  return;
 }
 
-void solve() { 
+void solve() {
   // 0개 구함
-  if(validate()) {
+  if (validate()) {
     cout << 0;
     return;
   }
 
   cout << put(1);
-  return; 
+  return;
 }
 
 int put(int amount) {
   int minVal = -1;
-  for(int i = 1; i <= ROW; ++i) {
-    for(int j = 1; j < COL; ++j) {
-      if(!putable(i,j)) {
-        continue; 
+  for (int i = 1; i <= ROW; ++i) {
+    for (int j = 1; j < COL; ++j) {
+      if (!putable(i, j)) {
+        continue;
       }
 
-      setup(i,j);
-      if(validate()) {
+      setup(i, j);
+      if (validate()) {
         undo(i, j);
         return amount;
       }
 
-      if(amount < 3) {
+      if (amount < 3) {
         int localMinVal = put(amount + 1);
-        if(localMinVal != -1) {
+        if (localMinVal != -1) {
           minVal = localMinVal;
         }
       }
@@ -89,16 +88,15 @@ int put(int amount) {
   return minVal;
 }
 
-
 bool validate() {
-  for(int i = 1; i <= COL;++i) {
+  for (int i = 1; i <= COL; ++i) {
     int currentCol = i;
 
-    for(int j = 1; j <= ROW; ++j) {
+    for (int j = 1; j <= ROW; ++j) {
       currentCol = endpoint[j][currentCol];
     }
 
-    if(currentCol != i) {
+    if (currentCol != i) {
       return false;
     }
   }
