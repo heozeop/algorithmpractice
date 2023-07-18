@@ -16,32 +16,31 @@ int main(void) {
   return 0;
 }
 
-void input() { 
-  for(int i = 0 ; i < 5;++i){ 
+void input() {
+  for (int i = 0; i < 5; ++i) {
     cin >> arr[i];
   }
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   int a = INT_MAX;
 
-  for(int i = 0; i < 1000000; ++i) {
+  for (int i = 0; i < 1000000; ++i) {
     int remain0 = 0;
-    for(int j = 0; j < 5; ++j) {
-      if(i / arr[j] > 0 && i % arr[j] == 0) {
+    for (int j = 0; j < 5; ++j) {
+      if (i / arr[j] > 0 && i % arr[j] == 0) {
         ++remain0;
       }
     }
 
-    if(remain0 >= 3) {
+    if (remain0 >= 3) {
       a = i;
       break;
     }
-  
   }
 
   cout << a;
 
-  return; 
+  return;
 }
