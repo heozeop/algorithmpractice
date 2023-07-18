@@ -36,13 +36,13 @@ void input() {
 }
 
 void solve() {
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     vector<bool> visited(n, false);
     visited[i] = true;
 
     dfs(0, i, visited);
 
-    if(isDepth5Exist) {
+    if (isDepth5Exist) {
       break;
     }
   }
@@ -58,7 +58,7 @@ void dfs(int count, int index, vector<bool> &visited) {
     return;
   }
 
-  for(int i : edges[index]) {
+  for (int i : edges[index]) {
     if (visited[i]) {
       continue;
     }
