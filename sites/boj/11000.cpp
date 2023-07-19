@@ -7,7 +7,7 @@
 using namespace std;
 
 int n;
-vector<pair<int,int>> v;
+vector<pair<int, int>> v;
 void input();
 void solve();
 
@@ -21,9 +21,9 @@ void input() {
   cin >> n;
 
   int s, e;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> s >> e;
-    v.push_back({s,e});
+    v.push_back({s, e});
   }
 
   sort(v.begin(), v.end());
@@ -31,12 +31,12 @@ void input() {
   return;
 }
 
-void solve() { 
+void solve() {
   priority_queue<int, vector<int>, greater<int>> lectureRoom;
   lectureRoom.push(0);
   int lectureRoomCount = 1;
 
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     lectureRoom.push(v[i].second);
     if (lectureRoom.top() <= v[i].first) {
       lectureRoom.pop();
@@ -45,5 +45,5 @@ void solve() {
 
   cout << lectureRoom.size();
 
-  return; 
+  return;
 }
