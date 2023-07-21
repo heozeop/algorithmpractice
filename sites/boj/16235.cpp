@@ -67,9 +67,9 @@ void solve() {
 
 void springSummerFall() {
 
-  for(int i = 1; i <= n; ++i) {
-    for(int j = 1; j <= n; ++j) {
-      if(tree[i][j].size() < 1) {
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1; j <= n; ++j) {
+      if (tree[i][j].size() < 1) {
         continue;
       }
 
@@ -77,8 +77,8 @@ void springSummerFall() {
       int size = tree[i][j].size();
 
       // spring
-      for(int k = 0; k < size; ++k) {
-        if(arr[i][j] < tree[i][j][k]) {
+      for (int k = 0; k < size; ++k) {
+        if (arr[i][j] < tree[i][j][k]) {
           idx = k;
           break;
         } else {
@@ -92,7 +92,7 @@ void springSummerFall() {
       }
 
       // summer
-      for(int k = size - 1; k >= idx; --k) {
+      for (int k = size - 1; k >= idx; --k) {
         arr[i][j] += tree[i][j][k] / 2;
         tree[i][j].pop_back();
       }
@@ -100,25 +100,25 @@ void springSummerFall() {
   }
 
   // fall
-  for(int i = 1; i <= n; ++i) {
-    for(int j = 1; j <= n; ++j) {
+  for (int i = 1; i <= n; ++i) {
+    for (int j = 1; j <= n; ++j) {
       int size = tree[i][j].size();
 
-      if(size < 1) {
+      if (size < 1) {
         continue;
       }
 
-      for(int k = 0; k < size; ++k) {
-        if(tree[i][j][k] % 5 != 0) {
+      for (int k = 0; k < size; ++k) {
+        if (tree[i][j][k] % 5 != 0) {
           continue;
         }
 
-        int nx,ny;
-        for(int l = 0; l < 8; ++l) {
+        int nx, ny;
+        for (int l = 0; l < 8; ++l) {
           nx = i + DIRECTION[l][0];
           ny = j + DIRECTION[l][1];
 
-          if(!isInArea(nx,ny)) {
+          if (!isInArea(nx, ny)) {
             continue;
           }
 
