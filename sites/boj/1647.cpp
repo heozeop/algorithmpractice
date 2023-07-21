@@ -5,7 +5,7 @@
 #include <vector>
 
 using namespace std;
-typedef pair<int, pair<int,int>> piii;
+typedef pair<int, pair<int, int>> piii;
 const int MAX_N = 100001;
 
 int n, m;
@@ -23,10 +23,10 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> m;
-  int x,y,c;
-  for(int i = 0; i < m; ++i) {
+  int x, y, c;
+  for (int i = 0; i < m; ++i) {
     cin >> x >> y >> c;
     q.push({c, {x, y}});
   }
@@ -35,13 +35,13 @@ void input() {
     parent[i] = i;
   }
 
-    return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   int longest = 0, sum = 0;
   int x, y, c;
-  while(!q.empty()) {
+  while (!q.empty()) {
     piii temp = q.top();
     q.pop();
     c = temp.first;
@@ -51,7 +51,7 @@ void solve() {
     int xp = findParent(x);
     int yp = findParent(y);
 
-    if(xp == yp) {
+    if (xp == yp) {
       continue;
     }
 
@@ -62,11 +62,11 @@ void solve() {
 
   cout << sum - longest;
 
-  return; 
+  return;
 }
 
 int findParent(int x) {
-  if(parent[x] == x) {
+  if (parent[x] == x) {
     return x;
   }
 
