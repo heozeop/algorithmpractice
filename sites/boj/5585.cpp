@@ -7,9 +7,7 @@
 using namespace std;
 
 int n;
-int arr[] = {
-  500, 100, 50, 10, 5, 1
-};
+int arr[] = {500, 100, 50, 10, 5, 1};
 void input();
 void solve();
 
@@ -19,15 +17,15 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
   n = 1000 - n;
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   int cnt = 0;
-  for(int i : arr) {
+  for (int i : arr) {
     if (n < i) {
       continue;
     }
@@ -37,5 +35,5 @@ void solve() {
   }
 
   cout << cnt;
-  return; 
+  return;
 }
