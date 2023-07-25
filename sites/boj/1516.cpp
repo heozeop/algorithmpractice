@@ -56,11 +56,11 @@ void solve() {
 int dfs(int curIdx, vector<bool> &visited) {
   int buildTimeOfCurIdx = buildTime[curIdx];
 
-  if(v[curIdx].size() < 1) {
+  if (v[curIdx].size() < 1) {
     return buildTimeOfCurIdx;
   }
 
-  for(int i = 0; i < v[curIdx].size(); ++i) {
+  for (int i = 0; i < v[curIdx].size(); ++i) {
     int nextIdx = v[curIdx][i];
     if (visited[nextIdx]) {
       continue;
@@ -69,6 +69,6 @@ int dfs(int curIdx, vector<bool> &visited) {
 
     buildTimeOfCurIdx += dfs(nextIdx, visited);
   }
-  
+
   return buildTimeOfCurIdx;
 }
