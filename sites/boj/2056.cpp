@@ -22,26 +22,26 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
-  int a,b,c;
-  for(int i = 1; i <= n; ++i) {
+  int a, b, c;
+  for (int i = 1; i <= n; ++i) {
     cin >> arr[i] >> b;
 
-    while(b--) {
-      cin >> c; 
-      
+    while (b--) {
+      cin >> c;
+
       edges[c].push_back(i);
       ++inDegree[i];
     }
   }
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   queue<int> q;
-  for(int i = 1; i <= n; ++i){
-    if(inDegree[i] > 0){
+  for (int i = 1; i <= n; ++i) {
+    if (inDegree[i] > 0) {
       continue;
     }
 
@@ -49,11 +49,11 @@ void solve() {
     dp[i] = arr[i];
   }
 
-  while(!q.empty()) {
+  while (!q.empty()) {
     int cur = q.front();
     q.pop();
 
-    for(int i : edges[cur]) {
+    for (int i : edges[cur]) {
       if (--inDegree[i] == 0) {
         q.push(i);
       }
@@ -63,10 +63,10 @@ void solve() {
   }
 
   int maxVal = 0;
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     maxVal = max(maxVal, dp[i]);
   }
   cout << maxVal;
 
-  return; 
+  return;
 }
