@@ -1,9 +1,9 @@
 #include <algorithm>
 #include <iostream>
 #include <limits.h>
+#include <map>
 #include <queue>
 #include <vector>
-#include <map>
 
 using namespace std;
 const int MAX_N = 50;
@@ -25,11 +25,11 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> m;
   cin >> king;
   string c, f, mo;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> c >> f >> mo;
     edges[f].push_back(c);
     edges[mo].push_back(c);
@@ -37,28 +37,28 @@ void input() {
     inDegree[c] += 2;
   }
 
-  for(int i = 0; i < m; ++i) {
+  for (int i = 0; i < m; ++i) {
     cin >> candidates[i];
   }
 
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   queue<string> q;
-  for(auto a: edges) {
-    if(inDegree.find(a.first) == inDegree.end() || inDegree[a.first] == 0) {
+  for (auto a : edges) {
+    if (inDegree.find(a.first) == inDegree.end() || inDegree[a.first] == 0) {
       q.push(a.first);
     }
   }
   dp[king] = 1;
 
-  while(!q.empty()) {
+  while (!q.empty()) {
     string temp = q.front();
     q.pop();
 
-    for(string a : edges[temp]) {
-      if(--inDegree[a] == 0) {
+    for (string a : edges[temp]) {
+      if (--inDegree[a] == 0) {
         q.push(a);
       }
       dp[a] += dp[temp] / 2;
@@ -67,7 +67,7 @@ void solve() {
 
   int maxIdx = 0;
   double maxVal = 0;
-  for(int i = 0; i < m; ++i) {
+  for (int i = 0; i < m; ++i) {
     if (dp[candidates[i]] > maxVal) {
       maxVal = dp[candidates[i]];
       maxIdx = i;
@@ -76,6 +76,5 @@ void solve() {
 
   cout << candidates[maxIdx];
 
-  return; 
+  return;
 }
-
