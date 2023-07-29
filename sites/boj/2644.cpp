@@ -19,43 +19,43 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n >> x >> y;
   int m;
   cin >> m;
 
   int a, b;
-  for(int i = 0; i < m; ++i) {
+  for (int i = 0; i < m; ++i) {
     cin >> a >> b;
 
     arr[a][b] = 1;
     arr[b][a] = 1;
   }
 
-  return; 
+  return;
 }
 
-void solve() { 
-  queue<pair<int,int>> q;
+void solve() {
+  queue<pair<int, int>> q;
   vector<bool> visited(n, false);
   q.push({x, 0});
   visited[x] = 1;
-  while(!q.empty()) {
+  while (!q.empty()) {
     auto temp = q.front();
     q.pop();
 
-    if(temp.first == y) {
+    if (temp.first == y) {
       cout << temp.second;
       return;
     }
 
-    for(int i = 1; i <= n; ++i) {
-      if(!arr[temp.first][i]) {
-        continue; 
+    for (int i = 1; i <= n; ++i) {
+      if (!arr[temp.first][i]) {
+        continue;
       }
 
       if (visited[i]) {
-        continue; 
+        continue;
       }
       visited[i] = true;
 
@@ -64,5 +64,5 @@ void solve() {
   }
 
   cout << -1;
-  return; 
+  return;
 }
