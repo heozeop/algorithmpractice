@@ -30,7 +30,7 @@ void input() {
   for (int i = 0; i < n; ++i) {
     cin >> a;
 
-    for(char b: a) {
+    for (char b : a) {
       arr[i] |= 1 << (b - 'a');
     }
   }
@@ -56,7 +56,7 @@ void solve() {
 }
 
 void dfs(int curNode, int leftCount) {
-  if (leftCount == k-5) {
+  if (leftCount == k - 5) {
     countMax();
     return;
   }
@@ -75,7 +75,7 @@ void dfs(int curNode, int leftCount) {
 void countMax() {
   int sum = 0;
   for (int i = 0; i < n; ++i) {
-    if((arr[i] & learnedWord) == arr[i]) {
+    if ((arr[i] & learnedWord) == arr[i]) {
       sum += 1;
     }
   }

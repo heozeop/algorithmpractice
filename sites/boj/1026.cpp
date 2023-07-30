@@ -20,27 +20,27 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
 
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> a[i];
   }
 
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> b[i];
   }
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   sort(a, a + n);
   sort(b, b + n);
 
   int sum = 0;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     sum += a[n - 1 - i] * b[i];
   }
   cout << sum;
-  return; 
+  return;
 }
