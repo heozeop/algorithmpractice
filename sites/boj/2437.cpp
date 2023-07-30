@@ -12,7 +12,6 @@ int arr[MAX_N];
 int minDp[MAX_N];
 int maxDp[MAX_N];
 
-
 void input();
 void solve();
 
@@ -22,15 +21,13 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
-  for(int i = 0; i < n; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> arr[i];
   }
-  
-  return; 
+
+  return;
 }
 
-void solve() { 
- return; 
-}
+void solve() { return; }
