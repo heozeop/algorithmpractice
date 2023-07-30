@@ -1,4 +1,10 @@
-3 6
-antarctica
-antahellotica
-antacartica
+9 8
+antabtica
+antaxtica
+antadtica
+antaetica
+antaftica
+antagtica
+antahtica
+antajtica
+antaktica
