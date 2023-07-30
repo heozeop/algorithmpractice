@@ -5,7 +5,7 @@
 #include <vector>
 
 using namespace std;
-int a,b,c;
+int a, b, c;
 
 void input();
 void solve();
@@ -16,12 +16,12 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> a >> b >> c;
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   bool isABEqual = a == b;
   bool isBCEqual = b == c;
   bool isCAEqual = c == a;
@@ -36,12 +36,12 @@ void solve() {
     return;
   }
 
-  if(isBCEqual) {
+  if (isBCEqual) {
     cout << 1000 + b * 100;
     return;
   }
 
-  if(isCAEqual) {
+  if (isCAEqual) {
     cout << 1000 + c * 100;
     return;
   }
@@ -51,5 +51,5 @@ void solve() {
   maxVal = max(maxVal, c);
 
   cout << maxVal * 100;
-  return; 
+  return;
 }
