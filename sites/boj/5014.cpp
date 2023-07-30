@@ -8,7 +8,7 @@ using namespace std;
 
 const int MAX_N = 1000001;
 
-int f,s,g,u,d;
+int f, s, g, u, d;
 
 void input();
 void solve();
@@ -19,22 +19,22 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> f >> s >> g >> u >> d;
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   vector<bool> visited(f + 1, false);
-  queue<pair<int,int>>q;
+  queue<pair<int, int>> q;
   q.push({s, 0});
   visited[s] = true;
 
-  while(!q.empty()) {
+  while (!q.empty()) {
     auto temp = q.front();
     q.pop();
 
-    if(temp.first == g) {
+    if (temp.first == g) {
       cout << temp.second;
       return;
     }
@@ -46,12 +46,12 @@ void solve() {
     }
 
     next = temp.first + u;
-    if(next <= f && !visited[next]) {
+    if (next <= f && !visited[next]) {
       visited[next] = true;
       q.push({next, temp.second + 1});
     }
   }
 
   cout << "use the stairs";
-  return; 
+  return;
 }
