@@ -30,4 +30,17 @@ void input() {
   return;
 }
 
-void solve() { return; }
+void solve() { 
+  sort(arr, arr + n);
+  int sum = 1;
+  for(int i = 0; i < n; ++i) {
+    if (sum < arr[i]) {
+      break;
+    }
+
+    sum += arr[i];
+  }
+
+  cout << sum;
+  return; 
+}
