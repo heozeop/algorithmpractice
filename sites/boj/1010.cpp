@@ -18,16 +18,16 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> tc;
-  return; 
+  return;
 }
 
-void solve() { 
-  while(tc--) {
+void solve() {
+  while (tc--) {
     setBridge();
   }
-  return; 
+  return;
 }
 
 void setBridge() {
@@ -36,24 +36,24 @@ void setBridge() {
 
   vector<vector<int>> dp(n + 1, vector<int>(m + 1, 0));
 
-  for(int i = 1; i <= n; ++i) {
+  for (int i = 1; i <= n; ++i) {
     dp[i][i] = 1;
   }
 
-  for(int i = 1; i <= m; ++i) {
+  for (int i = 1; i <= m; ++i) {
     dp[1][i] = 1;
   }
 
-  for(int i = 2; i <= n; ++i) {
-    for(int j = i + 1; j <= m; ++j) {
-      for(int k = j - 1; k >= i - 1; --k) {
-        dp[i][j]+= dp[i - 1][k];
+  for (int i = 2; i <= n; ++i) {
+    for (int j = i + 1; j <= m; ++j) {
+      for (int k = j - 1; k >= i - 1; --k) {
+        dp[i][j] += dp[i - 1][k];
       }
     }
   }
 
   int sum = 0;
-  for(int i = n; i <= m; ++i) {
+  for (int i = n; i <= m; ++i) {
     sum += dp[n][i];
   }
 
