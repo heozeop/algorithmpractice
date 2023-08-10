@@ -17,20 +17,20 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
-  return; 
+  return;
 }
 
-void solve() { 
-  int s = n /4;
-  if(n% 4 > 0) {
+void solve() {
+  int s = n / 4;
+  if (n % 4 > 0) {
     s += 1;
   }
 
-  for(int i = 0; i < s; ++i) {
+  for (int i = 0; i < s; ++i) {
     cout << "long ";
   }
   cout << "int";
-  return; 
+  return;
 }
