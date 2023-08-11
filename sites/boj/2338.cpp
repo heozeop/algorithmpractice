@@ -16,13 +16,13 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> a >> b;
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   cout << a + b << '\n' << a - b << '\n' << a * b;
 
-  return; 
+  return;
 }
