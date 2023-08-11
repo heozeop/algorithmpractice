@@ -20,19 +20,19 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
-  for(int i = 0; i < n ; ++i) {
+  for (int i = 0; i < n; ++i) {
     cin >> arr[i];
   }
-  return; 
+  return;
 }
 
-void solve() { 
+void solve() {
   vector<int> temp;
   temp.push_back(arr[0]);
-  for(int i = 1; i < n; ++i) {
-    if(temp.back() <= arr[i]) {
+  for (int i = 1; i < n; ++i) {
+    if (temp.back() <= arr[i]) {
       temp.push_back(arr[i]);
       continue;
     }
@@ -43,5 +43,5 @@ void solve() {
 
   cout << temp.size();
 
-  return; 
+  return;
 }
