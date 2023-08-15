@@ -16,16 +16,16 @@ int main(void) {
   return 0;
 }
 
-void input() { 
+void input() {
   cin >> n;
-  return; 
+  return;
 }
 
-void solve() { 
-  if(n % 2) {
+void solve() {
+  if (n % 2) {
     cout << "CY";
-  }else {
+  } else {
     cout << "SK";
   }
-  return; 
+  return;
 }
